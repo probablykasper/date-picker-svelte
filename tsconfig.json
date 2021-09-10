@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es2019",
+    "module": "es2020",
+    "lib": ["es2020", "DOM"],
+
+    // svelte-preprocess can't tell if you're importing a value or
+    // type, so require 'import type' instead of 'import' for types
+    "importsNotUsedAsValues": "error",
+
+    // To have Svelte warnings/errors correct position
+    "sourceMap": true,
+
+    // Global types
+    "types": ["@sveltejs/kit"],
+
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": true,
+    "paths": {
+      // "$lib/*": ["src/lib/*"]
+    }
+  },
+  "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
+}
