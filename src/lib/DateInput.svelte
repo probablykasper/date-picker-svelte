@@ -4,10 +4,11 @@
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
 
-  export let width = '128px'
-  export let placeholder = '"2020-12-31 23:00:00"'
+  export let width = '140px'
+  export let placeholder = '2020-12-31 23:00:00'
   export let value = new Date()
-  export let isValid = false
+  export let isValid = true
+  export let years = [2018, 2019, 2020, 2021]
 
   export let format = 'yyyy-MM-dd HH:mm:ss'
   let formatTokens = createFormat(format)
@@ -37,7 +38,7 @@
     }
   }
 
-  export let visible = true
+  export let visible = false
   let dateTimePicker: DateTimePicker
   function onFocusOut(e: FocusEvent) {
     dateTimePicker.onFocusOut(e)
@@ -50,11 +51,11 @@
     type="text"
     bind:value={text}
     {placeholder}
-    on:focus={(e) => (visible = true)}
+    on:focus={() => (visible = true)}
     on:input={input}
     style={`width: ${width}`} />
   <div class="picker" class:visible>
-    <DateTimePicker bind:this={dateTimePicker} bind:value bind:visible />
+    <DateTimePicker bind:this={dateTimePicker} bind:value bind:visible bind:years />
   </div>
 </div>
 

@@ -19,7 +19,7 @@
     'November',
     'December',
   ]
-  const years = [2018, 2019, 2020, 2021]
+  export let years = [2018, 2019, 2020, 2021]
 
   let year = value.getFullYear()
   const getYear = (value: Date) => (year = value.getFullYear())

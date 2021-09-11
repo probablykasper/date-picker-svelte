@@ -1,2 +1,20 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+  import DatePicker from './_DatePicker.svelte'
+  import DateInput from './_DateInput.svelte'
+</script>
+
+<h1>Svelte Date Picker</h1>
+<p>Date and time picker for Svelte</p>
+
+<h2>DateInput</h2>
+<DateInput />
+
+<h2>DatePicker</h2>
+<DatePicker />
+
+<style lang="sass">
+  :global(body)
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+    max-width: 800px
+    margin: auto
+</style>

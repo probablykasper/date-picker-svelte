@@ -11,8 +11,10 @@ Date and time picker for Svelte
 
 ### Commands
 
-- `npm run dev`: Start in dev mode
-- `npm run build`: Build
-- `npm run preview`: Preview production app
+- `npm run dev`: Start site in dev mode
+- `npm run build`: Build package and site
+- `npm run build:package`: Build package
+- `npm run build:site`: Build site
+- `npm run preview`: Preview production site
 - `npm run check`: Run `svelte-check`
 - `npm run lint`: Lint
