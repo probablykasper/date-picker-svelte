@@ -25,7 +25,12 @@
 
   function textUpdate(text: string, formatTokens: FormatToken[]) {
     const result = parse(text, formatTokens)
-    if (result.date !== null) value = result.date
+    if (result.date !== null) {
+      valid = true
+      value = result.date
+    } else {
+      valid = false
+    }
   }
   $: textUpdate(text, formatTokens)
 
@@ -38,7 +43,7 @@
     }
   }
 
-  export let isVisible = false
+  export let visible = false
   let dateTimePicker: DateTimePicker
   function onFocusOut(e: FocusEvent) {
     dateTimePicker.onFocusOut(e)
@@ -51,7 +56,7 @@
     type="text"
     bind:value={text}
     {placeholder}
-    on:focus={() => (isVisible = true)}
+    on:focus={() => (visible = true)}
     on:input={input}
     style={`width: ${width}`} />
   <div class="picker" class:visible>
