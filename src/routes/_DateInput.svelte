@@ -1,10 +1,11 @@
 <script lang="ts">
   import DateInput from '$lib/DateInput.svelte'
   import Prop from './_prop.svelte'
+  import Split from './_split.svelte'
 
   let placeholder = '2020-12-31 23:00:00'
   let value = new Date()
-  let isValid = true
+  let valid = true
   let visible = false
   let width = '140px'
   let format = 'yyyy-MM-dd HH:mm:ss'
@@ -12,37 +13,30 @@
   $: console.log(years)
 </script>
 
-<div class="row">
-  <div class="left">
-    <DateInput
-      bind:placeholder
-      bind:value
-      bind:isValid
-      bind:visible
-      bind:width
-      bind:format
-      bind:years />
-  </div>
-  <div class="right">
+<Split>
+  <DateInput
+    slot="left"
+    bind:placeholder
+    bind:value
+    bind:valid
+    bind:visible
+    bind:width
+    bind:format
+    bind:years />
+
+  <svelte:fragment slot="right">
     <h3 class="no-top">Props</h3>
     <Prop label="value">{value}</Prop>
     <Prop label="placeholder" bind:value={placeholder} />
-    <Prop label="isValid" bind:value={isValid} />
+    <Prop label="valid" bind:value={valid} />
     <Prop label="visible" bind:value={visible} />
     <Prop label="width" bind:value={width} />
     <Prop label="format" bind:value={format} />
     <Prop label="years" bind:value={years} />
-  </div>
-</div>
+  </svelte:fragment>
+</Split>
 
 <style lang="sass">
-  .row
-    display: flex
-    .left
-      padding: 20px
-      min-width: 250px
-    .right
-      padding: 20px
   .no-top
-    margin-top: 0px
+    // margin-top: 0px
 </style>

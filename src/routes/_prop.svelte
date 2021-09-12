@@ -22,7 +22,9 @@
   {:else if value instanceof Array}
     <textarea type="text" bind:value={jsonValue} on:input={jsonInput} />
   {:else}
-    <slot />
+    <div>
+      <slot />
+    </div>
   {/if}
 </div>
 

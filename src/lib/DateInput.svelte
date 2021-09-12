@@ -7,7 +7,7 @@
   export let width = '140px'
   export let placeholder = '2020-12-31 23:00:00'
   export let value = new Date()
-  export let isValid = true
+  export let valid = true
   export let years = [2018, 2019, 2020, 2021]
 
   export let format = 'yyyy-MM-dd HH:mm:ss'
@@ -38,7 +38,7 @@
     }
   }
 
-  export let visible = false
+  export let isVisible = false
   let dateTimePicker: DateTimePicker
   function onFocusOut(e: FocusEvent) {
     dateTimePicker.onFocusOut(e)
@@ -47,11 +47,11 @@
 
 <div class="date-time-field" on:focusout={onFocusOut}>
   <input
-    class:invalid={!isValid}
+    class:invalid={!valid}
     type="text"
     bind:value={text}
     {placeholder}
-    on:focus={() => (visible = true)}
+    on:focus={() => (isVisible = true)}
     on:input={input}
     style={`width: ${width}`} />
   <div class="picker" class:visible>

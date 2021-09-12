@@ -16,5 +16,8 @@
   :global(body)
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
     max-width: 800px
+    padding: 0px 30px
     margin: auto
+    background-color: #e0fff4
+    padding-bottom: 100px
 </style>
