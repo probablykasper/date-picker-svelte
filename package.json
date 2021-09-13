@@ -1,6 +1,7 @@
 {
 	"name": "svelte-date-picker",
 	"version": "0.0.1",
+	"description": "Date and time picker for Svelte",
 	"type": "module",
 	"scripts": {
 		"dev": "svelte-kit dev",
@@ -19,12 +20,26 @@
 		"prettier-plugin-svelte": "^2.4.0",
 		"sass": "^1.39.2",
 		"svelte": "^3.42.5",
-		"svelte-check": "^2.2.5",
+		"svelte-check": "^2.2.6",
 		"svelte-preprocess": "^4.9.4",
-		"svelte2tsx": "^0.4.5",
+		"svelte2tsx": "^0.4.6",
 		"tslib": "^2.3.1",
 		"typescript": "^4.4.3"
 	},
+	"license": "MIT",
+	"homepage": "https://svelte-date-picker.kasper.space",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/probablykasper/svelte-date-picker.git"
+	},
+	"keywords": [
+		"date",
+		"date-picker",
+		"datepicker",
+		"date-time-picker",
+		"calender",
+		"svelte"
+	],
 	"prettier": {
 		"printWidth": 100,
 		"semi": false,
