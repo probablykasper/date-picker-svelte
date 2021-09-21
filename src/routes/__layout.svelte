@@ -3,6 +3,7 @@
   <nav>
     <a href="/demo">Demo</a>
     <a href="/docs">Docs</a>
+    <a href="https://github.com/probablykasper/svelte-date-picker">GitHub</a>
   </nav>
 </header>
 <div class="page">
@@ -11,12 +12,14 @@
 
 <style lang="sass">
   @import url('./_prism-holi-theme.css')
+  :global(html)
+    background: linear-gradient(#fce0ff, #ffe0e0)
+    min-height: 100%
   :global(body)
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
     max-width: 800px
     padding: 0px 30px
     margin: auto
-    background-color: #e0fff4
     padding-bottom: 100px
   :global(a)
     color: #074ced
@@ -33,7 +36,7 @@
     padding-right: 50px
     display: flex
     a
-      padding: 5px
+      padding: 5px 10px
       transition: all 0.1s ease-in-out
       &:hover
         color: #4775ff

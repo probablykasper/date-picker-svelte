@@ -3,17 +3,19 @@
   import Prop from './_prop.svelte'
   import Split from './_split.svelte'
 
-  let placeholder: string = '2020-12-31 23:00:00'
-  let value: Date = new Date()
-  let years = [2018, 2019, 2020, 2021]
+  let value = new Date()
+  let min: Date
+  let max: Date
 </script>
 
 <Split>
-  <DatePicker slot="left" bind:placeholder bind:value bind:years />
+  <div class="left" slot="left">
+    <DatePicker bind:value bind:min bind:max />
+  </div>
   <div slot="right">
     <h3 class="no-top">Props</h3>
     <Prop label="value">{value}</Prop>
-    <Prop label="placeholder" bind:value={placeholder} />
-    <Prop label="years" bind:value={years} />
+    <Prop label="min" bind:value={min} />
+    <Prop label="max" bind:value={max} />
   </div>
 </Split>

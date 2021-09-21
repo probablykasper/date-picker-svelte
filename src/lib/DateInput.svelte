@@ -4,12 +4,23 @@
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
 
-  export let width = '140px'
-  export let placeholder = '2020-12-31 23:00:00'
+  /** Date value */
   export let value = new Date()
+  function setValue(d: Date) {
+    if (d.getTime() !== value.getTime()) value = d
+  }
+  /** The earliest value the user can select */
+  export let min = new Date(new Date().getFullYear() - 20, 0, 1)
+  /** The latest value the user can select */
+  export let max = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999)
+  /** Placeholder text to show when input field is empty */
+  export let placeholder = '2020-12-31 23:00:00'
+  /** Whether the text is valid */
   export let valid = true
-  export let years = [2018, 2019, 2020, 2021]
+  /** Input field width */
+  export let width = '140px'
 
+  /** Format string */
   export let format = 'yyyy-MM-dd HH:mm:ss'
   let formatTokens = createFormat(format)
   $: formatTokens = createFormat(format)
@@ -24,10 +35,10 @@
   $: textHistory = [textHistory[1], text]
 
   function textUpdate(text: string, formatTokens: FormatToken[]) {
-    const result = parse(text, formatTokens)
+    const result = parse(text, formatTokens, value)
     if (result.date !== null) {
       valid = true
-      value = result.date
+      setValue(result.date)
     } else {
       valid = false
     }
@@ -36,17 +47,28 @@
 
   function input(e: any) {
     if (e.inputType === 'insertText' && text === textHistory[0] + e.data) {
-      let result = parse(textHistory[0], formatTokens)
+      let result = parse(textHistory[0], formatTokens, value)
       if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
         text = textHistory[0] + result.missingPunctuation + e.data
       }
     }
   }
 
+  /** Whether the date popup is visible */
   export let visible = false
-  let dateTimePicker: DateTimePicker
+  // handle on:focusout for parent element. If the parent element loses
+  // focus (e.g input element), visible is set to false
   function onFocusOut(e: FocusEvent) {
-    dateTimePicker.onFocusOut(e)
+    if (
+      e?.currentTarget instanceof HTMLElement &&
+      e.relatedTarget &&
+      e.relatedTarget instanceof HTMLElement &&
+      e.currentTarget.contains(e.relatedTarget)
+    ) {
+      return
+    } else {
+      visible = false
+    }
   }
 </script>
 
@@ -60,7 +82,7 @@
     on:input={input}
     style={`width: ${width}`} />
   <div class="picker" class:visible>
-    <DateTimePicker bind:this={dateTimePicker} bind:value bind:visible bind:years />
+    <DateTimePicker on:focusout={onFocusOut} bind:value bind:min bind:max />
   </div>
 </div>
 
@@ -85,6 +107,7 @@
     position: absolute
     margin-top: 1px
     background-color: #ffffff
+    z-index: 10
     &.visible
       display: block
 </style>

@@ -2,8 +2,15 @@
   import { getMonthLength, getWeeks } from './date-utils'
   import type { CalendarDay } from './date-utils'
 
+  /** Date value */
   export let value = new Date()
-  export let visible = true
+  function setValue(d: Date) {
+    if (d.getTime() !== value.getTime()) value = d
+  }
+  function updateValue(updater: (date: Date) => Date) {
+    let d = updater(new Date(value.getTime()))
+    if (d.getTime() !== value.getTime()) value = d
+  }
   const weekdayNames = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
   const monthNames = [
     'January',
@@ -19,13 +26,36 @@
     'November',
     'December',
   ]
-  export let years = [2018, 2019, 2020, 2021]
+  /** The earliest year the user can select */
+  export let min = new Date(new Date().getFullYear() - 20, 0, 1)
+  /** The latest year the user can select */
+  export let max = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999)
+  let years = getYears(min, max)
+  $: years = getYears(min, max)
+  function getYears(min: Date, max: Date) {
+    let years = []
+    for (let i = min.getFullYear(); i <= max.getFullYear(); i++) {
+      years.push(i)
+    }
+    return years
+  }
+  $: if (value > max) {
+    console.log('MAX', max)
+    setValue(max)
+  } else if (value < min) {
+    console.log('MIN', min)
+    setValue(min)
+  } else {
+    console.log('x', value)
+  }
 
   let year = value.getFullYear()
   const getYear = (value: Date) => (year = value.getFullYear())
   function setYear(year: number) {
-    value.setFullYear(year)
-    value = value
+    updateValue((value) => {
+      value.setFullYear(year)
+      return value
+    })
   }
   $: getYear(value)
   $: setYear(year)
@@ -35,14 +65,16 @@
   function setMonth(month: number) {
     const maxDate = getMonthLength(year, month)
     const newDate = Math.min(value.getDate(), maxDate)
-    value = new Date(
-      year,
-      month,
-      newDate,
-      value.getHours(),
-      value.getMinutes(),
-      value.getSeconds(),
-      value.getMilliseconds()
+    setValue(
+      new Date(
+        year,
+        month,
+        newDate,
+        value.getHours(),
+        value.getMinutes(),
+        value.getSeconds(),
+        value.getMilliseconds()
+      )
     )
   }
   $: getMonth(value)
@@ -51,38 +83,36 @@
   let dayOfMonth = value.getDate()
   $: dayOfMonth = value.getDate()
 
-  export let parentElement: HTMLElement | null = null
-  export const onFocusOut = (e: FocusEvent) => {
-    let relatedTarget = parentElement || e.relatedTarget
-    if (
-      e?.currentTarget instanceof HTMLElement &&
-      relatedTarget &&
-      relatedTarget instanceof HTMLElement &&
-      e.currentTarget.contains(relatedTarget)
-    ) {
-      return
-    } else {
-      visible = false
-    }
-  }
-
   $: weeks = getWeeks(value)
 
-  function setDay(day: CalendarDay) {
-    value.setFullYear(0)
-    value.setMonth(0)
-    value.setDate(1)
-    value.setFullYear(day.year)
-    value.setMonth(day.month)
-    value.setDate(day.number)
-    value = value
+  function setDay(calendarDay: CalendarDay) {
+    if (dayIsInRange(calendarDay)) {
+      updateValue((value) => {
+        value.setFullYear(0)
+        value.setMonth(0)
+        value.setDate(1)
+        value.setFullYear(calendarDay.year)
+        value.setMonth(calendarDay.month)
+        value.setDate(calendarDay.number)
+        return value
+      })
+    }
+  }
+  function dayIsInRange(calendarDay: CalendarDay) {
+    const date = new Date(calendarDay.year, calendarDay.month, calendarDay.number)
+    const minDate = new Date(min.getFullYear(), min.getMonth(), min.getDate())
+    const maxDate = new Date(max.getFullYear(), max.getMonth(), max.getDate())
+    return date >= minDate && date <= maxDate
   }
 </script>
 
-<div class="date-time-picker" on:focusout={onFocusOut} tabindex="-1">
+<div class="date-time-picker" on:focusout tabindex="-1">
   <select bind:value={month}>
     {#each monthNames as monthName, i}
-      <option value={i}>{monthName}</option>
+      <option
+        disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
+          new Date(year, i) > max}
+        value={i}>{monthName}</option>
     {/each}
   </select>
   <select bind:value={year}>
@@ -101,6 +131,7 @@
         <div
           class="cell"
           on:click={() => setDay(calendarDay)}
+          class:disabled={!dayIsInRange(calendarDay)}
           class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
           class:other-month={calendarDay.month !== month}>
           {calendarDay.number}
@@ -140,6 +171,8 @@
       border-radius: 4px
       &:hover
         background-color: #ededed
+      &.disabled:hover
+        background-color: transparent
       &.other-month
         color: #9FA9B2
       &.selected

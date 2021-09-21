@@ -1,9 +1,10 @@
 <script lang="ts">
+  import DateInput from '$lib/DateInput.svelte'
+
   export let value: any = null
   export let label: string
   let jsonValue = JSON.stringify(value)
   $: () => {
-    console.log('X')
     jsonValue = JSON.stringify(value)
   }
   function jsonInput() {
@@ -21,6 +22,8 @@
     <input type="checkbox" bind:checked={value} />
   {:else if value instanceof Array}
     <textarea type="text" bind:value={jsonValue} on:input={jsonInput} />
+  {:else if value instanceof Date}
+    <DateInput bind:value />
   {:else}
     <div>
       <slot />
