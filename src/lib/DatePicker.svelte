@@ -59,12 +59,22 @@
   let month = value.getMonth()
   const getMonth = (value: Date) => (month = value.getMonth())
   function setMonth(month: number) {
-    const maxDate = getMonthLength(year, month)
+    let newYear = year
+    let newMonth = month
+    if (month === 12) {
+      newMonth = 0
+      newYear++
+    } else if (month === -1) {
+      newMonth = 11
+      newYear--
+    }
+
+    const maxDate = getMonthLength(newYear, newMonth)
     const newDate = Math.min(value.getDate(), maxDate)
     setValue(
       new Date(
-        year,
-        month,
+        newYear,
+        newMonth,
         newDate,
         value.getHours(),
         value.getMinutes(),
@@ -104,6 +114,17 @@
 
 <div class="date-time-picker" on:focusout tabindex="-1">
   <div class="top">
+    <svg
+      class="page-button previous"
+      tabindex="-1"
+      on:click={() => setMonth(month - 1)}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      ><path
+        d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
+        transform="rotate(180, 12, 12)" /></svg>
     <div class="dropdown month">
       <select bind:value={month}>
         {#each monthNames as monthName, i}
@@ -125,6 +146,14 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
         ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg>
     </div>
+    <svg
+      class="page-button"
+      tabindex="-1"
+      on:click={() => setMonth(month + 1)}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg>
   </div>
   <div class="header">
     {#each weekdayNames as weekdayName}
@@ -159,7 +188,7 @@
     font-size: 0.8em
     border: 1px solid #c6cddd
     border-radius: 3px
-    box-shadow: 0px 4px 4px 0px rgba(#000000, 0.1)
+    box-shadow: 0px 3px 6px rgba(#000000,0.08), 0px 3px 6px rgba(#000000,0.11)
   .top
     display: flex
     justify-content: center
@@ -184,6 +213,16 @@
     svg
       fill: #404040
       outline: none
+    svg.page-button
+      width: 10px
+      height: 10px
+      padding: 6px
+      flex-shrink: 0
+      border-radius: 5px
+      &:hover
+        background-color: rgba(#000000, 0.07)
+      &:active
+        background-color: rgba(#000000, 0.14)
     select
       font-size: inherit
       -webkit-appearance: none

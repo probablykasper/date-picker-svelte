@@ -62,7 +62,7 @@
     if (
       e?.currentTarget instanceof HTMLElement &&
       e.relatedTarget &&
-      e.relatedTarget instanceof HTMLElement &&
+      e.relatedTarget instanceof Node &&
       e.currentTarget.contains(e.relatedTarget)
     ) {
       return
@@ -111,7 +111,6 @@
     display: none
     position: absolute
     margin-top: 1px
-    background-color: #ffffff
     z-index: 10
     &.visible
       display: block
