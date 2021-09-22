@@ -33,7 +33,6 @@
     color: #000000
   nav
     margin-left: 30px
-    padding-right: 50px
     display: flex
     a
       padding: 5px 10px

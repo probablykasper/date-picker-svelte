@@ -110,9 +110,63 @@
     const maxDate = new Date(max.getFullYear(), max.getMonth(), max.getDate())
     return date >= minDate && date <= maxDate
   }
+  function yearKeydown(e: KeyboardEvent) {
+    if (e.key === 'ArrowUp') {
+      setYear(year - 1)
+    } else if (e.key === 'ArrowDown') {
+      setYear(year + 1)
+    } else if (e.key === 'ArrowLeft') {
+      setMonth(month - 1)
+    } else if (e.key === 'ArrowRight') {
+      setMonth(month + 1)
+    } else {
+      return
+    }
+    e.preventDefault()
+  }
+  function monthKeydown(e: KeyboardEvent) {
+    if (e.key === 'ArrowUp') {
+      setMonth(month - 1)
+    } else if (e.key === 'ArrowDown') {
+      setMonth(month + 1)
+    } else if (e.key === 'ArrowLeft') {
+      setMonth(month - 1)
+    } else if (e.key === 'ArrowRight') {
+      setMonth(month + 1)
+    } else {
+      return
+    }
+    e.preventDefault()
+  }
+  function keydown(e: KeyboardEvent) {
+    if (e.key === 'ArrowUp') {
+      updateValue((value) => {
+        value.setDate(value.getDate() - 7)
+        return value
+      })
+    } else if (e.key === 'ArrowDown') {
+      updateValue((value) => {
+        value.setDate(value.getDate() + 7)
+        return value
+      })
+    } else if (e.key === 'ArrowLeft') {
+      updateValue((value) => {
+        value.setDate(value.getDate() - 1)
+        return value
+      })
+    } else if (e.key === 'ArrowRight') {
+      updateValue((value) => {
+        value.setDate(value.getDate() + 1)
+        return value
+      })
+    } else {
+      return
+    }
+    e.preventDefault()
+  }
 </script>
 
-<div class="date-time-picker" on:focusout tabindex="-1">
+<div class="date-time-picker" on:focusout tabindex="-1" on:keydown|self={keydown}>
   <div class="top">
     <svg
       class="page-button previous"
@@ -126,7 +180,7 @@
         d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
         transform="rotate(180, 12, 12)" /></svg>
     <div class="dropdown month">
-      <select bind:value={month}>
+      <select bind:value={month} on:keydown={monthKeydown}>
         {#each monthNames as monthName, i}
           <option
             disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
@@ -138,7 +192,7 @@
         ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg>
     </div>
     <div class="dropdown year">
-      <select bind:value={year}>
+      <select bind:value={year} on:keydown={yearKeydown}>
         {#each years as year}
           <option value={year}>{year}</option>
         {/each}
@@ -228,6 +282,7 @@
       -webkit-appearance: none
       -moz-appearance: none
       appearance: none
+      background-color: transparent
       width: 100%
       padding: 2px 3px
       height: 22px
