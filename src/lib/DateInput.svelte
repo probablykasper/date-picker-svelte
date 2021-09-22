@@ -18,7 +18,7 @@
   /** Whether the text is valid */
   export let valid = true
   /** Input field width */
-  export let width = '140px'
+  export let width = '150px'
 
   /** Format string */
   export let format = 'yyyy-MM-dd HH:mm:ss'
@@ -94,7 +94,6 @@
     box-sizing: border-box
     padding: 4px 6px
     margin: 0px
-    font-size: 0.75em
     font-family: inherit
     border: 1px solid #c6cddd
     border-radius: 3px

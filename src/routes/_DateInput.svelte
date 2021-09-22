@@ -3,14 +3,14 @@
   import Prop from './_prop.svelte'
   import Split from './_split.svelte'
 
-  let placeholder = '2020-12-31 23:00:00'
-  let value = new Date()
+  let placeholder: string
+  let value: Date
   let min: Date
   let max: Date
-  let valid = true
-  let visible = false
-  let width = '140px'
-  let format = 'yyyy-MM-dd HH:mm:ss'
+  let valid: boolean
+  let visible: boolean
+  let width: string
+  let format: string
 </script>
 
 <Split>

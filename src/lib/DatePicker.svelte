@@ -239,7 +239,7 @@
     -webkit-user-select: none
     padding: 8px
     cursor: default
-    font-size: 0.8em
+    font-size: 12px
     border: 1px solid #c6cddd
     border-radius: 3px
     box-shadow: 0px 3px 6px rgba(#000000,0.08), 0px 3px 6px rgba(#000000,0.11)
@@ -252,6 +252,7 @@
       margin-right: 8px
     .dropdown
       position: relative
+      display: flex
       svg
         position: absolute
         right: 0px
@@ -283,10 +284,10 @@
       -moz-appearance: none
       appearance: none
       background-color: transparent
-      width: 100%
-      padding: 2px 3px
+      flex-grow: 1
+      padding: 2px 5px
       height: 22px
-      padding-right: 18px
+      padding-right: 22px
       margin: 0px
       border: 1px solid #c6cddd
       border-radius: 3px

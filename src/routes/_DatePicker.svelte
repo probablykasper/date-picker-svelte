@@ -3,7 +3,7 @@
   import Prop from './_prop.svelte'
   import Split from './_split.svelte'
 
-  let value = new Date()
+  let value: Date
   let min: Date
   let max: Date
 </script>
