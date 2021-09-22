@@ -99,6 +99,11 @@
     border: 1px solid #c6cddd
     border-radius: 3px
     width: 130px
+    outline: none
+    transition: all 80ms ease-in-out
+    &:focus
+      border-color: #3061F6
+      box-shadow: 0px 0px 0px 2px rgba(#3061F6, 0.5)
   .invalid
     border: 1px solid rgba(#f92f72, 0.5)
     background-color: #fff0f5

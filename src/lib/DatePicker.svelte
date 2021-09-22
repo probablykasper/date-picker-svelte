@@ -40,13 +40,9 @@
     return years
   }
   $: if (value > max) {
-    console.log('MAX', max)
     setValue(max)
   } else if (value < min) {
-    console.log('MIN', min)
     setValue(min)
-  } else {
-    console.log('x', value)
   }
 
   let year = value.getFullYear()
@@ -107,19 +103,29 @@
 </script>
 
 <div class="date-time-picker" on:focusout tabindex="-1">
-  <select bind:value={month}>
-    {#each monthNames as monthName, i}
-      <option
-        disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
-          new Date(year, i) > max}
-        value={i}>{monthName}</option>
-    {/each}
-  </select>
-  <select bind:value={year}>
-    {#each years as year}
-      <option value={year}>{year}</option>
-    {/each}
-  </select>
+  <div class="top">
+    <div class="dropdown month">
+      <select bind:value={month}>
+        {#each monthNames as monthName, i}
+          <option
+            disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
+              new Date(year, i) > max}
+            value={i}>{monthName}</option>
+        {/each}
+      </select>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg>
+    </div>
+    <div class="dropdown year">
+      <select bind:value={year}>
+        {#each years as year}
+          <option value={year}>{year}</option>
+        {/each}
+      </select>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg>
+    </div>
+  </div>
   <div class="header">
     {#each weekdayNames as weekdayName}
       <div class="header-cell">{weekdayName}</div>
@@ -154,12 +160,54 @@
     border: 1px solid #c6cddd
     border-radius: 3px
     box-shadow: 0px 4px 4px 0px rgba(#000000, 0.1)
+  .top
+    display: flex
+    justify-content: center
+    align-items: center
+    padding-bottom: 8px
+    .dropdown, svg.previous
+      margin-right: 8px
+    .dropdown
+      position: relative
+      svg
+        position: absolute
+        right: 0px
+        top: 0px
+        height: 100%
+        width: 8px
+        padding: 0px 8px
+        pointer-events: none
+    .month
+      flex-grow: 1
+    .year
+      flex-grow: 1
+    svg
+      fill: #404040
+      outline: none
+    select
+      font-size: inherit
+      -webkit-appearance: none
+      -moz-appearance: none
+      appearance: none
+      width: 100%
+      padding: 2px 3px
+      height: 22px
+      padding-right: 18px
+      margin: 0px
+      border: 1px solid #c6cddd
+      border-radius: 3px
+      outline: none
+      transition: all 80ms ease-in-out
+      &:focus
+        border-color: #3061F6
+        box-shadow: 0px 0px 0px 2px rgba(#3061F6, 0.5)
   .header
     display: flex
     font-weight: 600
     .header-cell
       width: 30px
       text-align: center
+      flex-grow: 1
   .week
     display: flex
     .cell
@@ -168,9 +216,10 @@
       justify-content: center
       width: 30px
       height: 30px
+      flex-grow: 1
       border-radius: 4px
       &:hover
-        background-color: #ededed
+        background-color: rgba(#000000, 0.07)
       &.disabled:hover
         background-color: transparent
       &.other-month
@@ -178,6 +227,4 @@
       &.selected
         background-color: #0074f0
         color: #ffffff
-  select
-    font-size: inherit
 </style>

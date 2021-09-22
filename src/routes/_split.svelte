@@ -22,9 +22,9 @@
       box-shadow: 0px 1px 3px 0px rgba(#000000, 0.05)
     section.left
       margin-right: 15px
-      min-width: 250px
+      min-width: 240px
     .spacer
-      margin: 20px 0px
+      margin-top: 20px
   @media(max-width: 700px)
     .row
       flex-direction: column
