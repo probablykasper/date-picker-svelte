@@ -17,8 +17,6 @@
   export let placeholder = '2020-12-31 23:00:00'
   /** Whether the text is valid */
   export let valid = true
-  /** Input field width */
-  export let width = '150px'
 
   /** Format string */
   export let format = 'yyyy-MM-dd HH:mm:ss'
@@ -79,8 +77,7 @@
     bind:value={text}
     {placeholder}
     on:focus={() => (visible = true)}
-    on:input={input}
-    style={`width: ${width}`} />
+    on:input={input} />
   <div class="picker" class:visible>
     <DateTimePicker on:focusout={onFocusOut} bind:value bind:min bind:max />
   </div>
@@ -90,22 +87,26 @@
   .date-time-field
     position: relative
   input
+    color: var(--date-picker-foreground, #000000)
+    background-color: var(--date-picker-background, #ffffff)
     min-width: 0px
     box-sizing: border-box
     padding: 4px 6px
     margin: 0px
-    font-family: inherit
-    border: 1px solid #c6cddd
+    border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
-    width: 130px
+    width: var(----date-input-width, 150px)
     outline: none
     transition: all 80ms ease-in-out
     &:focus
-      border-color: #3061F6
-      box-shadow: 0px 0px 0px 2px rgba(#3061F6, 0.5)
+      border-color: var(--date-picker-highlight-border, #0269f7)
+      box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
   .invalid
     border: 1px solid rgba(#f92f72, 0.5)
-    background-color: #fff0f5
+    background-color: rgba(#f92f72, 0.1)
+    &:focus
+      border-color: #f92f72
+      box-shadow: 0px 0px 0px 2px rgba(#f92f72, 0.5)
   .picker
     display: none
     position: absolute

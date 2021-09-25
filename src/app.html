@@ -7,9 +7,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
       rel="stylesheet">
+    <script>
+      function detectTheme() {
+        if(localStorage.getItem('theme') == 'dark') {
+          return 'dark'
+        } else if(window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'light'
+        } else {
+          return 'dark'
+        }
+      }
+      document.documentElement.setAttribute('data-theme', detectTheme())
+    </script>
     %svelte.head%
   </head>
   <body>
-    <div id="svelte">%svelte.body%</div>
+    %svelte.body%
   </body>
 </html>

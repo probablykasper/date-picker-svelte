@@ -168,17 +168,12 @@
 
 <div class="date-time-picker" on:focusout tabindex="-1" on:keydown|self={keydown}>
   <div class="top">
-    <svg
-      class="page-button previous"
-      tabindex="-1"
-      on:click={() => setMonth(month - 1)}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      ><path
-        d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
-        transform="rotate(180, 12, 12)" /></svg>
+    <div class="page-button previous" tabindex="-1" on:click={() => setMonth(month - 1)}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        ><path
+          d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
+          transform="rotate(180, 12, 12)" /></svg>
+    </div>
     <div class="dropdown month">
       <select bind:value={month} on:keydown={monthKeydown}>
         {#each monthNames as monthName, i}
@@ -200,14 +195,10 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
         ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg>
     </div>
-    <svg
-      class="page-button"
-      tabindex="-1"
-      on:click={() => setMonth(month + 1)}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg>
+    <div class="page-button" tabindex="-1" on:click={() => setMonth(month + 1)}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+        ><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg>
+    </div>
   </div>
   <div class="header">
     {#each weekdayNames as weekdayName}
@@ -223,7 +214,7 @@
           class:disabled={!dayIsInRange(calendarDay)}
           class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
           class:other-month={calendarDay.month !== month}>
-          {calendarDay.number}
+          <span>{calendarDay.number}</span>
         </div>
       {/each}
     </div>
@@ -234,13 +225,14 @@
   .date-time-picker
     display: inline-block
     outline: none
-    background-color: white
+    color: var(--date-picker-foreground, #000000)
+    background-color: var(--date-picker-background, #ffffff)
     user-select: none
     -webkit-user-select: none
     padding: 8px
     cursor: default
     font-size: 12px
-    border: 1px solid #c6cddd
+    border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
     box-shadow: 0px 3px 6px rgba(#000000,0.08), 0px 3px 6px rgba(#000000,0.11)
   .top
@@ -248,7 +240,7 @@
     justify-content: center
     align-items: center
     padding-bottom: 8px
-    .dropdown, svg.previous
+    .dropdown, .previous
       margin-right: 8px
     .dropdown
       position: relative
@@ -266,21 +258,26 @@
     .year
       flex-grow: 1
     svg
-      fill: #404040
+      display: block
+      fill: var(--date-picker-foreground, #000000)
+      opacity: 0.75
       outline: none
-    svg.page-button
-      width: 10px
-      height: 10px
-      padding: 6px
+    .page-button
+      padding: 5px
       flex-shrink: 0
       border-radius: 5px
+      box-sizing: border-box
+      border: 1px solid transparent
       &:hover
-        background-color: rgba(#000000, 0.07)
-      &:active
-        background-color: rgba(#000000, 0.14)
+        background-color: rgba(#808080, 0.08)
+        border: 1px solid rgba(#808080, 0.08)
+      svg
+        width: 10px
+        height: 10px
     select
       font-size: inherit
       font-family: inherit
+      color: inherit
       -webkit-appearance: none
       -moz-appearance: none
       appearance: none
@@ -290,13 +287,13 @@
       height: 22px
       padding-right: 22px
       margin: 0px
-      border: 1px solid #c6cddd
+      border: 1px solid rgba(108, 120, 147, 0.3)
       border-radius: 3px
       outline: none
       transition: all 80ms ease-in-out
       &:focus
-        border-color: #3061F6
-        box-shadow: 0px 0px 0px 2px rgba(#3061F6, 0.5)
+        border-color: var(--date-picker-highlight-border, #0269f7)
+        box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
   .header
     display: flex
     font-weight: 600
@@ -313,14 +310,19 @@
       width: 30px
       height: 30px
       flex-grow: 1
-      border-radius: 4px
+      border-radius: 5px
+      box-sizing: border-box
+      border: 2px solid transparent
       &:hover
-        background-color: rgba(#000000, 0.07)
+        border: 1px solid rgba(#808080, 0.08)
+        background-color: rgba(#808080, 0.08)
       &.disabled:hover
+        border: none
         background-color: transparent
-      &.other-month
-        color: #9FA9B2
+      &.other-month span
+        opacity: 0.4
       &.selected
-        background-color: #0074f0
-        color: #ffffff
+        color: var(--date-picker-selected-color, inherit)
+        background-color: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
+        border: 2px solid var(--date-picker-highlight-border, #0269f7)
 </style>

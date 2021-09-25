@@ -39,4 +39,17 @@
     display: inline-block
     width: 100px
     flex-shrink: 0
+  input[type='text']
+    color: var(--foreground)
+    background-color: var(--input-background)
+    border: 1px solid rgba(103, 113, 137, 0.3)
+    border-radius: 3px
+    box-sizing: border-box
+    padding: 4px 6px
+    width: var(--input-width)
+    outline: none
+    transition: all 80ms ease-in-out
+    &:focus
+      border-color: var(--input-highlight-border)
+      box-shadow: 0px 0px 0px 2px var(--input-highlight-shadow)
 </style>

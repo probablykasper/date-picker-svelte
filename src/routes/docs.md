@@ -22,7 +22,6 @@
 | `max`         | Date   | The latest value the user can select |
 | `placeholder` | string | Placeholder |
 | `valid`       | bool   | Whether the text is valid |
-| `width`       | string | Input field width |
 | `format`      | string | Format string |
 | `visible`     | bool   | Whether the date popup is visible |
 
@@ -44,9 +43,29 @@ Example format string: `yyyy-MM-dd HH:mm:ss`
 
 ### Props
 
-| Prop          | Type           | Description |
-| :------------ | :------------- | :---------- |
+| Prop          | Type   | Description |
+| :------------ | :----- | :---------- |
 | `value`       | Date   | Date value |
 | `min`         | Date   | The earliest year the user can select |
 | `max`         | Date   | The latest year the user can select |
 
+## CSS variables
+
+Colors:
+- `--date-picker-foreground`
+- `--date-picker-background`
+- `--date-picker-highlight-border`
+- `--date-picker-highlight-shadow`
+- `--date-picker-selected-color`
+- `--date-picker-selected-background`
+
+Lengths:
+- `--date-input-width`
+
+Dark theme example:
+```css
+:root {
+  --date-picker-background: #1b1e27;
+  --date-picker-foreground: #f7f7f7;
+}
+```

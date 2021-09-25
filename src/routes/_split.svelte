@@ -14,22 +14,21 @@
 <style lang="sass">
   .row
     display: flex
+    border: 1px solid hsla(222, 15%, 50%, 0.1)
+    box-shadow: 0px 1px 3px 0px rgba(#000000, 0.05)
+    border-radius: 5px
+    padding: 0px 20px
   @media(min-width: 701px)
-    section
-      padding: 0px 20px
-      border-radius: 5px
-      background-color: rgba(#ffffff, 0.5)
-      box-shadow: 0px 1px 3px 0px rgba(#000000, 0.05)
     section.left
-      margin-right: 15px
+      padding-right: 0px
+      flex-shrink: 0
       min-width: 240px
+      padding-right: 20px
     .spacer
       margin-top: 20px
   @media(max-width: 700px)
     .row
       flex-direction: column
       padding: 20px
-      border-radius: 5px
-      background-color: rgba(#ffffff, 0.5)
       box-shadow: 0px 1px 3px 0px rgba(#000000, 0.05)
 </style>
