@@ -21,7 +21,6 @@ export function toText(date: Date, formatTokens: FormatToken[]) {
   return text
 }
 
-type Week = CalendarDay[]
 export type CalendarDay = {
   year: number
   month: number
@@ -39,7 +38,7 @@ function getMonthDays(year: number, month: number) {
   }
   return days
 }
-export function getWeeks(value: Date) {
+export function getCalendarDays(value: Date) {
   const year = value.getFullYear()
   const month = value.getMonth()
   const firstWeekday = new Date(year, month, 1).getDay()
@@ -62,20 +61,14 @@ export function getWeeks(value: Date) {
   days = days.concat(getMonthDays(year, month))
 
   // add next month
-  let daysAfter = 7 - (days.length % 7 || 7)
   let nextMonth = month + 1
   let nextMonthYear = year
   if (nextMonth === 12) {
     nextMonth = 0
     nextMonthYear = year + 1
   }
+  let daysAfter = 42 - days.length
   days = days.concat(getMonthDays(nextMonthYear, nextMonth).slice(0, daysAfter))
 
-  const weeks: Week[] = []
-  for (let i = 0; i < days.length; i++) {
-    if (i % 7 === 0) {
-      weeks.push(days.slice(i, i + 7))
-    }
-  }
-  return weeks
+  return days
 }

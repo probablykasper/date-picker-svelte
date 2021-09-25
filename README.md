@@ -38,10 +38,9 @@ Date and time picker for Svelte
     ```
     npm run build:package
     ```
-5. Remove the `lang` attributes from the `.svelte` files in the generated `package/` folder
-6. Publish the package
+5. Publish the package
     ```
     npm publish ./package
     ```
-7. Commit with a tag in format "v#.#.#"
-8. Create GitHub release with release notes
+6. Commit with a tag in format "v#.#.#"
+7. Create GitHub release with release notes

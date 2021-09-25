@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getMonthLength, getWeeks } from './date-utils'
+  import { getMonthLength, getCalendarDays } from './date-utils'
   import type { CalendarDay } from './date-utils'
 
   /** Date value */
@@ -89,7 +89,7 @@
   let dayOfMonth = value.getDate()
   $: dayOfMonth = value.getDate()
 
-  $: weeks = getWeeks(value)
+  $: calendarDays = getCalendarDays(value)
 
   function setDay(calendarDay: CalendarDay) {
     if (dayIsInRange(calendarDay)) {
@@ -214,9 +214,9 @@
       <div class="header-cell">{weekdayName}</div>
     {/each}
   </div>
-  {#each weeks as week}
+  {#each Array(6) as _, weekIndex}
     <div class="week">
-      {#each week as calendarDay}
+      {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
         <div
           class="cell"
           on:click={() => setDay(calendarDay)}
@@ -280,6 +280,7 @@
         background-color: rgba(#000000, 0.14)
     select
       font-size: inherit
+      font-family: inherit
       -webkit-appearance: none
       -moz-appearance: none
       appearance: none

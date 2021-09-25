@@ -11,7 +11,7 @@
 <DateInput bind:value={date} />
 ```
 
-## <a name="DateInput"></a> DateInput
+## DateInput
 
 ### Props
 
@@ -40,7 +40,7 @@ Example format string: `yyyy-MM-dd HH:mm:ss`
 | `mm`       | 59
 | `ss`       | 59
 
-## <a id="DatePicker"></a> DatePicker
+## DatePicker
 
 ### Props
 
