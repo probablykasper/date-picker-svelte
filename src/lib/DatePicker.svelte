@@ -226,7 +226,7 @@
     display: inline-block
     outline: none
     color: var(--date-picker-foreground, #000000)
-    background-color: var(--date-picker-background, #ffffff)
+    background: var(--date-picker-background, #ffffff)
     user-select: none
     -webkit-user-select: none
     padding: 8px
@@ -234,7 +234,7 @@
     font-size: 12px
     border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
-    box-shadow: 0px 3px 6px rgba(#000000,0.08), 0px 3px 6px rgba(#000000,0.11)
+    box-shadow: 0px 2px 6px rgba(#000000,0.08), 0px 2px 6px rgba(#000000,0.11)
   .top
     display: flex
     justify-content: center
@@ -290,7 +290,7 @@
       border: 1px solid rgba(108, 120, 147, 0.3)
       border-radius: 3px
       outline: none
-      transition: all 80ms ease-in-out
+      transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
       &:focus
         border-color: var(--date-picker-highlight-border, #0269f7)
         box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
@@ -323,6 +323,6 @@
         opacity: 0.4
       &.selected
         color: var(--date-picker-selected-color, inherit)
-        background-color: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
+        background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
         border: 2px solid var(--date-picker-highlight-border, #0269f7)
 </style>

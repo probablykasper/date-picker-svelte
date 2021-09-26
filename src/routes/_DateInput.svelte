@@ -9,7 +9,6 @@
   let max: Date
   let valid: boolean
   let visible: boolean
-  let width: string
   let format: string
 </script>
 
@@ -21,7 +20,6 @@
     bind:max
     bind:placeholder
     bind:valid
-    bind:width
     bind:format
     bind:visible />
 
@@ -32,7 +30,6 @@
     <Prop label="max" bind:value={max} />
     <Prop label="placeholder" bind:value={placeholder} />
     <Prop label="valid" bind:value={valid} />
-    <Prop label="width" bind:value={width} />
     <Prop label="format" bind:value={format} />
     <Prop label="visible" bind:value={visible} />
   </svelte:fragment>

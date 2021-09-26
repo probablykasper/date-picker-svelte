@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { slide, fly } from 'svelte/transition'
   import { toText } from './date-utils'
   import { parse, createFormat } from './parse'
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
+  import { cubicInOut } from 'svelte/easing'
 
   /** Date value */
   export let value = new Date()
@@ -78,9 +80,11 @@
     {placeholder}
     on:focus={() => (visible = true)}
     on:input={input} />
-  <div class="picker" class:visible>
-    <DateTimePicker on:focusout={onFocusOut} bind:value bind:min bind:max />
-  </div>
+  {#if visible}
+    <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
+      <DateTimePicker on:focusout={onFocusOut} bind:value bind:min bind:max />
+    </div>
+  {/if}
 </div>
 
 <style lang="sass">
@@ -88,7 +92,7 @@
     position: relative
   input
     color: var(--date-picker-foreground, #000000)
-    background-color: var(--date-picker-background, #ffffff)
+    background: var(--date-picker-background, #ffffff)
     min-width: 0px
     box-sizing: border-box
     padding: 4px 6px
@@ -97,7 +101,7 @@
     border-radius: 3px
     width: var(----date-input-width, 150px)
     outline: none
-    transition: all 80ms ease-in-out
+    transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
     &:focus
       border-color: var(--date-picker-highlight-border, #0269f7)
       box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))

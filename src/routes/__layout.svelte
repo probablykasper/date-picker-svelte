@@ -69,8 +69,9 @@
     --date-input-width: var(--input-width)
     color: var(--foreground)
   :global([data-theme='dark'])
-    --background: #0d0e12
     --foreground: #f7f7f7
+    --background: #0d0e12
+    --card-background: var(--background)
     --border: #1C1E24
     --input-background: #1b1e27
     --date-picker-background: #1b1e27
@@ -78,8 +79,9 @@
     --date-picker-highlight-border: var(--input-highlight-border)
     --date-picker-highlight-shadow: var(--input-highlight-shadow)
   :global([data-theme='light'])
-    --background: #ffffff
     --foreground: #0d0e12
+    --background: #f6f9fe
+    --card-background: #ffffff
     --border: #c6cddd
     --input-background: #ffffff
 
@@ -92,8 +94,8 @@
     color: #074ced
     text-decoration: none
   .layout
-    background-color: var(--background)
-    transition: all 80ms ease-in-out
+    background: var(--background)
+    transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
     min-height: 100vh
   header
     display: flex
@@ -111,6 +113,11 @@
   h2
     color: var(--primary)
     margin-right: 20px
+  :global(h1)
+    font-size: 3.5em
+  :global(::selection)
+    background: var(--primary)
+    color: #ffffff
   a
     color: inherit
   a, button.theme-toggle
@@ -121,7 +128,7 @@
   a.nav-link
     padding: 5px 2px
     margin: 0px 8px
-    transition: all 80ms ease-in-out
+    transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
   .spacer
     margin: auto
   button.theme-toggle
@@ -134,7 +141,7 @@
     svg
       fill: var(--foreground)
       display: block
-      transition: all 80ms ease-in-out
+      transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
   :global(table)
     border-collapse: collapse
     :global(td), :global(th)
