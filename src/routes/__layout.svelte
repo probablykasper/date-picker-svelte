@@ -27,11 +27,11 @@
 
 <div class="layout">
   <header>
-    <h2><a href="/">Svelte Date Picker</a></h2>
+    <h2><a href="/">Date Picker Svelte</a></h2>
     <a class="nav-link" href="/demo">Demo</a>
     <a class="nav-link" href="/docs">Docs</a>
     <div class="spacer" />
-    <a class="nav-link" href="https://github.com/probablykasper/svelte-date-picker">GitHub</a>
+    <a class="nav-link" href="https://github.com/probablykasper/date-picker-svelte">GitHub</a>
     <button class="theme-toggle" on:click={toggleTheme}>
       {#if theme}
         <svg

@@ -1,10 +1,10 @@
-# svelte-date-picker
+# Date Picker Svelte
 
 Date and time picker for Svelte
 
-[Demo](https://svelte-date-picker.kasper.space/demo)
+[Demo](https://date-picker-svelte.kasper.space/demo)
 
-[Documentation](https://svelte-date-picker.kasper.space/docs)
+[Documentation](https://date-picker-svelte.kasper.space/docs)
 
 ## Dev instructions
 

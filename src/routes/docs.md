@@ -4,7 +4,7 @@
 
 ```svelte
 <script>
-  import { DateInput } from 'svelte-date-picker'
+  import { DateInput } from 'date-picker-svelte'
   let date = new Date()
 </script>
 

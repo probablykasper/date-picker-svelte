@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { slide, fly } from 'svelte/transition'
+  import { fly } from 'svelte/transition'
   import { toText } from './date-utils'
   import { parse, createFormat } from './parse'
   import type { FormatToken } from './parse'
