@@ -46,7 +46,7 @@ export function getCalendarDays(value: Date) {
   let days: CalendarDay[] = []
 
   // add last month
-  const daysBefore = firstWeekday
+  const daysBefore = firstWeekday - 1
   if (daysBefore > 0) {
     let lastMonth = month - 1
     let lastMonthYear = year
