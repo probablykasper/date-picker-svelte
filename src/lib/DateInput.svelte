@@ -99,7 +99,7 @@
     margin: 0px
     border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
-    width: var(----date-input-width, 150px)
+    width: var(--date-input-width, 150px)
     outline: none
     transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
     &:focus
