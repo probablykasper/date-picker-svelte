@@ -48,7 +48,7 @@
     padding: 4px 6px
     outline: none
     transition: 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
-    transition-property: border-color, box-shadow
+    transition-property: border-color, box-shadow, background
     &:focus
       border-color: var(--input-highlight-border)
       box-shadow: 0px 0px 0px 2px var(--input-highlight-shadow)

@@ -38,7 +38,6 @@ export function localeFromDateFnsLocale(dateFnsLocale: any) {
   let locale = getLocaleDefaults()
   if (typeof dateFnsLocale.options.weekStartsOn === 'number') {
     locale.weekStartsOn = dateFnsLocale.options.weekStartsOn
-    console.log(dateFnsLocale.options.weekStartsOn)
   }
   if (dateFnsLocale.localize) {
     for (let i = 0; i < 7; i++) {

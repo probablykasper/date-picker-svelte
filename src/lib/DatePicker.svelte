@@ -174,11 +174,29 @@
             value={i}>{monthName}</option>
         {/each}
       </select>
+      <!--
+        Here we have use `select.dummy-select` for showing just the <select> button. This
+        is to style the <select> button without affecting the menu popup
+        - `option { color: initial }` causes invisible menu in dark mode on Firefox
+        - `option { color: initial; background-color: initial }` causes invisible menu in Chrome
+        - `select { background-color: $bg; color: $text }` causes white scrollbar in dark mode on Firefox
+      -->
+      <select value={month} class="dummy-select" tabindex="-1">
+        {#each iLocale.months as monthName, i}
+          <option value={i}>{monthName}</option>
+        {/each}
+      </select>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
         ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg>
     </div>
     <div class="dropdown year">
       <select bind:value={year} on:keydown={yearKeydown}>
+        {#each years as year}
+          <option value={year}>{year}</option>
+        {/each}
+      </select>
+      <!-- style <select> button without affecting menu popup -->
+      <select value={year} class="dummy-select" tabindex="-1">
         {#each years as year}
           <option value={year}>{year}</option>
         {/each}
@@ -269,29 +287,36 @@
       svg
         width: 10px
         height: 10px
+    select.dummy-select
+      position: absolute
+      pointer-events: none
+      outline: none
+      color: var(--date-picker-foreground, #000000)
+      background-color: var(--date-picker-background, #ffffff)
+      border-radius: 3px
+    select:focus + select.dummy-select
+      border-color: var(--date-picker-highlight-border, #0269f7)
+      box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
+    select:not(.dummy-select)
+      border-radius: 100px
     select
       font-size: inherit
       font-family: inherit
-      color: inherit
       -webkit-appearance: none
       -moz-appearance: none
       appearance: none
-      background-color: transparent
       flex-grow: 1
       padding: 2px 5px
       height: 22px
       padding-right: 22px
       margin: 0px
       border: 1px solid rgba(108, 120, 147, 0.3)
-      border-radius: 3px
       outline: none
       transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
-      &:focus
-        border-color: var(--date-picker-highlight-border, #0269f7)
-        box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
   .header
     display: flex
     font-weight: 600
+    padding-bottom: 2px
     .header-cell
       width: 30px
       text-align: center
