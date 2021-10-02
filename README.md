@@ -6,6 +6,8 @@ Date and time picker for Svelte
 
 [Documentation](https://date-picker-svelte.kasper.space/docs)
 
+![](Screenshot.png)
+
 ## Dev instructions
 
 ### Get started

@@ -202,7 +202,7 @@
   </div>
   {#each Array(6) as _, weekIndex}
     <div class="week">
-      {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay, dayIndex}
+      {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
         <div
           class="cell"
           on:click={() => setDay(calendarDay)}
