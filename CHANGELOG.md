@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 - 2021 Oct 2
+- Fix invisible dropdown menu in dark mode on Windows Chrome
+- Fix flash of incorrect month/year value on page load
+
 ## 0.2.0 - 2021 Oct 2
 - Add internationalization support, including setting the first day of the week. Can be configured manually as well as using `date-fns`.
 
