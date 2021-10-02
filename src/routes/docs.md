@@ -13,6 +13,8 @@
 
 ## DateInput
 
+Component with an input field that shows the DatePicker component on focus.
+
 ### Props
 
 | Prop          | Type   | Description                            |
@@ -41,6 +43,8 @@ Example format string: `yyyy-MM-dd HH:mm:ss`
 
 ## DatePicker
 
+Component with a calendar for choosing a date.
+
 ### Props
 
 | Prop     | Type   | Description                            |
@@ -66,13 +70,13 @@ If you use [date-fns](https://date-fns.org/), you can create a Locale object by 
 
 ```js
 <script>
-  import { DateInput, localeFromDateFnsLocale } from 'date-picker-svelte'
+  import { DatePicker, localeFromDateFnsLocale } from 'date-picker-svelte'
   import { hy } from 'date-fns/locale'
   let date = new Date()
   let locale = localeFromDateFnsLocale(hy)
 </script>
 
-<DateInput bind:value={date} {locale} />
+<DatePicker bind:value={date} {locale} />
 ```
 
 ## CSS variables

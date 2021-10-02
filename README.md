@@ -10,6 +10,25 @@ Supports theming, custom formats, internationalization and autopunctuation (e.g 
 
 ![](Screenshot.png)
 
+## Install
+
+```
+npm install date-picker-svelte
+```
+
+## Usage
+
+```svelte
+<script>
+  import { DateInput } from 'date-picker-svelte'
+  let date = new Date()
+</script>
+
+<DateInput bind:value={date} />
+```
+
+Check the [docs](https://date-picker-svelte.kasper.space/docs) to learn more
+
 ## Dev instructions
 
 ### Get started
