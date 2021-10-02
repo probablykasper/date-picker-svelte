@@ -17,5 +17,6 @@
     <Prop label="value">{value}</Prop>
     <Prop label="min" bind:value={min} />
     <Prop label="max" bind:value={max} />
+    <Prop label="locale">Locale object for internationalization</Prop>
   </div>
 </Split>

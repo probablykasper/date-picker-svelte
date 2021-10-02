@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getMonthLength, getCalendarDays } from './date-utils'
-  import type { CalendarDay } from './date-utils'
+  import { getMonthLength, getCalendarDays, defaultLocale } from './date-utils'
+  import type { CalendarDay, Locale } from './date-utils'
 
   /** Date value */
   export let value = new Date()
@@ -11,21 +11,6 @@
     let d = updater(new Date(value.getTime()))
     if (d.getTime() !== value.getTime()) value = d
   }
-  const weekdayNames = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ]
   /** The earliest year the user can select */
   export let min = new Date(new Date().getFullYear() - 20, 0, 1)
   /** The latest year the user can select */
@@ -44,6 +29,9 @@
   } else if (value < min) {
     setValue(min)
   }
+
+  /** Locale object for internationalization */
+  export const locale: Locale = defaultLocale
 
   let year = value.getFullYear()
   const getYear = (value: Date) => (year = value.getFullYear())
@@ -176,7 +164,7 @@
     </div>
     <div class="dropdown month">
       <select bind:value={month} on:keydown={monthKeydown}>
-        {#each monthNames as monthName, i}
+        {#each locale.months as monthName, i}
           <option
             disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
               new Date(year, i) > max}
@@ -201,13 +189,13 @@
     </div>
   </div>
   <div class="header">
-    {#each weekdayNames as weekdayName}
+    {#each locale.weekdays as weekdayName}
       <div class="header-cell">{weekdayName}</div>
     {/each}
   </div>
   {#each Array(6) as _, weekIndex}
     <div class="week">
-      {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
+      {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay, dayIndex}
         <div
           class="cell"
           on:click={() => setDay(calendarDay)}

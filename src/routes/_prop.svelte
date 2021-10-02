@@ -3,8 +3,8 @@
 
   export let value: any = null
   export let label: string
-  let jsonValue = JSON.stringify(value)
-  $: () => {
+  let jsonValue = ''
+  $: if (value instanceof Object) {
     jsonValue = JSON.stringify(value)
   }
   function jsonInput() {
@@ -20,10 +20,10 @@
     <input type="text" bind:value />
   {:else if typeof value === 'boolean'}
     <input type="checkbox" bind:checked={value} />
-  {:else if value instanceof Array}
-    <textarea type="text" bind:value={jsonValue} on:input={jsonInput} />
   {:else if value instanceof Date}
     <DateInput bind:value />
+  {:else if value instanceof Object}
+    <textarea type="text" bind:value={jsonValue} on:input={jsonInput} />
   {:else}
     <div>
       <slot />
@@ -39,17 +39,19 @@
     display: inline-block
     width: 100px
     flex-shrink: 0
-  input[type='text']
+  input[type='text'], textarea
     color: var(--foreground)
     background: var(--input-background)
     border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
     box-sizing: border-box
     padding: 4px 6px
-    width: var(--input-width)
     outline: none
-    transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+    transition: 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+    transition-property: border-color, box-shadow
     &:focus
       border-color: var(--input-highlight-border)
       box-shadow: 0px 0px 0px 2px var(--input-highlight-shadow)
+  input[type='text']
+    width: var(--input-width)
 </style>

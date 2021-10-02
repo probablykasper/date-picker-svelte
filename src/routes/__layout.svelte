@@ -72,7 +72,7 @@
     --foreground: #f7f7f7
     --background: #0d0e12
     --card-background: var(--background)
-    --border: #1C1E24
+    --border: #1f2228
     --input-background: #1b1e27
     --date-picker-background: #1b1e27
     --date-picker-foreground: var(--foreground)
@@ -147,4 +147,11 @@
     :global(td), :global(th)
       border: 1px solid var(--border)
       padding: 6px 9px
+  :global(code)
+    background-color: hsla(231, 8%, 70%, 0.2)
+    border-radius: 6px
+    padding: .2em .4em
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace
+  :global(li)
+    margin-top: .25em
 </style>

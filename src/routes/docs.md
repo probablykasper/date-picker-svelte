@@ -24,6 +24,7 @@
 | `valid`       | bool   | Whether the text is valid |
 | `format`      | string | Format string |
 | `visible`     | bool   | Whether the date popup is visible |
+| `locale`      | Locale | Locale object for internationalization |
 
 
 #### Format string
@@ -48,6 +49,23 @@ Example format string: `yyyy-MM-dd HH:mm:ss`
 | `value`       | Date   | Date value |
 | `min`         | Date   | The earliest year the user can select |
 | `max`         | Date   | The latest year the user can select |
+| `locale`      | Locale | Locale object for internationalization |
+
+## Types
+
+### <a name="locale"></a>`Locale`
+Object with the following properties:
+- `weekdays`: Array of weekdays in short form, Monday to Sunday
+- `months`: Array of month names, January to December
+
+Default:
+```js
+{
+  months: ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'],
+  weekdays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+}
+```
 
 ## CSS variables
 

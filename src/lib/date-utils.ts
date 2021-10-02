@@ -72,3 +72,41 @@ export function getCalendarDays(value: Date) {
 
   return days
 }
+
+export type Locale = {
+  weekdays: [string, string, string, string, string, string, string]
+  months: [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string
+  ]
+  firstDayOfWeek: number
+  format?: string
+}
+export const defaultLocale: Locale = {
+  weekdays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+  months: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ],
+  firstDayOfWeek: 0,
+}

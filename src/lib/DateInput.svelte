@@ -1,10 +1,11 @@
 <script lang="ts">
   import { fly } from 'svelte/transition'
-  import { toText } from './date-utils'
+  import { cubicInOut } from 'svelte/easing'
+  import { toText, defaultLocale } from './date-utils'
+  import type { Locale } from './date-utils'
   import { parse, createFormat } from './parse'
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
-  import { cubicInOut } from 'svelte/easing'
 
   /** Date value */
   export let value = new Date()
@@ -24,6 +25,9 @@
   export let format = 'yyyy-MM-dd HH:mm:ss'
   let formatTokens = createFormat(format)
   $: formatTokens = createFormat(format)
+
+  /** Locale object for internationalization */
+  export const locale: Locale = defaultLocale
 
   function valueUpdate(value: Date, formatTokens: FormatToken[]) {
     text = toText(value, formatTokens)

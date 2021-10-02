@@ -32,5 +32,6 @@
     <Prop label="valid" bind:value={valid} />
     <Prop label="format" bind:value={format} />
     <Prop label="visible" bind:value={visible} />
+    <Prop label="locale">Locale object for internationalization</Prop>
   </svelte:fragment>
 </Split>
