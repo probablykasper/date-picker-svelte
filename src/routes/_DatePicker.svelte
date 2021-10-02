@@ -3,7 +3,10 @@
   import { localeFromDateFnsLocale } from '$lib'
   import Prop from './_prop.svelte'
   import Split from './_split.svelte'
-  import { hy } from 'date-fns/locale'
+
+  // had to import it this way to avoid errors
+  // in `npm run build:site` or `npm run check`:
+  import hy from 'date-fns/locale/hy/index.js'
 
   let value: Date
   let min: Date

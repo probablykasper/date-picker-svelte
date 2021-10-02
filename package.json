@@ -1,55 +1,55 @@
 {
-	"name": "date-picker-svelte",
-	"version": "0.2.0",
-	"description": "Date and time picker for Svelte",
-	"type": "module",
-	"scripts": {
-		"dev": "svelte-kit dev",
-		"build": "svelte-kit package && svelte-kit build",
-		"build:package": "svelte-kit package",
-		"build:site": "svelte-kit build",
-		"preview": "svelte-kit preview",
-		"check": "svelte-check --tsconfig ./tsconfig.json",
-		"lint": "prettier --ignore-path .gitignore --write --plugin-search-dir=. src *.js *.json"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-static": "^1.0.0-next.20",
-		"@sveltejs/kit": "^1.0.0-next.178",
-		"date-fns": "^2.24.0",
-		"mdsvex": "^0.9.8",
-		"prettier": "^2.4.1",
-		"prettier-plugin-svelte": "^2.4.0",
-		"sass": "^1.42.1",
-		"svelte": "^3.43.1",
-		"svelte-check": "^2.2.6",
-		"svelte-preprocess": "^4.9.7",
-		"svelte2tsx": "^0.4.7",
-		"tslib": "^2.3.1",
-		"typescript": "^4.4.3"
-	},
-	"license": "MIT",
-	"homepage": "https://date-picker-svelte.kasper.space",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/probablykasper/date-picker-svelte.git"
-	},
-	"keywords": [
-		"date",
-		"date-picker",
-		"datepicker",
-		"date-time-picker",
-		"calender",
-		"svelte"
-	],
-	"prettier": {
-		"printWidth": 100,
-		"semi": false,
-		"singleQuote": true,
-		"htmlWhitespaceSensitivity": "strict",
-		"svelteSortOrder": "options-scripts-markup-styles",
-		"svelteStrictMode": false,
-		"svelteAllowShorthand": true,
-		"svelteBracketNewLine": false,
-		"svelteIndentScriptAndStyle": true
-	}
+  "name": "date-picker-svelte",
+  "version": "0.2.0",
+  "description": "Date and time picker for Svelte",
+  "type": "module",
+  "scripts": {
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit package && svelte-kit build",
+    "build:package": "svelte-kit package",
+    "build:site": "svelte-kit build",
+    "preview": "svelte-kit preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "prettier --ignore-path .gitignore --write --plugin-search-dir=. src *.js *.json"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^1.0.0-next.20",
+    "@sveltejs/kit": "^1.0.0-next.179",
+    "date-fns": "^2.24.0",
+    "mdsvex": "^0.9.8",
+    "prettier": "^2.4.1",
+    "prettier-plugin-svelte": "^2.4.0",
+    "sass": "^1.42.1",
+    "svelte": "^3.43.1",
+    "svelte-check": "^2.2.6",
+    "svelte-preprocess": "^4.9.7",
+    "svelte2tsx": "^0.4.7",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  },
+  "license": "MIT",
+  "homepage": "https://date-picker-svelte.kasper.space",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/probablykasper/date-picker-svelte.git"
+  },
+  "keywords": [
+    "date",
+    "date-picker",
+    "datepicker",
+    "date-time-picker",
+    "calender",
+    "svelte"
+  ],
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "htmlWhitespaceSensitivity": "strict",
+    "svelteSortOrder": "options-scripts-markup-styles",
+    "svelteStrictMode": false,
+    "svelteAllowShorthand": true,
+    "svelteBracketNewLine": false,
+    "svelteIndentScriptAndStyle": true
+  }
 }
