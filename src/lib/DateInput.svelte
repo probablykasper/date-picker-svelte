@@ -1,8 +1,8 @@
 <script lang="ts">
   import { fly } from 'svelte/transition'
   import { cubicInOut } from 'svelte/easing'
-  import { toText, defaultLocale } from './date-utils'
-  import type { Locale } from './date-utils'
+  import { toText } from './date-utils'
+  import type { Locale } from './locale'
   import { parse, createFormat } from './parse'
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
@@ -27,7 +27,7 @@
   $: formatTokens = createFormat(format)
 
   /** Locale object for internationalization */
-  export const locale: Locale = defaultLocale
+  export let locale: Locale = {}
 
   function valueUpdate(value: Date, formatTokens: FormatToken[]) {
     text = toText(value, formatTokens)
@@ -86,7 +86,7 @@
     on:input={input} />
   {#if visible}
     <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
-      <DateTimePicker on:focusout={onFocusOut} bind:value bind:min bind:max />
+      <DateTimePicker on:focusout={onFocusOut} bind:value bind:min bind:max {locale} />
     </div>
   {/if}
 </div>

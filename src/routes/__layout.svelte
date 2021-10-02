@@ -91,7 +91,7 @@
     font-family: Inter, sans-serif
     margin: 0px
   :global(a)
-    color: #074ced
+    color: #1257f8
     text-decoration: none
   .layout
     background: var(--background)
@@ -150,8 +150,11 @@
   :global(code)
     background-color: hsla(231, 8%, 70%, 0.2)
     border-radius: 6px
-    padding: .2em .4em
+    padding: .2em .3em
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace
+    font-size: 95%
+  :global(code, p)
+    line-height: 1.5
   :global(li)
     margin-top: .25em
 </style>

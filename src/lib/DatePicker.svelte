@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { getMonthLength, getCalendarDays, defaultLocale } from './date-utils'
-  import type { CalendarDay, Locale } from './date-utils'
+  import { getMonthLength, getCalendarDays } from './date-utils'
+  import type { CalendarDay } from './date-utils'
+  import { getInnerLocale } from './locale'
+  import type { Locale } from './locale'
 
   /** Date value */
   export let value = new Date()
@@ -31,7 +33,8 @@
   }
 
   /** Locale object for internationalization */
-  export const locale: Locale = defaultLocale
+  export let locale: Locale = {}
+  $: iLocale = getInnerLocale(locale)
 
   let year = value.getFullYear()
   const getYear = (value: Date) => (year = value.getFullYear())
@@ -77,7 +80,7 @@
   let dayOfMonth = value.getDate()
   $: dayOfMonth = value.getDate()
 
-  $: calendarDays = getCalendarDays(value, locale.firstDayOfWeek)
+  $: calendarDays = getCalendarDays(value, iLocale.weekStartsOn)
 
   function setDay(calendarDay: CalendarDay) {
     if (dayIsInRange(calendarDay)) {
@@ -164,7 +167,7 @@
     </div>
     <div class="dropdown month">
       <select bind:value={month} on:keydown={monthKeydown}>
-        {#each locale.months as monthName, i}
+        {#each iLocale.months as monthName, i}
           <option
             disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
               new Date(year, i) > max}
@@ -190,10 +193,10 @@
   </div>
   <div class="header">
     {#each Array(7) as _, i}
-      {#if i + locale.firstDayOfWeek < 7}
-        <div class="header-cell">{locale.weekdays[locale.firstDayOfWeek + i]}</div>
+      {#if i + iLocale.weekStartsOn < 7}
+        <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i]}</div>
       {:else}
-        <div class="header-cell">{locale.weekdays[locale.firstDayOfWeek + i - 7]}</div>
+        <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i - 7]}</div>
       {/if}
     {/each}
   </div>

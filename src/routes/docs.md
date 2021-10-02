@@ -26,7 +26,6 @@
 | `visible`     | bool   | Whether the date popup is visible |
 | `locale`      | Locale | Locale object for internationalization |
 
-
 #### Format string
 
 Example format string: `yyyy-MM-dd HH:mm:ss`
@@ -51,22 +50,25 @@ Example format string: `yyyy-MM-dd HH:mm:ss`
 | `max`         | Date   | The latest year the user can select |
 | `locale`      | Locale | Locale object for internationalization |
 
-## Types
+## Internationalization
 
-### <a name="locale"></a>`Locale`
-Object with the following properties:
-- `weekdays`: Array of weekdays in short form, Sunday to Monday
-- `months`: Array of month names, January to December
-- `firstDayOfWeek`: The day the week starts on, 0 = Sunday
+### `Locale`
+Object to support internationalization. Properties (all are optional):
+- `weekdays`: Array of weekdays in short form, Sunday to Monday. Default: `['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']`
+- `months`: Array of month names, January to December. Default: `['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']`
+- `weekStartsOn`: The day the week starts on, 0 = Sunday. Default: `1`
 
-Default:
+### `localeFromDateFnsLocale`
+If you use [date-fns](https://date-fns.org/), you can create a Locale object by passing a date-fns locale to this function:
 ```js
-{
-  months: ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'],
-  weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-  firstDayOfWeek: 1,
-}
+<script>
+  import { DateInput, localeFromDateFnsLocale } from 'date-picker-svelte'
+  import { hy } from 'date-fns/locale'
+  let date = new Date()
+  let locale = localeFromDateFnsLocale(hy)
+</script>
+
+<DateInput bind:value={date} {locale} />
 ```
 
 ## CSS variables
