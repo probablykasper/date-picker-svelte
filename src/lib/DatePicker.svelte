@@ -77,7 +77,7 @@
   let dayOfMonth = value.getDate()
   $: dayOfMonth = value.getDate()
 
-  $: calendarDays = getCalendarDays(value)
+  $: calendarDays = getCalendarDays(value, locale.firstDayOfWeek)
 
   function setDay(calendarDay: CalendarDay) {
     if (dayIsInRange(calendarDay)) {
@@ -189,8 +189,12 @@
     </div>
   </div>
   <div class="header">
-    {#each locale.weekdays as weekdayName}
-      <div class="header-cell">{weekdayName}</div>
+    {#each Array(7) as _, i}
+      {#if i + locale.firstDayOfWeek < 7}
+        <div class="header-cell">{locale.weekdays[locale.firstDayOfWeek + i]}</div>
+      {:else}
+        <div class="header-cell">{locale.weekdays[locale.firstDayOfWeek + i - 7]}</div>
+      {/if}
     {/each}
   </div>
   {#each Array(6) as _, weekIndex}

@@ -38,7 +38,7 @@ function getMonthDays(year: number, month: number) {
   }
   return days
 }
-export function getCalendarDays(value: Date) {
+export function getCalendarDays(value: Date, firstDayOfWeek: number) {
   const year = value.getFullYear()
   const month = value.getMonth()
   const firstWeekday = new Date(year, month, 1).getDay()
@@ -46,7 +46,7 @@ export function getCalendarDays(value: Date) {
   let days: CalendarDay[] = []
 
   // add last month
-  const daysBefore = firstWeekday - 1
+  const daysBefore = firstWeekday - firstDayOfWeek
   if (daysBefore > 0) {
     let lastMonth = month - 1
     let lastMonthYear = year
@@ -93,7 +93,7 @@ export type Locale = {
   format?: string
 }
 export const defaultLocale: Locale = {
-  weekdays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+  weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
   months: [
     'January',
     'February',
@@ -108,5 +108,5 @@ export const defaultLocale: Locale = {
     'November',
     'December',
   ],
-  firstDayOfWeek: 0,
+  firstDayOfWeek: 1,
 }

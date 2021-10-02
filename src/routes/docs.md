@@ -55,15 +55,17 @@ Example format string: `yyyy-MM-dd HH:mm:ss`
 
 ### <a name="locale"></a>`Locale`
 Object with the following properties:
-- `weekdays`: Array of weekdays in short form, Monday to Sunday
+- `weekdays`: Array of weekdays in short form, Sunday to Monday
 - `months`: Array of month names, January to December
+- `firstDayOfWeek`: The day the week starts on, 0 = Sunday
 
 Default:
 ```js
 {
   months: ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'],
-  weekdays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+  weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  firstDayOfWeek: 1,
 }
 ```
 
