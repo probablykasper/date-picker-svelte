@@ -8,7 +8,7 @@
   // in `npm run build:site` or `npm run check`:
   import hy from 'date-fns/locale/hy/index.js'
 
-  let value: Date
+  let value: Date = new Date(2011, 3, 1)
   let min: Date
   let max: Date
   let locale = localeFromDateFnsLocale(hy)

@@ -181,9 +181,9 @@
         - `option { color: initial; background-color: initial }` causes invisible menu in Chrome
         - `select { background-color: $bg; color: $text }` causes white scrollbar in dark mode on Firefox
       -->
-      <select value={month} class="dummy-select" tabindex="-1">
+      <select class="dummy-select" tabindex="-1">
         {#each iLocale.months as monthName, i}
-          <option value={i}>{monthName}</option>
+          <option value={i} selected={i === month}>{monthName}</option>
         {/each}
       </select>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -191,14 +191,14 @@
     </div>
     <div class="dropdown year">
       <select bind:value={year} on:keydown={yearKeydown}>
-        {#each years as year}
-          <option value={year}>{year}</option>
+        {#each years as v}
+          <option value={v}>{v}</option>
         {/each}
       </select>
       <!-- style <select> button without affecting menu popup -->
-      <select value={year} class="dummy-select" tabindex="-1">
-        {#each years as year}
-          <option value={year}>{year}</option>
+      <select class="dummy-select" tabindex="-1">
+        {#each years as v}
+          <option value={v} selected={v === year}>{v}</option>
         {/each}
       </select>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
