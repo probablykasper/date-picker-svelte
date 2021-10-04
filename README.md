@@ -4,8 +4,10 @@ Date and time picker for Svelte
 
 Supports theming, custom formats, internationalization and autopunctuation (e.g typing "20201111111111" gives you "2020-11-11 11:11:11" with the default format)
 
-[![license](https://img.shields.io/npm/l/date-picker-svelte.svg)](https://img.shields.io/npm/l/date-picker-svelte.svg)
-[![downloads](https://img.shields.io/npm/dm/date-picker-svelte.svg)](https://img.shields.io/npm/dm/date-picker-svelte.svg)
+
+[![License](https://img.shields.io/npm/l/date-picker-svelte.svg)](LICENSE)
+[![NPM Version](https://img.shields.io/npm/v/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
+[![NPM Downloads](https://img.shields.io/npm/dm/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
 
 [Demo](https://date-picker-svelte.kasper.space/demo)
 
