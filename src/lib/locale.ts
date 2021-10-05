@@ -3,7 +3,12 @@ export type Locale = {
   months?: string[]
   weekStartsOn?: number
 }
-export function getLocaleDefaults() {
+type InnerLocale = {
+  weekdays: string[]
+  months: string[]
+  weekStartsOn: number
+}
+export function getLocaleDefaults(): InnerLocale {
   return {
     weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
     months: [
@@ -23,8 +28,12 @@ export function getLocaleDefaults() {
     weekStartsOn: 1,
   }
 }
-export function getInnerLocale(locale: Locale = {}) {
-  let innerLocale = getLocaleDefaults()
+export function getInnerLocale(locale: Locale = {}): {
+  weekdays: string[]
+  months: string[]
+  weekStartsOn: number
+} {
+  const innerLocale = getLocaleDefaults()
   if (typeof locale.weekStartsOn === 'number') {
     innerLocale.weekStartsOn = locale.weekStartsOn
   }
@@ -33,10 +42,19 @@ export function getInnerLocale(locale: Locale = {}) {
   return innerLocale
 }
 
+type DateFnsLocale = {
+  options?: {
+    weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6
+  }
+  localize?: {
+    month: (n: number, options?: { width?: string }) => string
+    day: (i: number, options?: { width?: string }) => string
+  }
+}
 /** Create a Locale from a date-fns locale */
-export function localeFromDateFnsLocale(dateFnsLocale: any) {
-  let locale = getLocaleDefaults()
-  if (typeof dateFnsLocale.options.weekStartsOn === 'number') {
+export function localeFromDateFnsLocale(dateFnsLocale: DateFnsLocale): InnerLocale {
+  const locale = getLocaleDefaults()
+  if (typeof dateFnsLocale?.options?.weekStartsOn === 'number') {
     locale.weekStartsOn = dateFnsLocale.options.weekStartsOn
   }
   if (dateFnsLocale.localize) {

@@ -49,8 +49,13 @@
   }
   $: textUpdate(text, formatTokens)
 
-  function input(e: any) {
-    if (e.inputType === 'insertText' && text === textHistory[0] + e.data) {
+  function input(e: unknown) {
+    if (
+      e instanceof InputEvent &&
+      e.inputType === 'insertText' &&
+      typeof e.data === 'string' &&
+      text === textHistory[0] + e.data
+    ) {
       let result = parse(textHistory[0], formatTokens, value)
       if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
         text = textHistory[0] + result.missingPunctuation + e.data

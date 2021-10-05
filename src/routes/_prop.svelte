@@ -1,7 +1,7 @@
 <script lang="ts">
   import DateInput from '$lib/DateInput.svelte'
 
-  export let value: any = null
+  export let value: unknown = null
   export let label: string
   let jsonValue = ''
   $: if (value instanceof Object) {
@@ -10,7 +10,9 @@
   function jsonInput() {
     try {
       value = JSON.parse(jsonValue)
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
   }
 </script>
 

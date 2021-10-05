@@ -7,8 +7,12 @@ type RuleToken = {
 
 export type FormatToken = string | RuleToken
 
-export function parse(str: string, tokens: FormatToken[], baseDate?: Date) {
-  let missingPunctuation: string = ''
+type ParseResult = {
+  date: Date | null
+  missingPunctuation: string
+}
+export function parse(str: string, tokens: FormatToken[], baseDate?: Date): ParseResult {
+  let missingPunctuation = ''
   let valid = true
 
   baseDate = baseDate || new Date(2020, 0, 1, 0, 0, 0, 0)
