@@ -10,7 +10,8 @@
     "build:site": "svelte-kit build",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js"
+    "lint": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js",
+    "test": "npm run lint"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^1.0.0-next.20",
@@ -38,8 +39,16 @@
     "type": "git",
     "url": "git+https://github.com/probablykasper/date-picker-svelte.git"
   },
+  "bugs": {
+    "url": "https://github.com/probablykasper/date-picker-svelte/issues"
+  },
+  "author": {
+    "name": "Kasper Henningsen",
+    "url": "https://kasper.space"
+  },
   "keywords": [
     "date",
+    "time",
     "date-picker",
     "datepicker",
     "date-time-picker",
