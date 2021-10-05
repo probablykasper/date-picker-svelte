@@ -1,15 +1,15 @@
 import type { FormatToken } from './parse'
 
-export function isLeapYear(year: number) {
+export function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
 }
-export function getMonthLength(year: number, month: number) {
-  let feb = isLeapYear(year) ? 29 : 28
+export function getMonthLength(year: number, month: number): number {
+  const feb = isLeapYear(year) ? 29 : 28
   const monthLenghts = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   return monthLenghts[month]
 }
 
-export function toText(date: Date, formatTokens: FormatToken[]) {
+export function toText(date: Date, formatTokens: FormatToken[]): string {
   let text = ''
   for (const token of formatTokens) {
     if (typeof token === 'string') {
@@ -28,7 +28,7 @@ export type CalendarDay = {
 }
 function getMonthDays(year: number, month: number) {
   const monthLength = getMonthLength(year, month)
-  let days: CalendarDay[] = []
+  const days: CalendarDay[] = []
   for (let i = 0; i < monthLength; i++) {
     days.push({
       year: year,
@@ -38,7 +38,7 @@ function getMonthDays(year: number, month: number) {
   }
   return days
 }
-export function getCalendarDays(value: Date, weekStartsOn: number) {
+export function getCalendarDays(value: Date, weekStartsOn: number): CalendarDay[] {
   const year = value.getFullYear()
   const month = value.getMonth()
   const firstWeekday = new Date(year, month, 1).getDay()
@@ -67,7 +67,7 @@ export function getCalendarDays(value: Date, weekStartsOn: number) {
     nextMonth = 0
     nextMonthYear = year + 1
   }
-  let daysAfter = 42 - days.length
+  const daysAfter = 42 - days.length
   days = days.concat(getMonthDays(nextMonthYear, nextMonth).slice(0, daysAfter))
 
   return days

@@ -6,7 +6,7 @@
     <script>
       function detectTheme() {
         var savedTheme = localStorage.getItem('theme')
-        if(savedTheme == 'dark' || savedTheme === 'light') {
+        if (savedTheme == 'dark' || savedTheme === 'light') {
           return savedTheme
         } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
           return 'light'
@@ -16,10 +16,12 @@
       }
       document.documentElement.setAttribute('data-theme', detectTheme())
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-      rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     %svelte.head%
   </head>
   <body>

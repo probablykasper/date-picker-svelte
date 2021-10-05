@@ -18,7 +18,7 @@ export function parse(str: string, tokens: FormatToken[], baseDate?: Date) {
   let hours = baseDate.getHours()
   let minutes = baseDate.getMinutes()
   let seconds = baseDate.getSeconds()
-  let ms = baseDate.getMilliseconds()
+  const ms = baseDate.getMilliseconds()
 
   function parseString(token: string) {
     for (let i = 0; i < token.length; i++) {
@@ -33,10 +33,10 @@ export function parse(str: string, tokens: FormatToken[], baseDate?: Date) {
   }
 
   function parseUint(pattern: RegExp, min: number, max: number) {
-    let matches = str.match(pattern)
+    const matches = str.match(pattern)
     if (matches?.[0]) {
       str = str.slice(matches[0].length)
-      let n = parseInt(matches[0])
+      const n = parseInt(matches[0])
       if (n > max || n < min) {
         valid = false
         return null
@@ -78,7 +78,7 @@ export function parse(str: string, tokens: FormatToken[], baseDate?: Date) {
     if (!valid) break
   }
 
-  let monthLength = getMonthLength(year, month)
+  const monthLength = getMonthLength(year, month)
   if (day > monthLength) {
     valid = false
   }
@@ -127,8 +127,8 @@ function parseRule(s: string) {
   }
 }
 
-export function createFormat(s: string) {
-  let tokens = []
+export function createFormat(s: string): FormatToken[] {
+  const tokens = []
   while (s.length > 0) {
     const token = parseRule(s)
     if (token) {
