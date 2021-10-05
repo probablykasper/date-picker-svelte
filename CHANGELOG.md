@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0 - 2021 Oct 6
+- Replace all `any` types
+
 ## 0.2.1 - 2021 Oct 2
 - Fix invisible dropdown menu in dark mode on Windows Chrome
 - Fix flash of incorrect month/year value on page load
