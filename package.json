@@ -15,10 +15,10 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^1.0.0-next.20",
-    "@sveltejs/kit": "^1.0.0-next.179",
+    "@sveltejs/kit": "^1.0.0-next.180",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "date-fns": "^2.24.0",
+    "date-fns": "^2.25.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
@@ -28,7 +28,7 @@
     "sass": "^1.42.1",
     "svelte": "^3.43.1",
     "svelte-check": "^2.2.6",
-    "svelte-preprocess": "^4.9.7",
+    "svelte-preprocess": "^4.9.8",
     "svelte2tsx": "^0.4.7",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
