@@ -79,15 +79,25 @@
       visible = false
     }
   }
+  function keydown(e: KeyboardEvent) {
+    if (e.key === 'Escape' && visible) {
+      visible = false
+      e.preventDefault()
+      // When the date picker is open, we prevent 'Escape' from propagating,
+      // so for example a parent modal won't be closed
+      e.stopPropagation()
+    }
+  }
 </script>
 
-<div class="date-time-field" on:focusout={onFocusOut}>
+<div class="date-time-field" on:focusout={onFocusOut} on:keydown={keydown}>
   <input
     class:invalid={!valid}
     type="text"
     bind:value={text}
     {placeholder}
     on:focus={() => (visible = true)}
+    on:mousedown={() => (visible = true)}
     on:input={input} />
   {#if visible}
     <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
