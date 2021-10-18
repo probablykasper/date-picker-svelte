@@ -39,6 +39,8 @@
     <h2><a href="/">Date Picker Svelte</a></h2>
     <a class="nav-link" href="/demo">Demo</a>
     <a class="nav-link" href="/docs">Docs</a>
+    <a class="nav-link" href="https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=3"
+      >REPL</a>
     <div class="spacer" />
     <a class="nav-link" href="https://github.com/probablykasper/date-picker-svelte">GitHub</a>
     <button class="theme-toggle" on:click={toggleTheme}>
@@ -121,6 +123,7 @@
     color: #ffffff
   a
     color: inherit
+    user-select: none
   a, button.theme-toggle
     -webkit-tap-highlight-color: transparent
     -moz-tap-highlight-color: rgba(0, 0, 0, 0)

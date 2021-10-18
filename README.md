@@ -1,17 +1,19 @@
 # Date Picker Svelte
 
-Date and time picker for Svelte
-
-Supports theming, custom formats, internationalization and autopunctuation (e.g typing "20201111111111" gives you "2020-11-11 11:11:11" with the default format)
-
-
 [![License](https://img.shields.io/npm/l/date-picker-svelte.svg)](LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
 [![NPM Downloads](https://img.shields.io/npm/dm/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
 
-[Demo](https://date-picker-svelte.kasper.space/demo)
+Date and time picker for Svelte
 
-[Documentation](https://date-picker-svelte.kasper.space/docs)
+Features:
+- Theming
+- Custom formats
+- Internationalization (i18n)
+- Autopunctuation (e.g typing "20201111111111" gives you "2020-11-11 11:11:11" with the default format)
+- Keyboard shortcuts
+
+[Demo](https://date-picker-svelte.kasper.space/demo) • [Documentation](https://date-picker-svelte.kasper.space/docs) • [REPL](https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=3)
 
 ![](Screenshot.png)
 
