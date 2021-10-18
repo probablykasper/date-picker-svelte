@@ -86,6 +86,9 @@
       // When the date picker is open, we prevent 'Escape' from propagating,
       // so for example a parent modal won't be closed
       e.stopPropagation()
+    } else if (e.key === 'Enter') {
+      visible = !visible
+      e.preventDefault()
     }
   }
 </script>
