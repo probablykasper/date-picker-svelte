@@ -26,7 +26,7 @@ export type CalendarDay = {
   month: number
   number: number
 }
-function getMonthDays(year: number, month: number) {
+export function getMonthDays(year: number, month: number): CalendarDay[] {
   const monthLength = getMonthLength(year, month)
   const days: CalendarDay[] = []
   for (let i = 0; i < monthLength; i++) {
