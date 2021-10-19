@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 - 2021 Oct 19
+- Add `Escape` shortcut for closing DatePicker popup
+- Add `Enter` shortcut for opening/closing DatePicker popup
+
 ## 1.0.0 - 2021 Oct 6
 - Replace all `any` types
 
