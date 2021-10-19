@@ -1,7 +1,9 @@
 import { describe, expect, test } from '@jest/globals'
+import { nb } from 'date-fns/locale'
 
-import { getCalendarDays, getMonthDays } from '../src/lib/date-utils'
+import { getCalendarDays, getMonthDays, toText } from '../src/lib/date-utils'
 import { createFormat, parse } from '../src/lib/parse'
+import { getInnerLocale, localeFromDateFnsLocale } from '../src/lib/locale'
 
 describe('date-utils', () => {
   test('getMonthDays', () => {
@@ -30,11 +32,55 @@ describe('date-utils', () => {
       { year: 2020, month: 1, number: 9 },
     ])
   })
+  test('toText', () => {
+    const format = createFormat('yyyy-MM-dd HH:mm:ss')
+    const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
+    expect(text).toEqual('2020-01-01 00:00:00')
+  })
 })
 
 test('formatting', () => {
-  const tokens = createFormat('MM-dd HH:mm:ss')
+  const format = createFormat('yyyy-MM-dd HH:mm:ss')
   const baseDate = new Date(1234, 0, 1, 0, 0, 0, 999)
-  const parsedDate = parse('12-31 23:59:59', tokens, baseDate)
+  const parsedDate = parse('1234-12-31 23:59:59', format, baseDate)
   expect(parsedDate.date).toEqual(new Date(1234, 11, 31, 23, 59, 59, 999))
+})
+
+describe('locale', () => {
+  const nbLocale = {
+    weekdays: ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø'],
+    months: [
+      'januar',
+      'februar',
+      'mars',
+      'april',
+      'mai',
+      'juni',
+      'juli',
+      'august',
+      'september',
+      'oktober',
+      'november',
+      'desember',
+    ],
+    weekStartsOn: 1,
+  }
+
+  test('getInnerLocale', () => {
+    const locale = getInnerLocale({
+      months: nbLocale.months,
+      weekStartsOn: 4,
+    })
+
+    expect(locale).toEqual({
+      weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      months: nbLocale.months,
+      weekStartsOn: 4,
+    })
+  })
+
+  test('localeFromDateFnsLocale', () => {
+    const locale = localeFromDateFnsLocale(nb)
+    expect(locale).toEqual(nbLocale)
+  })
 })

@@ -28,11 +28,7 @@ export function getLocaleDefaults(): InnerLocale {
     weekStartsOn: 1,
   }
 }
-export function getInnerLocale(locale: Locale = {}): {
-  weekdays: string[]
-  months: string[]
-  weekStartsOn: number
-} {
+export function getInnerLocale(locale: Locale = {}): InnerLocale {
   const innerLocale = getLocaleDefaults()
   if (typeof locale.weekStartsOn === 'number') {
     innerLocale.weekStartsOn = locale.weekStartsOn
