@@ -12,7 +12,8 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js",
     "test": "jest tests",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --collect-coverage"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^1.0.0-next.21",
