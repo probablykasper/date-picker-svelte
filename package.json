@@ -58,7 +58,8 @@
     "datepicker",
     "date-time-picker",
     "calendar",
-    "svelte"
+    "svelte",
+    "front-end"
   ],
   "jest": {
     "transform": {

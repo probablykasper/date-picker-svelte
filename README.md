@@ -36,7 +36,7 @@ npm install date-picker-svelte
 
 Check the [docs](https://date-picker-svelte.kasper.space/docs) to learn more
 
-## Dev instructions
+## Contributing
 
 ### Get started
 
