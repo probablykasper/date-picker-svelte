@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       function detectTheme() {
-        var savedTheme = localStorage.getItem('theme')
-        if (savedTheme == 'dark' || savedTheme === 'light') {
-          return savedTheme
+        var themeOverride = localStorage.getItem('theme')
+        if (themeOverride == 'dark' || themeOverride === 'light') {
+          return themeOverride
         } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
           return 'light'
         } else {

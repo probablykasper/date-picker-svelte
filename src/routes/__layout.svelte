@@ -2,34 +2,32 @@
   import { onMount } from 'svelte'
 
   let systemTheme: string | null = null
-  let theme: string | null = null
   onMount(() => {
-    theme = document.documentElement.getAttribute('data-theme') || 'dark'
     const prefersDarkMQ = matchMedia('(prefers-color-scheme: dark)')
     systemTheme = prefersDarkMQ.matches ? 'dark' : 'light'
     prefersDarkMQ.onchange = (e) => {
       systemTheme = e.matches ? 'dark' : 'light'
       if (localStorage.getItem('theme') === null) {
-        theme = systemTheme
+        setTheme(systemTheme)
       }
     }
   })
 
-  function applyTheme(theme: string) {
-    document.documentElement.setAttribute('data-theme', theme)
-    if (theme === systemTheme) {
+  let theme = document.documentElement.getAttribute('data-theme') || 'dark'
+  function setTheme(newTheme: string) {
+    document.documentElement.setAttribute('data-theme', newTheme)
+    theme = newTheme
+    if (newTheme === systemTheme) {
       localStorage.removeItem('theme')
     } else {
-      localStorage.setItem('theme', theme)
+      localStorage.setItem('theme', newTheme)
     }
   }
-  $: if (theme !== null) applyTheme(theme)
-
   function toggleTheme() {
     if (theme === 'dark') {
-      theme = 'light'
+      setTheme('light')
     } else {
-      theme = 'dark'
+      setTheme('dark')
     }
   }
 </script>
