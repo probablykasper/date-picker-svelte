@@ -248,7 +248,6 @@
     border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
     box-shadow: 0px 2px 6px rgba(#000000,0.08), 0px 2px 6px rgba(#000000,0.11)
-
   .top
     display: flex
     justify-content: center
@@ -342,10 +341,10 @@
     &.disabled:hover
       border: none
       background-color: transparent
-  .other-month span
-    opacity: 0.4
-  .selected
-    color: var(--date-picker-selected-color, inherit)
-    background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
-    border: 2px solid var(--date-picker-highlight-border, #0269f7)
+    &.other-month span
+      opacity: 0.4
+    &.selected
+      color: var(--date-picker-selected-color, inherit)
+      background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
+      border: 2px solid var(--date-picker-highlight-border, #0269f7)
 </style>
