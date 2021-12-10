@@ -248,101 +248,104 @@
     border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
     box-shadow: 0px 2px 6px rgba(#000000,0.08), 0px 2px 6px rgba(#000000,0.11)
+
   .top
     display: flex
     justify-content: center
     align-items: center
     padding-bottom: 8px
-    .dropdown, .previous
-      margin-right: 8px
-    .dropdown
-      position: relative
-      display: flex
-      svg
-        position: absolute
-        right: 0px
-        top: 0px
-        height: 100%
-        width: 8px
-        padding: 0px 8px
-        pointer-events: none
-    .month
-      flex-grow: 1
-    .year
-      flex-grow: 1
+  .dropdown, .previous
+    margin-right: 8px
+  .dropdown
+    position: relative
+    display: flex
     svg
-      display: block
-      fill: var(--date-picker-foreground, #000000)
-      opacity: 0.75
-      outline: none
-    .page-button
-      padding: 5px
-      flex-shrink: 0
-      border-radius: 5px
-      box-sizing: border-box
-      border: 1px solid transparent
-      &:hover
-        background-color: rgba(#808080, 0.08)
-        border: 1px solid rgba(#808080, 0.08)
-      svg
-        width: 10px
-        height: 10px
-    select.dummy-select
       position: absolute
+      right: 0px
+      top: 0px
+      height: 100%
+      width: 8px
+      padding: 0px 8px
       pointer-events: none
-      outline: none
-      color: var(--date-picker-foreground, #000000)
-      background-color: var(--date-picker-background, #ffffff)
-      border-radius: 3px
-    select:focus + select.dummy-select
-      border-color: var(--date-picker-highlight-border, #0269f7)
-      box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
-    select:not(.dummy-select)
-      border-radius: 100px
-    select
-      font-size: inherit
-      font-family: inherit
-      -webkit-appearance: none
-      -moz-appearance: none
-      appearance: none
-      flex-grow: 1
-      padding: 2px 5px
-      height: 22px
-      padding-right: 22px
-      margin: 0px
-      border: 1px solid rgba(108, 120, 147, 0.3)
-      outline: none
-      transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+  .month
+    flex-grow: 1
+  .year
+    flex-grow: 1
+  svg
+    display: block
+    fill: var(--date-picker-foreground, #000000)
+    opacity: 0.75
+    outline: none
+  .page-button
+    padding: 5px
+    flex-shrink: 0
+    border-radius: 5px
+    box-sizing: border-box
+    border: 1px solid transparent
+    &:hover
+      background-color: rgba(#808080, 0.08)
+      border: 1px solid rgba(#808080, 0.08)
+    svg
+      width: 10px
+      height: 10px
+  select.dummy-select
+    position: absolute
+    pointer-events: none
+    outline: none
+    color: var(--date-picker-foreground, #000000)
+    background-color: var(--date-picker-background, #ffffff)
+    border-radius: 3px
+  select:focus + select.dummy-select
+    border-color: var(--date-picker-highlight-border, #0269f7)
+    box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
+  select:not(.dummy-select)
+    border-radius: 100px
+  select
+    font-size: inherit
+    font-family: inherit
+    -webkit-appearance: none
+    -moz-appearance: none
+    appearance: none
+    flex-grow: 1
+    padding: 2px 5px
+    height: 22px
+    padding-right: 22px
+    margin: 0px
+    border: 1px solid rgba(108, 120, 147, 0.3)
+    outline: none
+    transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+
   .header
     display: flex
     font-weight: 600
     padding-bottom: 2px
-    .header-cell
-      width: 30px
-      text-align: center
-      flex-grow: 1
+  .header-cell
+    width: 30px
+    text-align: center
+    flex-grow: 1
+
   .week
     display: flex
-    .cell
-      display: flex
-      align-items: center
-      justify-content: center
-      width: 30px
-      height: 30px
-      flex-grow: 1
-      border-radius: 5px
-      box-sizing: border-box
-      border: 2px solid transparent
-      &:hover
-        border: 1px solid rgba(#808080, 0.08)
-        background-color: rgba(#808080, 0.08)
-      &.disabled:hover
-        border: none
-        background-color: transparent
-      &.other-month span
-        opacity: 0.4
-      &.selected
-        color: var(--date-picker-selected-color, inherit)
-        background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
-        border: 2px solid var(--date-picker-highlight-border, #0269f7)
+  .cell
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 30px
+    height: 30px
+    flex-grow: 1
+    border-radius: 5px
+    box-sizing: border-box
+    border: 2px solid transparent
+    &:hover
+      border: 1px solid rgba(#808080, 0.08)
+      background-color: rgba(#808080, 0.08)
+    &.disabled:hover
+      border: none
+      background-color: transparent
+  .other-month span
+    opacity: 0.4
+  .selected
+    color: var(--date-picker-selected-color, inherit)
+    background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
+    border: 2px solid var(--date-picker-highlight-border, #0269f7)
 </style>
