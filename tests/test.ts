@@ -14,7 +14,33 @@ describe('date-utils', () => {
     const feb2020 = getMonthDays(2020, 1)
     expect(feb2020.length).toEqual(29)
   })
-  test('getCalendarDays', () => {
+  test('getCalendarDays weekdays', () => {
+    const weekdayStartsOn = 1 // monday
+    for (let year = 1995; year < 2025; year++) {
+      for (let month = 0; month < 11; month++) {
+        testMonth(year, month)
+      }
+    }
+    function testMonth(year: number, month: number) {
+      const calDays = getCalendarDays(new Date(year, month, 1), weekdayStartsOn)
+      expect(calDays.length).toEqual(42)
+      for (let i = 0; i < calDays.length; i++) {
+        const calDay = calDays[i]
+        expect({
+          year: calDay.year,
+          month: calDay.month,
+          number: calDay.number,
+          weekday: new Date(calDay.year, calDay.month, calDay.number).getDay(),
+        }).toEqual({
+          year: calDay.year,
+          month: calDay.month,
+          number: calDay.number,
+          weekday: ((i % 7) + weekdayStartsOn) % 7,
+        })
+      }
+    }
+  })
+  test('getCalendarDays prev/next months', () => {
     const feb2020 = new Date(2020, 0, 1, 0, 0, 0, 0)
     const calDays = getCalendarDays(feb2020, 1)
     expect(calDays).toEqual([
