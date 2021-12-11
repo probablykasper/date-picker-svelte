@@ -163,7 +163,9 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
         ><path
           d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
-          transform="rotate(180, 12, 12)" /></svg>
+          transform="rotate(180, 12, 12)"
+        /></svg
+      >
     </div>
     <div class="dropdown month">
       <select bind:value={month} on:keydown={monthKeydown}>
@@ -171,7 +173,8 @@
           <option
             disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
               new Date(year, i) > max}
-            value={i}>{monthName}</option>
+            value={i}>{monthName}</option
+          >
         {/each}
       </select>
       <!--
@@ -187,7 +190,8 @@
         {/each}
       </select>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-        ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg>
+        ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
+      >
     </div>
     <div class="dropdown year">
       <select bind:value={year} on:keydown={yearKeydown}>
@@ -202,11 +206,13 @@
         {/each}
       </select>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-        ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg>
+        ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
+      >
     </div>
     <div class="page-button" tabindex="-1" on:click={() => setMonth(month + 1)}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-        ><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg>
+        ><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg
+      >
     </div>
   </div>
   <div class="header">
@@ -226,7 +232,8 @@
           on:click={() => setDay(calendarDay)}
           class:disabled={!dayIsInRange(calendarDay)}
           class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
-          class:other-month={calendarDay.month !== month}>
+          class:other-month={calendarDay.month !== month}
+        >
           <span>{calendarDay.number}</span>
         </div>
       {/each}

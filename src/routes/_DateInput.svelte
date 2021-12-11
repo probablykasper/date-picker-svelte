@@ -21,7 +21,8 @@
     bind:placeholder
     bind:valid
     bind:format
-    bind:visible />
+    bind:visible
+  />
 
   <svelte:fragment slot="right">
     <h3 class="no-top">Props</h3>

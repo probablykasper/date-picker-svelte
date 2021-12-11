@@ -117,7 +117,8 @@
     {placeholder}
     on:focus={() => (visible = true)}
     on:mousedown={() => (visible = true)}
-    on:input={input} />
+    on:input={input}
+  />
   {#if visible}
     <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
       <DateTimePicker on:focusout={onFocusOut} bind:value={$store} {min} {max} {locale} />

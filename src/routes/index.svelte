@@ -12,7 +12,8 @@
   <li>Internationalization (i18n)</li>
   <li
     >Autopunctuation (e.g typing "20201111111111" gives you "2020-11-11 11:11:11" with the default
-    format)</li>
+    format)</li
+  >
   <li>Keyboard shortcuts</li>
 </ul>
 
