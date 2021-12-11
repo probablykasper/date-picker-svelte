@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 - 2021 Dec 11
+- Fix some dates showing as wrong weekdays
+- Fix invalid input fields resetting when clicked
+
 ## 1.1.0 - 2021 Oct 19
 - Add `Escape` shortcut for closing DatePicker popup
 - Add `Enter` shortcut for opening/closing DatePicker popup
