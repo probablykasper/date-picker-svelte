@@ -6,16 +6,32 @@
   import { parse, createFormat } from './parse'
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
+  import { writable } from 'svelte/store'
+
+  const defaultDate = new Date()
+
+  // inner date value store for preventing value updates (and also
+  // text updates as a result) when date is unchanged
+  const innerStore = writable(defaultDate)
+  const store = (() => {
+    return {
+      subscribe: innerStore.subscribe,
+      set: (d: Date) => {
+        if (d.getTime() !== $innerStore.getTime()) {
+          innerStore.set(d)
+          value = d
+        }
+      },
+    }
+  })()
 
   /** Date value */
-  export let value = new Date()
-  function setValue(d: Date) {
-    if (d.getTime() !== value.getTime()) value = d
-  }
+  export let value = defaultDate
+  $: store.set(value)
   /** The earliest value the user can select */
-  export let min = new Date(new Date().getFullYear() - 20, 0, 1)
+  export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest value the user can select */
-  export let max = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999)
+  export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
   /** Placeholder text to show when input field is empty */
   export let placeholder = '2020-12-31 23:00:00'
   /** Whether the text is valid */
@@ -32,17 +48,17 @@
   function valueUpdate(value: Date, formatTokens: FormatToken[]) {
     text = toText(value, formatTokens)
   }
-  $: valueUpdate(value, formatTokens)
+  $: valueUpdate($store, formatTokens)
 
-  export let text = toText(value, formatTokens)
+  export let text = toText($store, formatTokens)
   let textHistory = [text, text]
   $: textHistory = [textHistory[1], text]
 
   function textUpdate(text: string, formatTokens: FormatToken[]) {
-    const result = parse(text, formatTokens, value)
+    const result = parse(text, formatTokens, $store)
     if (result.date !== null) {
       valid = true
-      setValue(result.date)
+      store.set(result.date)
     } else {
       valid = false
     }
@@ -56,7 +72,7 @@
       typeof e.data === 'string' &&
       text === textHistory[0] + e.data
     ) {
-      let result = parse(textHistory[0], formatTokens, value)
+      let result = parse(textHistory[0], formatTokens, $store)
       if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
         text = textHistory[0] + result.missingPunctuation + e.data
       }
@@ -104,7 +120,7 @@
     on:input={input} />
   {#if visible}
     <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
-      <DateTimePicker on:focusout={onFocusOut} bind:value bind:min bind:max {locale} />
+      <DateTimePicker on:focusout={onFocusOut} bind:value={$store} {min} {max} {locale} />
     </div>
   {/if}
 </div>

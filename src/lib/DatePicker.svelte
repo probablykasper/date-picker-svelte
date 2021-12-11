@@ -11,7 +11,7 @@
   }
   function updateValue(updater: (date: Date) => Date) {
     let d = updater(new Date(value.getTime()))
-    if (d.getTime() !== value.getTime()) value = d
+    setValue(d)
   }
   /** The earliest year the user can select */
   export let min = new Date(new Date().getFullYear() - 20, 0, 1)
