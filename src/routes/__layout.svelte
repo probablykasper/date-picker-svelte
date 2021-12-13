@@ -6,7 +6,9 @@
     const prefersDarkMQ = matchMedia('(prefers-color-scheme: dark)')
     systemTheme = prefersDarkMQ.matches ? 'dark' : 'light'
     prefersDarkMQ.onchange = (e) => {
+      // Keep the systemTheme variable up to date
       systemTheme = e.matches ? 'dark' : 'light'
+      // Update the theme, as long as there's no theme override
       if (localStorage.getItem('theme') === null) {
         setTheme(systemTheme)
       }
@@ -18,6 +20,7 @@
     document.documentElement.setAttribute('data-theme', newTheme)
     theme = newTheme
     if (newTheme === systemTheme) {
+      // Remove override if the user sets the theme to match
       localStorage.removeItem('theme')
     } else {
       localStorage.setItem('theme', newTheme)
