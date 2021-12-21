@@ -345,6 +345,8 @@
     &:hover
       border: 1px solid rgba(#808080, 0.08)
       background-color: rgba(#808080, 0.08)
+    &.disabled
+      visibility: hidden
     &.disabled:hover
       border: none
       background-color: transparent

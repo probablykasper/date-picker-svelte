@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next
+- Hide disabled dates
 - Fix disabled dates not reacting to `min` and `max` being updated
 
 ## 1.1.1 - 2021 Dec 11
