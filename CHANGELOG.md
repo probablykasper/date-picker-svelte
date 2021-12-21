@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix disabled dates not reacting to `min` and `max` being updated
+
 ## 1.1.1 - 2021 Dec 11
 - Fix some dates showing as wrong weekdays
 - Fix invalid input fields resetting when clicked

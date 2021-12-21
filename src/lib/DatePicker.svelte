@@ -83,7 +83,7 @@
   $: calendarDays = getCalendarDays(value, iLocale.weekStartsOn)
 
   function setDay(calendarDay: CalendarDay) {
-    if (dayIsInRange(calendarDay)) {
+    if (dayIsInRange(calendarDay, min, max)) {
       updateValue((value) => {
         value.setFullYear(0)
         value.setMonth(0)
@@ -95,7 +95,7 @@
       })
     }
   }
-  function dayIsInRange(calendarDay: CalendarDay) {
+  function dayIsInRange(calendarDay: CalendarDay, min: Date, max: Date) {
     const date = new Date(calendarDay.year, calendarDay.month, calendarDay.number)
     const minDate = new Date(min.getFullYear(), min.getMonth(), min.getDate())
     const maxDate = new Date(max.getFullYear(), max.getMonth(), max.getDate())
@@ -230,7 +230,7 @@
         <div
           class="cell"
           on:click={() => setDay(calendarDay)}
-          class:disabled={!dayIsInRange(calendarDay)}
+          class:disabled={!dayIsInRange(calendarDay, min, max)}
           class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
           class:other-month={calendarDay.month !== month}
         >
