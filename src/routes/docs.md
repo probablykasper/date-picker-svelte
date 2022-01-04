@@ -1,4 +1,9 @@
-# Docs
+# Documentation
+
+## Install
+```
+npm install -D date-picker-svelte
+```
 
 ## Usage
 
