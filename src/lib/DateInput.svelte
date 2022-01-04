@@ -7,6 +7,9 @@
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
   import { writable } from 'svelte/store'
+  import { createEventDispatcher } from 'svelte'
+
+  const dispatch = createEventDispatcher<{ select: undefined }>()
 
   const defaultDate = new Date()
 
@@ -107,6 +110,10 @@
       e.preventDefault()
     }
   }
+
+  function onSelect(e: CustomEvent<undefined>) {
+    dispatch('select', e.detail)
+  }
 </script>
 
 <div class="date-time-field" on:focusout={onFocusOut} on:keydown={keydown}>
@@ -121,7 +128,14 @@
   />
   {#if visible}
     <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
-      <DateTimePicker on:focusout={onFocusOut} bind:value={$store} {min} {max} {locale} />
+      <DateTimePicker
+        on:focusout={onFocusOut}
+        on:select={onSelect}
+        bind:value={$store}
+        {min}
+        {max}
+        {locale}
+      />
     </div>
   {/if}
 </div>

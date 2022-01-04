@@ -3,6 +3,9 @@
   import type { CalendarDay } from './date-utils'
   import { getInnerLocale } from './locale'
   import type { Locale } from './locale'
+  import { createEventDispatcher } from 'svelte'
+
+  const dispatch = createEventDispatcher<{ select: undefined }>()
 
   /** Date value */
   export let value = new Date()
@@ -94,6 +97,10 @@
         return value
       })
     }
+  }
+  function selectDay(calendarDay: CalendarDay) {
+    setDay(calendarDay)
+    dispatch('select')
   }
   function dayIsInRange(calendarDay: CalendarDay, min: Date, max: Date) {
     const date = new Date(calendarDay.year, calendarDay.month, calendarDay.number)
@@ -229,7 +236,7 @@
       {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
         <div
           class="cell"
-          on:click={() => setDay(calendarDay)}
+          on:click={() => selectDay(calendarDay)}
           class:disabled={!dayIsInRange(calendarDay, min, max)}
           class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
           class:other-month={calendarDay.month !== month}
