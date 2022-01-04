@@ -1,3 +1,4 @@
 /build/
 /.svelte-kit
 /package
+/coverage

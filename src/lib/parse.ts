@@ -136,12 +136,15 @@ export function createFormat(s: string): FormatToken[] {
   while (s.length > 0) {
     const token = parseRule(s)
     if (token) {
+      // parsed a token like "yyyy"
       tokens.push(token)
       s = s.slice(token.id.length)
     } else if (typeof tokens[tokens.length - 1] === 'string') {
+      // last token is a string token, so append to it
       tokens[tokens.length - 1] += s[0]
       s = s.slice(1)
     } else {
+      // add string token
       tokens.push(s[0])
       s = s.slice(1)
     }

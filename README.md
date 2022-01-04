@@ -51,6 +51,7 @@ Check the [docs](https://date-picker-svelte.kasper.space/docs) to learn more
 - `npm run build:site`: Build site
 - `npm run preview`: Preview production site
 - `npm run check`: Run `svelte-check`
+- `npm run test`: Run tests
 - `npm run lint`: Lint
 
 ### Publish new version

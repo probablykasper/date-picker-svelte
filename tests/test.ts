@@ -41,9 +41,9 @@ describe('date-utils', () => {
     }
   })
   test('getCalendarDays prev/next months', () => {
-    const feb2020 = new Date(2020, 0, 1, 0, 0, 0, 0)
-    const calDays = getCalendarDays(feb2020, 1)
-    expect(calDays).toEqual([
+    const jan2020 = new Date(2020, 0, 1, 0, 0, 0, 0)
+    const jan2020CalDays = getCalendarDays(jan2020, 1)
+    expect(jan2020CalDays).toEqual([
       { year: 2019, month: 11, number: 30 },
       { year: 2019, month: 11, number: 31 },
       ...getMonthDays(2020, 0),
@@ -57,6 +57,23 @@ describe('date-utils', () => {
       { year: 2020, month: 1, number: 8 },
       { year: 2020, month: 1, number: 9 },
     ])
+
+    const dec2019 = new Date(2019, 11, 1, 0, 0, 0, 0)
+    const dec2019CalDays = getCalendarDays(dec2019, 1)
+    expect(dec2019CalDays).toEqual([
+      { year: 2019, month: 10, number: 25 },
+      { year: 2019, month: 10, number: 26 },
+      { year: 2019, month: 10, number: 27 },
+      { year: 2019, month: 10, number: 28 },
+      { year: 2019, month: 10, number: 29 },
+      { year: 2019, month: 10, number: 30 },
+      ...getMonthDays(2019, 11),
+      { year: 2020, month: 0, number: 1 },
+      { year: 2020, month: 0, number: 2 },
+      { year: 2020, month: 0, number: 3 },
+      { year: 2020, month: 0, number: 4 },
+      { year: 2020, month: 0, number: 5 },
+    ])
   })
   test('toText', () => {
     const format = createFormat('yyyy-MM-dd HH:mm:ss')
@@ -66,10 +83,39 @@ describe('date-utils', () => {
 })
 
 test('formatting', () => {
-  const format = createFormat('yyyy-MM-dd HH:mm:ss')
   const baseDate = new Date(1234, 0, 1, 0, 0, 0, 999)
-  const parsedDate = parse('1234-12-31 23:59:59', format, baseDate)
-  expect(parsedDate.date).toEqual(new Date(1234, 11, 31, 23, 59, 59, 999))
+  const format = createFormat('yyyy--MM-dd HH:mm:ss')
+
+  const basic = parse('1234--12-31 23:59:59', format, baseDate)
+  expect(basic).toEqual({
+    date: new Date(1234, 11, 31, 23, 59, 59, 999),
+    missingPunctuation: '',
+  })
+
+  const withMissingPunctuation = parse('2345', format, baseDate)
+  expect(withMissingPunctuation).toEqual({
+    date: null,
+    missingPunctuation: '--',
+  })
+
+  const minuteOverflow = parse('1234--12-31 23:99:59', format, baseDate)
+  expect(minuteOverflow).toEqual({
+    date: null,
+    missingPunctuation: '',
+  })
+
+  // separate test because some months have less than 31 days
+  const dayOfMonthOverflow = parse('1234--02-31 23:59:59', format, baseDate)
+  expect(dayOfMonthOverflow).toEqual({
+    date: null,
+    missingPunctuation: '',
+  })
+
+  const noNumber = parse('1234--02-31 23:59:5d', format, baseDate)
+  expect(noNumber).toEqual({
+    date: null,
+    missingPunctuation: '',
+  })
 })
 
 describe('locale', () => {
