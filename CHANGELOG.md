@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 1.3.0 - 2021 Jan 4
 - Add `closeOnSelection` property for DateInput
 
 ## 1.2.0 - 2021 Dec 22
