@@ -9,6 +9,7 @@
   let max: Date
   let valid: boolean
   let visible: boolean
+  let closeOnSelection: boolean
   let format: string
 </script>
 
@@ -22,6 +23,7 @@
     bind:valid
     bind:format
     bind:visible
+    bind:closeOnSelection
   />
 
   <svelte:fragment slot="right">
@@ -33,6 +35,7 @@
     <Prop label="valid" bind:value={valid} />
     <Prop label="format" bind:value={format} />
     <Prop label="visible" bind:value={visible} />
+    <Prop label="closeOnSelection" bind:value={closeOnSelection} />
     <Prop label="locale">Default</Prop>
   </svelte:fragment>
 </Split>

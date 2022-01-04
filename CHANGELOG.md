@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Add `closeOnSelection` property for DateInput
+
 ## 1.2.0 - 2021 Dec 22
 - Hide disabled dates
 - Fix disabled dates not reacting to `min` and `max` being updated

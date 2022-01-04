@@ -39,7 +39,7 @@
     padding: 5px 0px
   .label
     display: inline-block
-    width: 100px
+    width: 140px
     flex-shrink: 0
   input[type='text'], textarea
     color: var(--foreground)
