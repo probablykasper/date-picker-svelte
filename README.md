@@ -1,8 +1,10 @@
 # Date Picker Svelte
 
+[![NPM](https://img.shields.io/npm/v/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
 [![License](https://img.shields.io/npm/l/date-picker-svelte.svg)](LICENSE)
-[![NPM Version](https://img.shields.io/npm/v/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
 [![NPM Downloads](https://img.shields.io/npm/dm/date-picker-svelte.svg)](https://npmjs.com/package/date-picker-svelte)
+[![Test](https://github.com/probablykasper/date-picker-svelte/actions/workflows/ci.yml/badge.svg)](https://github.com/probablykasper/date-picker-svelte/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/probablykasper/date-picker-svelte/branch/master/graph/badge.svg?token=8C7BMY92PA)](https://codecov.io/gh/probablykasper/date-picker-svelte)
 
 Date and time picker for Svelte
 
