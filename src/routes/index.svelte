@@ -3,6 +3,10 @@
   import DateInput from './_DateInput.svelte'
 </script>
 
+<svelte:head>
+  <title>Date Picker Svelte</title>
+</svelte:head>
+
 <p>Date and time picker for Svelte</p>
 
 <p>Features:</p>
