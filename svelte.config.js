@@ -14,7 +14,6 @@ const config = {
 
   kit: {
     target: 'body',
-    ssr: false,
     adapter: adapter({
       fallback: null,
     }),

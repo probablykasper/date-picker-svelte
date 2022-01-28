@@ -15,7 +15,10 @@
     }
   })
 
-  let theme = document.documentElement.getAttribute('data-theme') || 'dark'
+  let theme = 'dark'
+  if (typeof document === 'object') {
+    theme = document.documentElement.getAttribute('data-theme') || 'dark'
+  }
   function setTheme(newTheme: string) {
     document.documentElement.setAttribute('data-theme', newTheme)
     theme = newTheme
