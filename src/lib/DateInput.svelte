@@ -11,32 +11,38 @@
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
-  const defaultDate = new Date()
+  /** Default date to use before value is assigned */
+  export let defaultDate = new Date();
 
   // inner date value store for preventing value updates (and also
   // text updates as a result) when date is unchanged
-  const innerStore = writable(defaultDate)
+  const innerStore = writable(null);
   const store = (() => {
     return {
       subscribe: innerStore.subscribe,
       set: (d: Date) => {
-        if (d.getTime() !== $innerStore.getTime()) {
+        console.log('*** store set', {d});
+        if (d && (d.getTime() !== $innerStore?.getTime())) {
           innerStore.set(d)
           value = d
+        } else if (!d && $innerStore) {
+          innerStore.set(null);
         }
       },
     }
   })()
 
   /** Date value */
-  export let value = defaultDate
+  export let value = null;
   $: store.set(value)
+
+  console.log('*** value', {value});
   /** The earliest value the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest value the user can select */
   export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
   /** Placeholder text to show when input field is empty */
-  export let placeholder = '2020-12-31 23:00:00'
+  export let placeholder = 'yyyy-MM-dd HH:mm:ss'
   /** Whether the text is valid */
   export let valid = true
 
@@ -49,21 +55,34 @@
   export let locale: Locale = {}
 
   function valueUpdate(value: Date, formatTokens: FormatToken[]) {
-    text = toText(value, formatTokens)
+    console.log('*** valueUpdate', {text, value});
+    text = toText(value, formatTokens);
   }
   $: valueUpdate($store, formatTokens)
 
-  export let text = toText($store, formatTokens)
+  export let text = toText($store, formatTokens);
+  console.log('*** text init', {text, value});
   let textHistory = [text, text]
   $: textHistory = [textHistory[1], text]
 
   function textUpdate(text: string, formatTokens: FormatToken[]) {
-    const result = parse(text, formatTokens, $store)
-    if (result.date !== null) {
-      valid = true
-      store.set(result.date)
+    console.log('*** text update', {text, value});
+    if (text.length) {
+      console.log('*** text update value', value);
+      const result = parse(text, formatTokens, $store)
+      if (result.date !== null) {
+        valid = true
+        store.set(result.date)
+      } else {
+        valid = false
+      }
     } else {
-      valid = false
+      // value resets to null if you clear the field
+      console.log('*** text update clear value', value);
+      if (value) {
+        value = null;
+        store.set(null as Date);
+      }
     }
   }
   $: textUpdate(text, formatTokens)
@@ -137,6 +156,7 @@
       <DateTimePicker
         on:focusout={onFocusOut}
         on:select={onSelect}
+        bind:defaultDate
         bind:value={$store}
         {min}
         {max}

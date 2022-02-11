@@ -10,12 +10,15 @@ export function getMonthLength(year: number, month: number): number {
 }
 
 export function toText(date: Date, formatTokens: FormatToken[]): string {
+  console.log('*** toText', {date});
   let text = ''
-  for (const token of formatTokens) {
-    if (typeof token === 'string') {
-      text += token
-    } else {
-      text += token.toString(date)
+  if (date) {
+    for (const token of formatTokens) {
+      if (typeof token === 'string') {
+        text += token
+      } else {
+        text += token.toString(date)
+      }
     }
   }
   return text

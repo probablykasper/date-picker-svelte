@@ -7,19 +7,24 @@
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
+  /** Default Date to use */
+  export let defaultDate = new Date()
+
   /** Date value */
-  export let value = new Date()
+  export let value = null;
   function setValue(d: Date) {
-    if (d.getTime() !== value.getTime()) value = d
+    console.log('*** setting value', {d, value});
+    console.trace('*** setting value');
+    if (d.getTime() !== value?.getTime()) value = d
   }
   function updateValue(updater: (date: Date) => Date) {
-    let d = updater(new Date(value.getTime()))
+    let d = updater(new Date((value ?? defaultDate).getTime()))
     setValue(d)
   }
   /** The earliest year the user can select */
-  export let min = new Date(new Date().getFullYear() - 20, 0, 1)
+  export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest year the user can select */
-  export let max = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999)
+  export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
   let years = getYears(min, max)
   $: years = getYears(min, max)
   function getYears(min: Date, max: Date) {
@@ -29,9 +34,9 @@
     }
     return years
   }
-  $: if (value > max) {
+  $: if (value && value > max) {
     setValue(max)
-  } else if (value < min) {
+  } else if (value && value < min) {
     setValue(min)
   }
 
@@ -39,18 +44,21 @@
   export let locale: Locale = {}
   $: iLocale = getInnerLocale(locale)
 
-  let year = value.getFullYear()
+  let year = (value ?? defaultDate).getFullYear();
   const getYear = (value: Date) => (year = value.getFullYear())
   function setYear(year: number) {
-    updateValue((value) => {
-      value.setFullYear(year)
-      return value
-    })
+    console.log('*** setting year', {year});
+    if (value) {
+      updateValue((value) => {
+        value.setFullYear(year)
+        return value
+      })
+    }
   }
-  $: getYear(value)
+  $: getYear(value ?? defaultDate)
   $: setYear(year)
 
-  let month = value.getMonth()
+  let month = (value ?? defaultDate).getMonth();
   const getMonth = (value: Date) => (month = value.getMonth())
   function setMonth(month: number) {
     let newYear = year
@@ -64,26 +72,26 @@
     }
 
     const maxDate = getMonthLength(newYear, newMonth)
-    const newDate = Math.min(value.getDate(), maxDate)
+    const newDate = Math.min((value ?? defaultDate).getDate(), maxDate)
     setValue(
       new Date(
         newYear,
         newMonth,
         newDate,
-        value.getHours(),
-        value.getMinutes(),
-        value.getSeconds(),
-        value.getMilliseconds()
+        (value ?? defaultDate).getHours(),
+        (value ?? defaultDate).getMinutes(),
+        (value ?? defaultDate).getSeconds(),
+        (value ?? defaultDate).getMilliseconds()
       )
     )
   }
-  $: getMonth(value)
+  $: getMonth(value ?? defaultDate)
   $: setMonth(month)
 
-  let dayOfMonth = value.getDate()
-  $: dayOfMonth = value.getDate()
+  let dayOfMonth = (value ?? defaultDate).getDate();
+  $: dayOfMonth = (value ?? defaultDate).getDate();
 
-  $: calendarDays = getCalendarDays(value, iLocale.weekStartsOn)
+  $: calendarDays = getCalendarDays(value ?? defaultDate, iLocale.weekStartsOn)
 
   function setDay(calendarDay: CalendarDay) {
     if (dayIsInRange(calendarDay, min, max)) {

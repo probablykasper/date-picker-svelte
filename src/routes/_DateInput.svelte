@@ -3,6 +3,7 @@
   import Prop from './_prop.svelte'
   import Split from './_split.svelte'
 
+  let defaultDate: Date
   let placeholder: string
   let value: Date
   let min: Date
@@ -19,6 +20,7 @@
     bind:value
     bind:min
     bind:max
+    bind:defaultDate
     bind:placeholder
     bind:valid
     bind:format
@@ -31,6 +33,7 @@
     <Prop label="value">{value}</Prop>
     <Prop label="min" bind:value={min} />
     <Prop label="max" bind:value={max} />
+    <Prop label="defaultDate" bind:value={defaultDate} />
     <Prop label="placeholder" bind:value={placeholder} />
     <Prop label="valid" bind:value={valid} />
     <Prop label="format" bind:value={format} />
