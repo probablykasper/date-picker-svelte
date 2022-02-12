@@ -21,7 +21,6 @@
     return {
       subscribe: innerStore.subscribe,
       set: (d: Date) => {
-        console.log('*** store set', {d});
         if (d && (d.getTime() !== $innerStore?.getTime())) {
           innerStore.set(d)
           value = d
@@ -36,7 +35,6 @@
   export let value = null;
   $: store.set(value)
 
-  console.log('*** value', {value});
   /** The earliest value the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest value the user can select */
@@ -55,20 +53,16 @@
   export let locale: Locale = {}
 
   function valueUpdate(value: Date, formatTokens: FormatToken[]) {
-    console.log('*** valueUpdate', {text, value});
     text = toText(value, formatTokens);
   }
   $: valueUpdate($store, formatTokens)
 
   export let text = toText($store, formatTokens);
-  console.log('*** text init', {text, value});
   let textHistory = [text, text]
   $: textHistory = [textHistory[1], text]
 
   function textUpdate(text: string, formatTokens: FormatToken[]) {
-    console.log('*** text update', {text, value});
     if (text.length) {
-      console.log('*** text update value', value);
       const result = parse(text, formatTokens, $store)
       if (result.date !== null) {
         valid = true
@@ -78,7 +72,6 @@
       }
     } else {
       // value resets to null if you clear the field
-      console.log('*** text update clear value', value);
       if (value) {
         value = null;
         store.set(null as Date);
