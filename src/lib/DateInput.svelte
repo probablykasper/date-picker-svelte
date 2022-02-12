@@ -6,7 +6,7 @@
   import { parse, createFormat } from './parse'
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
-  import { writable } from 'svelte/store'
+  import { Writable, writable } from 'svelte/store'
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
@@ -16,7 +16,7 @@
 
   // inner date value store for preventing value updates (and also
   // text updates as a result) when date is unchanged
-  const innerStore = writable(null);
+  const innerStore: Writable<Date | null> = writable(null);
   const store = (() => {
     return {
       subscribe: innerStore.subscribe,
