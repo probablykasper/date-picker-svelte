@@ -8,7 +8,7 @@
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
   /** Default Date to use */
-  export let defaultDate = new Date()
+  const defaultDate = new Date()
 
   /** Date value */
   export let value: Date | null = null;

@@ -31,7 +31,6 @@ Component with an input field that shows the DatePicker component on focus.
 | `value`               | Date   | Date value                                                                  |
 | `min`                 | Date   | The earliest value the user can select                                      |
 | `max`                 | Date   | The latest value the user can select                                        |
-| `defaultDate`         | Date   | Default date to use before value is assigned (defaults to the current date) |
 | `placeholder`         | string | Placeholder used when date value is null                                    |
 | `valid`               | bool   | Whether the text is valid                                                   |
 | `format`              | string | Format string                                                               |
@@ -61,7 +60,6 @@ Component with a calendar for choosing a date.
 | Prop                 | Type   | Description                            |
 |:---------------------| :----- | :------------------------------------- |
 | `value`              | Date   | Date value                             |
-| `defaultDate`        | Date   | Default date to use before value is assigned (defaults to the current date)  |
 | `min`                | Date   | The earliest year the user can select  |
 | `max`                | Date   | The latest year the user can select    |
 | `locale`             | Locale | Locale object for internationalization |
