@@ -11,15 +11,20 @@
   export let defaultDate = new Date()
 
   /** Date value */
-  export let value = null;
+  export let value: Date | null = null;
   function setValue(d: Date) {
-    console.log('*** setting value', {d, value});
-    console.trace('*** setting value');
     if (d.getTime() !== value?.getTime()) value = d
   }
-  function updateValue(updater: (date: Date) => Date) {
-    let d = updater(new Date((value ?? defaultDate).getTime()))
-    setValue(d)
+
+  tmpPickerDate = value ?? defaultDate;
+  $: tmpPickerDate = value ?? defaultDate;
+
+  function setPickerDate(d: Date) {
+    if (d.getTime() !== tmpPickerDate.getTime()) tmpPickerDate = d
+  }
+  function updatePickerDate(updater: (date: Date) => Date) {
+    let d = updater(new Date(tmpPickerDate.getTime()))
+    setPickerDate(d)
   }
   /** The earliest year the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
@@ -34,6 +39,7 @@
     }
     return years
   }
+
   $: if (value && value > max) {
     setValue(max)
   } else if (value && value < min) {
@@ -44,22 +50,21 @@
   export let locale: Locale = {}
   $: iLocale = getInnerLocale(locale)
 
-  let year = (value ?? defaultDate).getFullYear();
-  const getYear = (value: Date) => (year = value.getFullYear())
+  let year = tmpPickerDate.getFullYear();
+  const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
   function setYear(year: number) {
-    console.log('*** setting year', {year});
     if (value) {
-      updateValue((value) => {
-        value.setFullYear(year)
-        return value
+      updatePickerDate((tmpPickerDate) => {
+        tmpPickerDate.setFullYear(year)
+        return tmpPickerDate
       })
     }
   }
-  $: getYear(value ?? defaultDate)
+  $: getYear(tmpPickerDate)
   $: setYear(year)
 
-  let month = (value ?? defaultDate).getMonth();
-  const getMonth = (value: Date) => (month = value.getMonth())
+  let month = tmpPickerDate.getMonth();
+  const getMonth = (tmpPickerDate: Date) => (month = tmpPickerDate.getMonth())
   function setMonth(month: number) {
     let newYear = year
     let newMonth = month
@@ -72,37 +77,38 @@
     }
 
     const maxDate = getMonthLength(newYear, newMonth)
-    const newDate = Math.min((value ?? defaultDate).getDate(), maxDate)
-    setValue(
+    const newDate = Math.min(tmpPickerDate.getDate(), maxDate)
+    setPickerDate(
       new Date(
         newYear,
         newMonth,
         newDate,
-        (value ?? defaultDate).getHours(),
-        (value ?? defaultDate).getMinutes(),
-        (value ?? defaultDate).getSeconds(),
-        (value ?? defaultDate).getMilliseconds()
+        tmpPickerDate.getHours(),
+        tmpPickerDate.getMinutes(),
+        tmpPickerDate.getSeconds(),
+        tmpPickerDate.getMilliseconds()
       )
     )
   }
-  $: getMonth(value ?? defaultDate)
+  $: getMonth(tmpPickerDate)
   $: setMonth(month)
 
-  let dayOfMonth = (value ?? defaultDate).getDate();
-  $: dayOfMonth = (value ?? defaultDate).getDate();
+  let dayOfMonth = tmpPickerDate.getDate();
+  $: dayOfMonth = tmpPickerDate.getDate();
 
-  $: calendarDays = getCalendarDays(value ?? defaultDate, iLocale.weekStartsOn)
+  $: calendarDays = getCalendarDays(tmpPickerDate, iLocale.weekStartsOn)
 
   function setDay(calendarDay: CalendarDay) {
     if (dayIsInRange(calendarDay, min, max)) {
-      updateValue((value) => {
-        value.setFullYear(0)
-        value.setMonth(0)
-        value.setDate(1)
-        value.setFullYear(calendarDay.year)
-        value.setMonth(calendarDay.month)
-        value.setDate(calendarDay.number)
-        return value
+      updatePickerDate((tmpPickerDate) => {
+        tmpPickerDate.setFullYear(0)
+        tmpPickerDate.setMonth(0)
+        tmpPickerDate.setDate(1)
+        tmpPickerDate.setFullYear(calendarDay.year)
+        tmpPickerDate.setMonth(calendarDay.month)
+        tmpPickerDate.setDate(calendarDay.number)
+        setValue(tmpPickerDate);
+        return tmpPickerDate
       })
     }
   }
@@ -146,24 +152,28 @@
   }
   function keydown(e: KeyboardEvent) {
     if (e.key === 'ArrowUp') {
-      updateValue((value) => {
-        value.setDate(value.getDate() - 7)
-        return value
+      updatePickerDate((tmpPickerDate) => {
+        tmpPickerDate.setDate(tmpPickerDate.getDate() - 7)
+        setValue(tmpPickerDate);
+        return tmpPickerDate
       })
     } else if (e.key === 'ArrowDown') {
-      updateValue((value) => {
-        value.setDate(value.getDate() + 7)
-        return value
+      updatePickerDate((tmpPickerDate) => {
+        tmpPickerDate.setDate(tmpPickerDate.getDate() + 7)
+        setValue(tmpPickerDate);
+        return tmpPickerDate
       })
     } else if (e.key === 'ArrowLeft') {
-      updateValue((value) => {
-        value.setDate(value.getDate() - 1)
-        return value
+      updatePickerDate((tmpPickerDate) => {
+        tmpPickerDate.setDate(tmpPickerDate.getDate() - 1)
+        setValue(tmpPickerDate);
+        return tmpPickerDate
       })
     } else if (e.key === 'ArrowRight') {
-      updateValue((value) => {
-        value.setDate(value.getDate() + 1)
-        return value
+      updatePickerDate((tmpPickerDate) => {
+        tmpPickerDate.setDate(tmpPickerDate.getDate() + 1)
+        setValue(tmpPickerDate);
+        return tmpPickerDate
       })
     } else {
       return
