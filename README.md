@@ -49,12 +49,10 @@ Check the [docs](https://date-picker-svelte.kasper.space/docs) to learn more
 
 - `npm run dev`: Start site in dev mode
 - `npm run build`: Build package and site
-- `npm run build:package`: Build package
-- `npm run build:site`: Build site
 - `npm run preview`: Preview production site
 - `npm run check`: Run `svelte-check`
 - `npm run test`: Run tests
-- `npm run lint`: Lint
+- `npm run format`: Format code
 
 ### Publish new version
 

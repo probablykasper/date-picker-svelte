@@ -1,5 +1,5 @@
 name: test
-on: [push, workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,9 +10,13 @@ jobs:
       - name: Node.js setup
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16
 
       - run: npm install
+
+      - run: npm run check
+
+      - run: npm run lint
 
       - run: npm run test:coverage
 

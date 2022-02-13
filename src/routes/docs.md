@@ -1,10 +1,12 @@
 <svelte:head>
+
   <title>Docs • Date Picker Svelte</title>
 </svelte:head>
 
 # Documentation
 
 ## Install
+
 ```
 npm install -D date-picker-svelte
 ```
