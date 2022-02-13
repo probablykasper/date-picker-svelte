@@ -40,7 +40,7 @@
   /** The latest value the user can select */
   export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
   /** Placeholder text to show when input field is empty */
-  export let placeholder = 'yyyy-MM-dd HH:mm:ss'
+  export let placeholder = '2020-12-31 23:00:00'
   /** Whether the text is valid */
   export let valid = true
 
