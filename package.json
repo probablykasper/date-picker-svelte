@@ -10,9 +10,9 @@
     "build:site": "svelte-kit build",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js",
+    "lint": "prettier --check --plugin-search-dir=. src *.js && eslint src *.js",
+    "format": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js",
     "test": "jest tests",
-    "test:watch": "jest --watchAll",
     "test:coverage": "jest --collect-coverage --collectCoverageFrom=src/lib/**"
   },
   "devDependencies": {
