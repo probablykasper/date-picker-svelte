@@ -21,11 +21,12 @@
     return {
       subscribe: innerStore.subscribe,
       set: (d: Date | null) => {
-        if (d && d.getTime() !== $innerStore?.getTime()) {
+        if (d === null) {
+          innerStore.set(null)
+          value = d
+        } else if (d.getTime() !== $innerStore?.getTime()) {
           innerStore.set(d)
           value = d
-        } else if (!d && $innerStore) {
-          innerStore.set(null)
         }
       },
     }
