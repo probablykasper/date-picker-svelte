@@ -16,7 +16,7 @@
     if (d.getTime() !== value?.getTime()) value = d
   }
 
-  tmpPickerDate = value ?? defaultDate
+  let tmpPickerDate = value ?? defaultDate
   $: tmpPickerDate = value ?? defaultDate
 
   function setPickerDate(d: Date) {

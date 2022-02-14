@@ -20,7 +20,7 @@
   const store = (() => {
     return {
       subscribe: innerStore.subscribe,
-      set: (d: Date) => {
+      set: (d: Date | null) => {
         if (d && d.getTime() !== $innerStore?.getTime()) {
           innerStore.set(d)
           value = d
@@ -32,7 +32,7 @@
   })()
 
   /** Date value */
-  export let value = null
+  export let value: Date | null = null
   $: store.set(value)
 
   /** The earliest value the user can select */
@@ -52,7 +52,7 @@
   /** Locale object for internationalization */
   export let locale: Locale = {}
 
-  function valueUpdate(value: Date, formatTokens: FormatToken[]) {
+  function valueUpdate(value: Date | null, formatTokens: FormatToken[]) {
     text = toText(value, formatTokens)
   }
   $: valueUpdate($store, formatTokens)
@@ -74,7 +74,7 @@
       // value resets to null if you clear the field
       if (value) {
         value = null
-        store.set(null as Date)
+        store.set(null)
       }
     }
   }

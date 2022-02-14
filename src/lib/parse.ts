@@ -11,7 +11,7 @@ type ParseResult = {
   date: Date | null
   missingPunctuation: string
 }
-export function parse(str: string, tokens: FormatToken[], baseDate?: Date): ParseResult {
+export function parse(str: string, tokens: FormatToken[], baseDate: Date | null): ParseResult {
   let missingPunctuation = ''
   let valid = true
 

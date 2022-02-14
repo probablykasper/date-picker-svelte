@@ -9,7 +9,7 @@ export function getMonthLength(year: number, month: number): number {
   return monthLenghts[month]
 }
 
-export function toText(date: Date, formatTokens: FormatToken[]): string {
+export function toText(date: Date | null, formatTokens: FormatToken[]): string {
   let text = ''
   if (date) {
     for (const token of formatTokens) {
