@@ -31,7 +31,7 @@ The component will not assign a date value until a specific date is selected in 
 
 | Prop               | Type           | Description                                  |
 | :----------------- |:---------------| :------------------------------------------- |
-| `value`            | Date (or null) | Date value                                   |
+| `value`            | Date \| null   | Date value                                   |
 | `min`              | Date           | The earliest value the user can select       |
 | `max`              | Date           | The latest value the user can select         |
 | `placeholder`      | string         | Placeholder used when date value is null     |
@@ -63,7 +63,7 @@ The component will not assign a date value until a specific date is selected in 
 
 | Prop     | Type           | Description                            |
 | :------- |:---------------| :------------------------------------- |
-| `value`  | Date (or null) | Date value                             |
+| `value`  | Date \| null   | Date value                             |
 | `min`    | Date           | The earliest year the user can select  |
 | `max`    | Date           | The latest year the user can select    |
 | `locale` | Locale         | Locale object for internationalization |
