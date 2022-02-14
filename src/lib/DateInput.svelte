@@ -11,7 +11,7 @@
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
-  /** Default date to use before value is assigned */
+  /** Default date to display in picker before value is assigned */
   const defaultDate = new Date()
 
   // inner date value store for preventing value updates (and also
