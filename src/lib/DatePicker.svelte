@@ -53,12 +53,13 @@
   let year = tmpPickerDate.getFullYear()
   const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
   function setYear(year: number) {
-    if (value) {
-      updatePickerDate((tmpPickerDate) => {
-        tmpPickerDate.setFullYear(year)
-        return tmpPickerDate
-      })
-    }
+    updatePickerDate((tmpPickerDate) => {
+      tmpPickerDate.setFullYear(year)
+      if (value) {
+        setValue(tmpPickerDate)
+      }
+      return tmpPickerDate
+    })
   }
   $: getYear(tmpPickerDate)
   $: setYear(year)
@@ -89,6 +90,9 @@
         tmpPickerDate.getMilliseconds()
       )
     )
+    if (value) {
+      setValue(tmpPickerDate)
+    }
   }
   $: getMonth(tmpPickerDate)
   $: setMonth(month)
