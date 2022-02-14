@@ -29,17 +29,17 @@ The component will not assign a date value until a specific date is selected in 
 
 ### Props
 
-| Prop               | Type           | Description                                  |
-| :----------------- |:---------------| :------------------------------------------- |
-| `value`            | Date \| null   | Date value                                   |
-| `min`              | Date           | The earliest value the user can select       |
-| `max`              | Date           | The latest value the user can select         |
-| `placeholder`      | string         | Placeholder used when date value is null     |
-| `valid`            | bool           | Whether the text is valid                    |
-| `format`           | string         | Format string                                |
-| `visible`          | bool           | Whether the date popup is visible            |
-| `closeOnSelection` | bool           | Close the date popup when a date is selected |
-| `locale`           | Locale         | Locale object for internationalization       |
+| Prop               | Type         | Description                                  |
+| :----------------- | :----------- | :------------------------------------------- |
+| `value`            | Date \| null | Date value                                   |
+| `min`              | Date         | The earliest value the user can select       |
+| `max`              | Date         | The latest value the user can select         |
+| `placeholder`      | string       | Placeholder used when date value is null     |
+| `valid`            | bool         | Whether the text is valid                    |
+| `format`           | string       | Format string                                |
+| `visible`          | bool         | Whether the date popup is visible            |
+| `closeOnSelection` | bool         | Close the date popup when a date is selected |
+| `locale`           | Locale       | Locale object for internationalization       |
 
 #### Format string
 
@@ -61,12 +61,12 @@ The component will not assign a date value until a specific date is selected in 
 
 ### Props
 
-| Prop     | Type           | Description                            |
-| :------- |:---------------| :------------------------------------- |
-| `value`  | Date \| null   | Date value                             |
-| `min`    | Date           | The earliest year the user can select  |
-| `max`    | Date           | The latest year the user can select    |
-| `locale` | Locale         | Locale object for internationalization |
+| Prop     | Type         | Description                            |
+| :------- | :----------- | :------------------------------------- |
+| `value`  | Date \| null | Date value                             |
+| `min`    | Date         | The earliest year the user can select  |
+| `max`    | Date         | The latest year the user can select    |
+| `locale` | Locale       | Locale object for internationalization |
 
 ## Internationalization
 
