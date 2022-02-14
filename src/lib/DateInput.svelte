@@ -12,27 +12,27 @@
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
   /** Default date to use before value is assigned */
-  const defaultDate = new Date();
+  const defaultDate = new Date()
 
   // inner date value store for preventing value updates (and also
   // text updates as a result) when date is unchanged
-  const innerStore: Writable<Date | null> = writable(null);
+  const innerStore: Writable<Date | null> = writable(null)
   const store = (() => {
     return {
       subscribe: innerStore.subscribe,
       set: (d: Date) => {
-        if (d && (d.getTime() !== $innerStore?.getTime())) {
+        if (d && d.getTime() !== $innerStore?.getTime()) {
           innerStore.set(d)
           value = d
         } else if (!d && $innerStore) {
-          innerStore.set(null);
+          innerStore.set(null)
         }
       },
     }
   })()
 
   /** Date value */
-  export let value = null;
+  export let value = null
   $: store.set(value)
 
   /** The earliest value the user can select */
@@ -53,11 +53,11 @@
   export let locale: Locale = {}
 
   function valueUpdate(value: Date, formatTokens: FormatToken[]) {
-    text = toText(value, formatTokens);
+    text = toText(value, formatTokens)
   }
   $: valueUpdate($store, formatTokens)
 
-  export let text = toText($store, formatTokens);
+  export let text = toText($store, formatTokens)
   let textHistory = [text, text]
   $: textHistory = [textHistory[1], text]
 
@@ -73,8 +73,8 @@
     } else {
       // value resets to null if you clear the field
       if (value) {
-        value = null;
-        store.set(null as Date);
+        value = null
+        store.set(null as Date)
       }
     }
   }

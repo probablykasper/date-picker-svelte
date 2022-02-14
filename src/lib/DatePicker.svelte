@@ -11,13 +11,13 @@
   const defaultDate = new Date()
 
   /** Date value */
-  export let value: Date | null = null;
+  export let value: Date | null = null
   function setValue(d: Date) {
     if (d.getTime() !== value?.getTime()) value = d
   }
 
-  tmpPickerDate = value ?? defaultDate;
-  $: tmpPickerDate = value ?? defaultDate;
+  tmpPickerDate = value ?? defaultDate
+  $: tmpPickerDate = value ?? defaultDate
 
   function setPickerDate(d: Date) {
     if (d.getTime() !== tmpPickerDate.getTime()) tmpPickerDate = d
@@ -50,7 +50,7 @@
   export let locale: Locale = {}
   $: iLocale = getInnerLocale(locale)
 
-  let year = tmpPickerDate.getFullYear();
+  let year = tmpPickerDate.getFullYear()
   const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
   function setYear(year: number) {
     if (value) {
@@ -63,7 +63,7 @@
   $: getYear(tmpPickerDate)
   $: setYear(year)
 
-  let month = tmpPickerDate.getMonth();
+  let month = tmpPickerDate.getMonth()
   const getMonth = (tmpPickerDate: Date) => (month = tmpPickerDate.getMonth())
   function setMonth(month: number) {
     let newYear = year
@@ -93,8 +93,8 @@
   $: getMonth(tmpPickerDate)
   $: setMonth(month)
 
-  let dayOfMonth = tmpPickerDate.getDate();
-  $: dayOfMonth = tmpPickerDate.getDate();
+  let dayOfMonth = tmpPickerDate.getDate()
+  $: dayOfMonth = tmpPickerDate.getDate()
 
   $: calendarDays = getCalendarDays(tmpPickerDate, iLocale.weekStartsOn)
 
@@ -107,7 +107,7 @@
         tmpPickerDate.setFullYear(calendarDay.year)
         tmpPickerDate.setMonth(calendarDay.month)
         tmpPickerDate.setDate(calendarDay.number)
-        setValue(tmpPickerDate);
+        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     }
@@ -154,25 +154,25 @@
     if (e.key === 'ArrowUp') {
       updatePickerDate((tmpPickerDate) => {
         tmpPickerDate.setDate(tmpPickerDate.getDate() - 7)
-        setValue(tmpPickerDate);
+        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     } else if (e.key === 'ArrowDown') {
       updatePickerDate((tmpPickerDate) => {
         tmpPickerDate.setDate(tmpPickerDate.getDate() + 7)
-        setValue(tmpPickerDate);
+        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     } else if (e.key === 'ArrowLeft') {
       updatePickerDate((tmpPickerDate) => {
         tmpPickerDate.setDate(tmpPickerDate.getDate() - 1)
-        setValue(tmpPickerDate);
+        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     } else if (e.key === 'ArrowRight') {
       updatePickerDate((tmpPickerDate) => {
         tmpPickerDate.setDate(tmpPickerDate.getDate() + 1)
-        setValue(tmpPickerDate);
+        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     } else {
