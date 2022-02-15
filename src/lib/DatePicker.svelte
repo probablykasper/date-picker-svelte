@@ -303,6 +303,7 @@
       height: 10px
   select.dummy-select
     position: absolute
+    width: 100%
     pointer-events: none
     outline: none
     color: var(--date-picker-foreground, #000000)
