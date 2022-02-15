@@ -7,25 +7,32 @@
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
-  /** Default Date to use */
-  const defaultDate = new Date()
-
-  /** Date value */
+  /** Date value. It's `null` if no date is selected */
   export let value: Date | null = null
   function setValue(d: Date) {
-    if (d.getTime() !== value?.getTime()) value = d
+    if (d.getTime() !== value?.getTime()) {
+      value = d
+    }
   }
+  function updateValue(updater: (date: Date) => Date) {
+    const newValue = updater(new Date(tmpPickerDate.getTime()))
+    setValue(newValue)
+  }
+
+  /** Default Date to use */
+  const defaultDate = new Date()
 
   let tmpPickerDate = value ?? defaultDate
   $: tmpPickerDate = value ?? defaultDate
 
-  function setPickerDate(d: Date) {
-    if (d.getTime() !== tmpPickerDate.getTime()) tmpPickerDate = d
+  /** Update the shownDate. The date is only selected if a date is already selected */
+  function updateShownDate(updater: (date: Date) => Date) {
+    tmpPickerDate = updater(new Date(tmpPickerDate.getTime()))
+    if (value && tmpPickerDate.getTime() !== value.getTime()) {
+      setValue(tmpPickerDate)
+    }
   }
-  function updatePickerDate(updater: (date: Date) => Date) {
-    let d = updater(new Date(tmpPickerDate.getTime()))
-    setPickerDate(d)
-  }
+
   /** The earliest year the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest year the user can select */
@@ -53,11 +60,8 @@
   let year = tmpPickerDate.getFullYear()
   const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
   function setYear(year: number) {
-    updatePickerDate((tmpPickerDate) => {
+    updateShownDate((tmpPickerDate) => {
       tmpPickerDate.setFullYear(year)
-      if (value) {
-        setValue(tmpPickerDate)
-      }
       return tmpPickerDate
     })
   }
@@ -79,20 +83,17 @@
 
     const maxDate = getMonthLength(newYear, newMonth)
     const newDate = Math.min(tmpPickerDate.getDate(), maxDate)
-    setPickerDate(
-      new Date(
+    updateShownDate((date) => {
+      return new Date(
         newYear,
         newMonth,
         newDate,
-        tmpPickerDate.getHours(),
-        tmpPickerDate.getMinutes(),
-        tmpPickerDate.getSeconds(),
-        tmpPickerDate.getMilliseconds()
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+        date.getMilliseconds()
       )
-    )
-    if (value) {
-      setValue(tmpPickerDate)
-    }
+    })
   }
   $: getMonth(tmpPickerDate)
   $: setMonth(month)
@@ -104,15 +105,14 @@
 
   function setDay(calendarDay: CalendarDay) {
     if (dayIsInRange(calendarDay, min, max)) {
-      updatePickerDate((tmpPickerDate) => {
-        tmpPickerDate.setFullYear(0)
-        tmpPickerDate.setMonth(0)
-        tmpPickerDate.setDate(1)
-        tmpPickerDate.setFullYear(calendarDay.year)
-        tmpPickerDate.setMonth(calendarDay.month)
-        tmpPickerDate.setDate(calendarDay.number)
-        setValue(tmpPickerDate)
-        return tmpPickerDate
+      updateValue((value) => {
+        value.setFullYear(0)
+        value.setMonth(0)
+        value.setDate(1)
+        value.setFullYear(calendarDay.year)
+        value.setMonth(calendarDay.month)
+        value.setDate(calendarDay.number)
+        return value
       })
     }
   }
@@ -156,27 +156,23 @@
   }
   function keydown(e: KeyboardEvent) {
     if (e.key === 'ArrowUp') {
-      updatePickerDate((tmpPickerDate) => {
+      updateShownDate((tmpPickerDate) => {
         tmpPickerDate.setDate(tmpPickerDate.getDate() - 7)
-        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     } else if (e.key === 'ArrowDown') {
-      updatePickerDate((tmpPickerDate) => {
+      updateShownDate((tmpPickerDate) => {
         tmpPickerDate.setDate(tmpPickerDate.getDate() + 7)
-        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     } else if (e.key === 'ArrowLeft') {
-      updatePickerDate((tmpPickerDate) => {
+      updateShownDate((tmpPickerDate) => {
         tmpPickerDate.setDate(tmpPickerDate.getDate() - 1)
-        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     } else if (e.key === 'ArrowRight') {
-      updatePickerDate((tmpPickerDate) => {
+      updateShownDate((tmpPickerDate) => {
         tmpPickerDate.setDate(tmpPickerDate.getDate() + 1)
-        setValue(tmpPickerDate)
         return tmpPickerDate
       })
     } else {
