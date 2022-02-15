@@ -47,10 +47,10 @@
     return years
   }
 
-  $: if (value && value > max) {
-    setValue(max)
-  } else if (value && value < min) {
-    setValue(min)
+  $: if (shownDate > max) {
+    updateShownDate(() => max)
+  } else if (shownDate < min) {
+    updateShownDate(() => min)
   }
 
   /** Locale object for internationalization */
