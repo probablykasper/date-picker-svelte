@@ -15,21 +15,21 @@
     }
   }
   function updateValue(updater: (date: Date) => Date) {
-    const newValue = updater(new Date(tmpPickerDate.getTime()))
+    const newValue = updater(new Date(shownDate.getTime()))
     setValue(newValue)
   }
 
   /** Default Date to use */
   const defaultDate = new Date()
 
-  let tmpPickerDate = value ?? defaultDate
-  $: tmpPickerDate = value ?? defaultDate
+  let shownDate = value ?? defaultDate
+  $: shownDate = value ?? defaultDate
 
   /** Update the shownDate. The date is only selected if a date is already selected */
   function updateShownDate(updater: (date: Date) => Date) {
-    tmpPickerDate = updater(new Date(tmpPickerDate.getTime()))
-    if (value && tmpPickerDate.getTime() !== value.getTime()) {
-      setValue(tmpPickerDate)
+    shownDate = updater(new Date(shownDate.getTime()))
+    if (value && shownDate.getTime() !== value.getTime()) {
+      setValue(shownDate)
     }
   }
 
@@ -57,7 +57,7 @@
   export let locale: Locale = {}
   $: iLocale = getInnerLocale(locale)
 
-  let year = tmpPickerDate.getFullYear()
+  let year = shownDate.getFullYear()
   const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
   function setYear(year: number) {
     updateShownDate((tmpPickerDate) => {
@@ -65,10 +65,10 @@
       return tmpPickerDate
     })
   }
-  $: getYear(tmpPickerDate)
+  $: getYear(shownDate)
   $: setYear(year)
 
-  let month = tmpPickerDate.getMonth()
+  let month = shownDate.getMonth()
   const getMonth = (tmpPickerDate: Date) => (month = tmpPickerDate.getMonth())
   function setMonth(month: number) {
     let newYear = year
@@ -82,7 +82,7 @@
     }
 
     const maxDate = getMonthLength(newYear, newMonth)
-    const newDate = Math.min(tmpPickerDate.getDate(), maxDate)
+    const newDate = Math.min(shownDate.getDate(), maxDate)
     updateShownDate((date) => {
       return new Date(
         newYear,
@@ -95,13 +95,13 @@
       )
     })
   }
-  $: getMonth(tmpPickerDate)
+  $: getMonth(shownDate)
   $: setMonth(month)
 
-  let dayOfMonth = tmpPickerDate.getDate()
-  $: dayOfMonth = tmpPickerDate.getDate()
+  let dayOfMonth = shownDate.getDate()
+  $: dayOfMonth = shownDate.getDate()
 
-  $: calendarDays = getCalendarDays(tmpPickerDate, iLocale.weekStartsOn)
+  $: calendarDays = getCalendarDays(shownDate, iLocale.weekStartsOn)
 
   function setDay(calendarDay: CalendarDay) {
     if (dayIsInRange(calendarDay, min, max)) {
