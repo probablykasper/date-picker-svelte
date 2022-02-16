@@ -1,8 +1,9 @@
 # Changelog
 
 ## Next
-- Use `rem` for sizing the `DatePicker`
-- Make the `DatePicker` slightly larger
+- Use `rem` for sizing the DatePicker
+- Make the DatePicker slightly larger
+- Make the calendar tabbable
 - Fix styling issue for languages with long month names
 
 ## 1.3.0 - 2021 Jan 4

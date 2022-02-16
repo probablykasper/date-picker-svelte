@@ -137,6 +137,10 @@
     e.preventDefault()
   }
   function keydown(e: KeyboardEvent) {
+    if ((e.target as HTMLElement)?.tagName === 'SELECT') {
+      return
+    }
+
     if (e.key === 'ArrowUp') {
       updateValue((value) => {
         value.setDate(value.getDate() - 7)
@@ -164,94 +168,95 @@
   }
 </script>
 
-<div class="date-time-picker" on:focusout tabindex="-1" on:keydown|self={keydown}>
-  <div class="top">
-    <div class="page-button" tabindex="-1" on:click={() => setMonth(month - 1)}>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-        ><path
-          d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
-          transform="rotate(180, 12, 12)"
-        /></svg
-      >
-    </div>
-    <div class="dropdown month">
-      <select bind:value={month} on:keydown={monthKeydown}>
-        {#each iLocale.months as monthName, i}
-          <option
-            disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
-              new Date(year, i) > max}
-            value={i}>{monthName}</option
-          >
-        {/each}
-      </select>
-      <!--
-        Here we have use `select.dummy-select` for showing just the <select> button. This
-        is to style the <select> button without affecting the menu popup
-        - `option { color: initial }` causes invisible menu in dark mode on Firefox
-        - `option { color: initial; background-color: initial }` causes invisible menu in Chrome
-        - `select { background-color: $bg; color: $text }` causes white scrollbar in dark mode on Firefox
-      -->
-      <select class="dummy-select" tabindex="-1">
-        {#each iLocale.months as monthName, i}
-          <option value={i} selected={i === month}>{monthName}</option>
-        {/each}
-      </select>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-        ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
-      >
-    </div>
-    <div class="dropdown year">
-      <select bind:value={year} on:keydown={yearKeydown}>
-        {#each years as v}
-          <option value={v}>{v}</option>
-        {/each}
-      </select>
-      <!-- style <select> button without affecting menu popup -->
-      <select class="dummy-select" tabindex="-1">
-        {#each years as v}
-          <option value={v} selected={v === year}>{v}</option>
-        {/each}
-      </select>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-        ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
-      >
-    </div>
-    <div class="page-button" tabindex="-1" on:click={() => setMonth(month + 1)}>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-        ><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg
-      >
-    </div>
-  </div>
-  <div class="header">
-    {#each Array(7) as _, i}
-      {#if i + iLocale.weekStartsOn < 7}
-        <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i]}</div>
-      {:else}
-        <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i - 7]}</div>
-      {/if}
-    {/each}
-  </div>
-  {#each Array(6) as _, weekIndex}
-    <div class="week">
-      {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
-        <div
-          class="cell"
-          on:click={() => selectDay(calendarDay)}
-          class:disabled={!dayIsInRange(calendarDay, min, max)}
-          class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
-          class:other-month={calendarDay.month !== month}
+<div class="date-time-picker" on:focusout tabindex="0" on:keydown={keydown}>
+  <div class="tab-container" tabindex="-1">
+    <div class="top">
+      <div class="page-button" tabindex="-1" on:click={() => setMonth(month - 1)}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          ><path
+            d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
+            transform="rotate(180, 12, 12)"
+          /></svg
         >
-          <span>{calendarDay.number}</span>
-        </div>
+      </div>
+      <div class="dropdown month">
+        <select bind:value={month} on:keydown={monthKeydown}>
+          {#each iLocale.months as monthName, i}
+            <option
+              disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
+                new Date(year, i) > max}
+              value={i}>{monthName}</option
+            >
+          {/each}
+        </select>
+        <!--
+          Here we have use `select.dummy-select` for showing just the <select> button. This
+          is to style the <select> button without affecting the menu popup
+          - `option { color: initial }` causes invisible menu in dark mode on Firefox
+          - `option { color: initial; background-color: initial }` causes invisible menu in Chrome
+          - `select { background-color: $bg; color: $text }` causes white scrollbar in dark mode on Firefox
+        -->
+        <select class="dummy-select" tabindex="-1">
+          {#each iLocale.months as monthName, i}
+            <option value={i} selected={i === month}>{monthName}</option>
+          {/each}
+        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
+        >
+      </div>
+      <div class="dropdown year">
+        <select bind:value={year} on:keydown={yearKeydown}>
+          {#each years as v}
+            <option value={v}>{v}</option>
+          {/each}
+        </select>
+        <!-- style <select> button without affecting menu popup -->
+        <select class="dummy-select" tabindex="-1">
+          {#each years as v}
+            <option value={v} selected={v === year}>{v}</option>
+          {/each}
+        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
+        >
+      </div>
+      <div class="page-button" tabindex="-1" on:click={() => setMonth(month + 1)}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+          ><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg
+        >
+      </div>
+    </div>
+    <div class="header">
+      {#each Array(7) as _, i}
+        {#if i + iLocale.weekStartsOn < 7}
+          <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i]}</div>
+        {:else}
+          <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i - 7]}</div>
+        {/if}
       {/each}
     </div>
-  {/each}
+    {#each Array(6) as _, weekIndex}
+      <div class="week">
+        {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
+          <div
+            class="cell"
+            on:click={() => selectDay(calendarDay)}
+            class:disabled={!dayIsInRange(calendarDay, min, max)}
+            class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
+            class:other-month={calendarDay.month !== month}
+          >
+            <span>{calendarDay.number}</span>
+          </div>
+        {/each}
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style lang="sass">
   .date-time-picker
     display: inline-block
-    outline: none
     color: var(--date-picker-foreground, #000000)
     background: var(--date-picker-background, #ffffff)
     user-select: none
@@ -262,6 +267,13 @@
     border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
     box-shadow: 0px 2px 6px rgba(#000000,0.08), 0px 2px 6px rgba(#000000,0.11)
+    outline: none
+    transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+    &:focus-visible
+      border-color: var(--date-picker-highlight-border, #0269f7)
+      box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
+  .tab-container
+    outline: none
   .top
     display: flex
     justify-content: center

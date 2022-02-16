@@ -23,7 +23,11 @@
   {:else if typeof value === 'boolean'}
     <input type="checkbox" bind:checked={value} />
   {:else if value instanceof Date}
-    <DateInput bind:value />
+    <DateInput
+      bind:value
+      min={new Date(new Date().getFullYear() - 20, 0)}
+      max={new Date(new Date().getFullYear() + 5, 0)}
+    />
   {:else if value instanceof Object}
     <textarea type="text" bind:value={jsonValue} on:input={jsonInput} />
   {:else}
