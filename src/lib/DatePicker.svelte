@@ -99,8 +99,8 @@
   $: getMonth(shownDate)
   $: setMonth(month)
 
-  let dayOfMonth = shownDate.getDate()
-  $: dayOfMonth = shownDate.getDate()
+  let dayOfMonth = value?.getDate() || null
+  $: dayOfMonth = value?.getDate() || null
 
   $: calendarDays = getCalendarDays(shownDate, iLocale.weekStartsOn)
 
