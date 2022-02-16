@@ -2,5 +2,4 @@
 /.svelte-kit
 /package
 /coverage
-/.idea/
 /node_modules
