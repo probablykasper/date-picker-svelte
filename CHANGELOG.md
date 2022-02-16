@@ -1,5 +1,10 @@
 # Changelog
 
+## Next
+- Use `rem` for sizing the `DatePicker`
+- Make the `DatePicker` slightly larger
+- Fix styling issue for languages with long month names
+
 ## 1.3.0 - 2021 Jan 4
 - Add `closeOnSelection` property for DateInput
 

@@ -75,6 +75,7 @@
       typeof e.data === 'string' &&
       text === textHistory[0] + e.data
     ) {
+      // check for missing punctuation, and add if there is any
       let result = parse(textHistory[0], formatTokens, $store)
       if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
         text = textHistory[0] + result.missingPunctuation + e.data

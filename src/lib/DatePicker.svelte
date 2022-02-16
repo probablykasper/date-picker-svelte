@@ -166,7 +166,7 @@
 
 <div class="date-time-picker" on:focusout tabindex="-1" on:keydown|self={keydown}>
   <div class="top">
-    <div class="page-button previous" tabindex="-1" on:click={() => setMonth(month - 1)}>
+    <div class="page-button" tabindex="-1" on:click={() => setMonth(month - 1)}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
         ><path
           d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
@@ -256,9 +256,9 @@
     background: var(--date-picker-background, #ffffff)
     user-select: none
     -webkit-user-select: none
-    padding: 8px
+    padding: 0.5rem
     cursor: default
-    font-size: 12px
+    font-size: 0.75rem
     border: 1px solid rgba(103, 113, 137, 0.3)
     border-radius: 3px
     box-shadow: 0px 2px 6px rgba(#000000,0.08), 0px 2px 6px rgba(#000000,0.11)
@@ -266,10 +266,10 @@
     display: flex
     justify-content: center
     align-items: center
-    padding-bottom: 8px
-  .dropdown, .previous
-    margin-right: 8px
+    padding-bottom: 0.5rem
   .dropdown
+    margin-left: 0.25rem
+    margin-right: 0.25rem
     position: relative
     display: flex
     svg
@@ -278,7 +278,7 @@
       top: 0px
       height: 100%
       width: 8px
-      padding: 0px 8px
+      padding: 0rem 0.5rem
       pointer-events: none
   .month
     flex-grow: 1
@@ -290,17 +290,21 @@
     opacity: 0.75
     outline: none
   .page-button
-    padding: 5px
+    width: 1.5rem
+    height: 1.5rem
     flex-shrink: 0
     border-radius: 5px
     box-sizing: border-box
     border: 1px solid transparent
+    display: flex
+    align-items: center
+    justify-content: center
     &:hover
       background-color: rgba(#808080, 0.08)
       border: 1px solid rgba(#808080, 0.08)
     svg
-      width: 10px
-      height: 10px
+      width: 0.68rem
+      height: 0.68rem
   select.dummy-select
     position: absolute
     width: 100%
@@ -321,9 +325,9 @@
     -moz-appearance: none
     appearance: none
     flex-grow: 1
-    padding: 2px 5px
-    height: 22px
-    padding-right: 22px
+    padding: 0rem 0.35rem
+    height: 1.5rem
+    padding-right: 1.3rem
     margin: 0px
     border: 1px solid rgba(108, 120, 147, 0.3)
     outline: none
@@ -334,7 +338,7 @@
     font-weight: 600
     padding-bottom: 2px
   .header-cell
-    width: 30px
+    width: 1.875rem
     text-align: center
     flex-grow: 1
 
@@ -344,8 +348,8 @@
     display: flex
     align-items: center
     justify-content: center
-    width: 30px
-    height: 30px
+    width: 2rem
+    height: 1.94rem
     flex-grow: 1
     border-radius: 5px
     box-sizing: border-box
