@@ -156,24 +156,24 @@
   }
   function keydown(e: KeyboardEvent) {
     if (e.key === 'ArrowUp') {
-      updateShownDate((tmpPickerDate) => {
-        tmpPickerDate.setDate(tmpPickerDate.getDate() - 7)
-        return tmpPickerDate
+      updateValue((value) => {
+        value.setDate(value.getDate() - 7)
+        return value
       })
     } else if (e.key === 'ArrowDown') {
-      updateShownDate((tmpPickerDate) => {
-        tmpPickerDate.setDate(tmpPickerDate.getDate() + 7)
-        return tmpPickerDate
+      updateValue((value) => {
+        value.setDate(value.getDate() + 7)
+        return value
       })
     } else if (e.key === 'ArrowLeft') {
-      updateShownDate((tmpPickerDate) => {
-        tmpPickerDate.setDate(tmpPickerDate.getDate() - 1)
-        return tmpPickerDate
+      updateValue((value) => {
+        value.setDate(value.getDate() - 1)
+        return value
       })
     } else if (e.key === 'ArrowRight') {
-      updateShownDate((tmpPickerDate) => {
-        tmpPickerDate.setDate(tmpPickerDate.getDate() + 1)
-        return tmpPickerDate
+      updateValue((value) => {
+        value.setDate(value.getDate() + 1)
+        return value
       })
     } else {
       return
