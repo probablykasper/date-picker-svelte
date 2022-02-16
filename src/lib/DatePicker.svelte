@@ -108,8 +108,27 @@
     const maxDate = new Date(max.getFullYear(), max.getMonth(), max.getDate())
     return date >= minDate && date <= maxDate
   }
+  function shiftKeydown(e: KeyboardEvent) {
+    if (e.shiftKey && e.key === 'ArrowUp') {
+      setYear(year - 1)
+    } else if (e.shiftKey && e.key === 'ArrowDown') {
+      setYear(year + 1)
+    } else if (e.shiftKey && e.key === 'ArrowLeft') {
+      setMonth(month - 1)
+    } else if (e.shiftKey && e.key === 'ArrowRight') {
+      setMonth(month + 1)
+    } else {
+      return false
+    }
+    e.preventDefault()
+    return true
+  }
   function yearKeydown(e: KeyboardEvent) {
-    if (e.key === 'ArrowUp') {
+    let shift = e.shiftKey || e.altKey
+    if (shift) {
+      shiftKeydown(e)
+      return
+    } else if (e.key === 'ArrowUp') {
       setYear(year - 1)
     } else if (e.key === 'ArrowDown') {
       setYear(year + 1)
@@ -118,12 +137,17 @@
     } else if (e.key === 'ArrowRight') {
       setMonth(month + 1)
     } else {
+      shiftKeydown(e)
       return
     }
     e.preventDefault()
   }
   function monthKeydown(e: KeyboardEvent) {
-    if (e.key === 'ArrowUp') {
+    let shift = e.shiftKey || e.altKey
+    if (shift) {
+      shiftKeydown(e)
+      return
+    } else if (e.key === 'ArrowUp') {
       setMonth(month - 1)
     } else if (e.key === 'ArrowDown') {
       setMonth(month + 1)
@@ -132,16 +156,20 @@
     } else if (e.key === 'ArrowRight') {
       setMonth(month + 1)
     } else {
+      shiftKeydown(e)
       return
     }
     e.preventDefault()
   }
   function keydown(e: KeyboardEvent) {
+    let shift = e.shiftKey || e.altKey
     if ((e.target as HTMLElement)?.tagName === 'SELECT') {
       return
     }
-
-    if (e.key === 'ArrowUp') {
+    if (shift) {
+      shiftKeydown(e)
+      return
+    } else if (e.key === 'ArrowUp') {
       updateValue((value) => {
         value.setDate(value.getDate() - 7)
         return value
