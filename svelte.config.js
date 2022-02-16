@@ -13,7 +13,6 @@ const config = {
   ],
 
   kit: {
-    target: 'body',
     adapter: adapter({
       fallback: null,
     }),
