@@ -72,6 +72,7 @@
         valid = false
       }
     } else {
+      valid = true // <-- empty string is always valid
       // value resets to null if you clear the field
       if (value) {
         value = null
