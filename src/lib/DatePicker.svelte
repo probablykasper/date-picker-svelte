@@ -22,8 +22,9 @@
   /** Default Date to use */
   const defaultDate = new Date()
 
+  /** The date shown in the popup, for when `value` is null */
   let shownDate = value ?? defaultDate
-  $: shownDate = value ?? defaultDate
+  $: if (value) shownDate = value
 
   /** Update the shownDate. The date is only selected if a date is already selected */
   function updateShownDate(updater: (date: Date) => Date) {
