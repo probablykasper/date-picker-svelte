@@ -2,6 +2,7 @@
 
 ## 2.0.0 - 2021 Feb 17
 - **Breaking**: Allow DateInput/DatePicker value to be `null`
+- **Breaking**: The value is now `null` by default
 - Use `rem` for sizing the DatePicker
 - Make the DatePicker slightly larger
 - Make the calendar tabbable
