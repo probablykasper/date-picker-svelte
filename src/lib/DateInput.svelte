@@ -6,21 +6,25 @@
   import { parse, createFormat } from './parse'
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
-  import { writable } from 'svelte/store'
+  import { Writable, writable } from 'svelte/store'
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
+  /** Default date to display in picker before value is assigned */
   const defaultDate = new Date()
 
   // inner date value store for preventing value updates (and also
   // text updates as a result) when date is unchanged
-  const innerStore = writable(defaultDate)
+  const innerStore: Writable<Date | null> = writable(null)
   const store = (() => {
     return {
       subscribe: innerStore.subscribe,
-      set: (d: Date) => {
-        if (d.getTime() !== $innerStore.getTime()) {
+      set: (d: Date | null) => {
+        if (d === null) {
+          innerStore.set(null)
+          value = d
+        } else if (d.getTime() !== $innerStore?.getTime()) {
           innerStore.set(d)
           value = d
         }
@@ -29,8 +33,9 @@
   })()
 
   /** Date value */
-  export let value = defaultDate
+  export let value: Date | null = null
   $: store.set(value)
+
   /** The earliest value the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest value the user can select */
@@ -48,7 +53,7 @@
   /** Locale object for internationalization */
   export let locale: Locale = {}
 
-  function valueUpdate(value: Date, formatTokens: FormatToken[]) {
+  function valueUpdate(value: Date | null, formatTokens: FormatToken[]) {
     text = toText(value, formatTokens)
   }
   $: valueUpdate($store, formatTokens)
@@ -58,12 +63,21 @@
   $: textHistory = [textHistory[1], text]
 
   function textUpdate(text: string, formatTokens: FormatToken[]) {
-    const result = parse(text, formatTokens, $store)
-    if (result.date !== null) {
-      valid = true
-      store.set(result.date)
+    if (text.length) {
+      const result = parse(text, formatTokens, $store)
+      if (result.date !== null) {
+        valid = true
+        store.set(result.date)
+      } else {
+        valid = false
+      }
     } else {
-      valid = false
+      valid = true // <-- empty string is always valid
+      // value resets to null if you clear the field
+      if (value) {
+        value = null
+        store.set(null)
+      }
     }
   }
   $: textUpdate(text, formatTokens)

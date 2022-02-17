@@ -7,19 +7,37 @@
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
-  /** Date value */
-  export let value = new Date()
+  /** Date value. It's `null` if no date is selected */
+  export let value: Date | null = null
   function setValue(d: Date) {
-    if (d.getTime() !== value.getTime()) value = d
+    if (d.getTime() !== value?.getTime()) {
+      value = d
+    }
   }
   function updateValue(updater: (date: Date) => Date) {
-    let d = updater(new Date(value.getTime()))
-    setValue(d)
+    const newValue = updater(new Date(shownDate.getTime()))
+    setValue(newValue)
   }
+
+  /** Default Date to use */
+  const defaultDate = new Date()
+
+  /** The date shown in the popup, for when `value` is null */
+  let shownDate = value ?? defaultDate
+  $: if (value) shownDate = value
+
+  /** Update the shownDate. The date is only selected if a date is already selected */
+  function updateShownDate(updater: (date: Date) => Date) {
+    shownDate = updater(new Date(shownDate.getTime()))
+    if (value && shownDate.getTime() !== value.getTime()) {
+      setValue(shownDate)
+    }
+  }
+
   /** The earliest year the user can select */
-  export let min = new Date(new Date().getFullYear() - 20, 0, 1)
+  export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest year the user can select */
-  export let max = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999)
+  export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
   let years = getYears(min, max)
   $: years = getYears(min, max)
   function getYears(min: Date, max: Date) {
@@ -29,29 +47,30 @@
     }
     return years
   }
-  $: if (value > max) {
-    setValue(max)
-  } else if (value < min) {
-    setValue(min)
+
+  $: if (shownDate > max) {
+    updateShownDate(() => max)
+  } else if (shownDate < min) {
+    updateShownDate(() => min)
   }
 
   /** Locale object for internationalization */
   export let locale: Locale = {}
   $: iLocale = getInnerLocale(locale)
 
-  let year = value.getFullYear()
-  const getYear = (value: Date) => (year = value.getFullYear())
+  let year = shownDate.getFullYear()
+  const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
   function setYear(year: number) {
-    updateValue((value) => {
-      value.setFullYear(year)
-      return value
+    updateShownDate((tmpPickerDate) => {
+      tmpPickerDate.setFullYear(year)
+      return tmpPickerDate
     })
   }
-  $: getYear(value)
+  $: getYear(shownDate)
   $: setYear(year)
 
-  let month = value.getMonth()
-  const getMonth = (value: Date) => (month = value.getMonth())
+  let month = shownDate.getMonth()
+  const getMonth = (tmpPickerDate: Date) => (month = tmpPickerDate.getMonth())
   function setMonth(month: number) {
     let newYear = year
     let newMonth = month
@@ -64,26 +83,26 @@
     }
 
     const maxDate = getMonthLength(newYear, newMonth)
-    const newDate = Math.min(value.getDate(), maxDate)
-    setValue(
-      new Date(
+    const newDate = Math.min(shownDate.getDate(), maxDate)
+    updateShownDate((date) => {
+      return new Date(
         newYear,
         newMonth,
         newDate,
-        value.getHours(),
-        value.getMinutes(),
-        value.getSeconds(),
-        value.getMilliseconds()
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+        date.getMilliseconds()
       )
-    )
+    })
   }
-  $: getMonth(value)
+  $: getMonth(shownDate)
   $: setMonth(month)
 
-  let dayOfMonth = value.getDate()
-  $: dayOfMonth = value.getDate()
+  let dayOfMonth = value?.getDate() || null
+  $: dayOfMonth = value?.getDate() || null
 
-  $: calendarDays = getCalendarDays(value, iLocale.weekStartsOn)
+  $: calendarDays = getCalendarDays(shownDate, iLocale.weekStartsOn)
 
   function setDay(calendarDay: CalendarDay) {
     if (dayIsInRange(calendarDay, min, max)) {
