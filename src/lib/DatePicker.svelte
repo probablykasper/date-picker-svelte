@@ -180,6 +180,15 @@
     }
     e.preventDefault()
   }
+  function calendarDayKeydown(e: KeyboardEvent, calendarDay: CalendarDay) {
+    if (e.key === ' ') {
+      selectDay(calendarDay)
+      e.preventDefault()
+      return calendarDay
+    } else {
+      return keydown(e)
+    }
+  }
   function keydown(e: KeyboardEvent) {
     let shift = e.shiftKey || e.altKey
     if ((e.target as HTMLElement)?.tagName === 'SELECT') {
@@ -215,7 +224,7 @@
   }
 </script>
 
-<div class="date-time-picker" on:focusout tabindex="0" on:keydown={keydown}>
+<div class="date-time-picker" on:focusout>
   <div class="tab-container" tabindex="-1">
     <div class="top">
       <div class="page-button" tabindex="-1" on:click={() => setMonth(month - 1)}>
@@ -288,6 +297,8 @@
         {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
           <div
             class="cell"
+            tabindex="0"
+            on:keydown|self={(e) => calendarDayKeydown(e, calendarDay)}
             on:click={() => selectDay(calendarDay)}
             class:disabled={!dayIsInRange(calendarDay, min, max)}
             class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
