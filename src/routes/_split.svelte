@@ -24,8 +24,8 @@
     section.left
       padding-right: 0px
       flex-shrink: 0
-      min-width: 240px
-      padding-right: 20px
+      min-width: 260px
+      padding-right: 10px
     .spacer
       margin-top: 20px
   @media(max-width: 700px)

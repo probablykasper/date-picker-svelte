@@ -1,5 +1,13 @@
 # Changelog
 
+## Next
+- Use `rem` for sizing the DatePicker
+- Make the DatePicker slightly larger
+- Make the calendar tabbable
+- Add `Shift/Alt+Up/Down` shortcut for changing year
+- Add `Shift/Alt+Left/Right` shortcut for changing month
+- Fix styling issue for languages with long month names
+
 ## 1.3.0 - 2021 Jan 4
 - Add `closeOnSelection` property for DateInput
 
