@@ -145,7 +145,7 @@
       e.preventDefault()
     }
   }
-  function calendarDayKeydown(e: KeyboardEvent, calendarDay: CalendarDay) {
+  function calendarDayKeydown(e: KeyboardEvent) {
     if (e.key === 'ArrowUp') {
       updateValue((value) => {
         value.setDate(value.getDate() - 7)
@@ -174,7 +174,6 @@
       return
     }
   }
-
 </script>
 
 <div class="date-time-picker" on:focusout>
@@ -251,7 +250,7 @@
           {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
             <div
               class="cell"
-              on:keydown|self={(e) => calendarDayKeydown(e, calendarDay)}
+              on:keydown|self={calendarDayKeydown}
               on:click={() => selectDay(calendarDay)}
               class:disabled={!dayIsInRange(calendarDay, min, max)}
               class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
