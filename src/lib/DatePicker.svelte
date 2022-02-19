@@ -316,7 +316,7 @@
     box-shadow: 0px 2px 6px rgba(#000000,0.08), 0px 2px 6px rgba(#000000,0.11)
     outline: none
     transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
-    &:focus-visible
+    &:focus
       border-color: var(--date-picker-highlight-border, #0269f7)
       box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
   .tab-container
