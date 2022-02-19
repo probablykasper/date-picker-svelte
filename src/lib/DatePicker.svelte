@@ -127,101 +127,54 @@
     const maxDate = new Date(max.getFullYear(), max.getMonth(), max.getDate())
     return date >= minDate && date <= maxDate
   }
-  function shiftKeydown(e: KeyboardEvent) {
-    if (e.shiftKey && e.key === 'ArrowUp') {
-      setYear(year - 1)
-    } else if (e.shiftKey && e.key === 'ArrowDown') {
-      setYear(year + 1)
-    } else if (e.shiftKey && e.key === 'ArrowLeft') {
-      setMonth(month - 1)
-    } else if (e.shiftKey && e.key === 'ArrowRight') {
-      setMonth(month + 1)
-    } else {
-      return false
-    }
-    e.preventDefault()
-    return true
-  }
   function yearKeydown(e: KeyboardEvent) {
-    let shift = e.shiftKey || e.altKey
-    if (shift) {
-      shiftKeydown(e)
-      return
-    } else if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       setYear(year - 1)
-    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
       setYear(year + 1)
-    } else if (e.key === 'ArrowLeft') {
-      setMonth(month - 1)
-    } else if (e.key === 'ArrowRight') {
-      setMonth(month + 1)
-    } else {
-      shiftKeydown(e)
-      return
+      e.preventDefault()
     }
-    e.preventDefault()
   }
   function monthKeydown(e: KeyboardEvent) {
-    let shift = e.shiftKey || e.altKey
-    if (shift) {
-      shiftKeydown(e)
-      return
-    } else if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       setMonth(month - 1)
-    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
       setMonth(month + 1)
-    } else if (e.key === 'ArrowLeft') {
-      setMonth(month - 1)
-    } else if (e.key === 'ArrowRight') {
-      setMonth(month + 1)
-    } else {
-      shiftKeydown(e)
-      return
+      e.preventDefault()
     }
-    e.preventDefault()
   }
   function calendarDayKeydown(e: KeyboardEvent, calendarDay: CalendarDay) {
-    if (e.key === ' ') {
-      selectDay(calendarDay)
-      e.preventDefault()
-      return calendarDay
-    } else {
-      return keydown(e)
-    }
-  }
-  function keydown(e: KeyboardEvent) {
-    let shift = e.shiftKey || e.altKey
-    if ((e.target as HTMLElement)?.tagName === 'SELECT') {
-      return
-    }
-    if (shift) {
-      shiftKeydown(e)
-      return
-    } else if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowUp') {
       updateValue((value) => {
         value.setDate(value.getDate() - 7)
         return value
       })
+      e.preventDefault()
     } else if (e.key === 'ArrowDown') {
       updateValue((value) => {
         value.setDate(value.getDate() + 7)
         return value
       })
+      e.preventDefault()
     } else if (e.key === 'ArrowLeft') {
       updateValue((value) => {
         value.setDate(value.getDate() - 1)
         return value
       })
+      e.preventDefault()
     } else if (e.key === 'ArrowRight') {
       updateValue((value) => {
         value.setDate(value.getDate() + 1)
         return value
       })
+      e.preventDefault()
     } else {
       return
     }
-    e.preventDefault()
   }
+
 </script>
 
 <div class="date-time-picker" on:focusout>
@@ -283,32 +236,33 @@
         >
       </div>
     </div>
-    <div class="header">
-      {#each Array(7) as _, i}
-        {#if i + iLocale.weekStartsOn < 7}
-          <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i]}</div>
-        {:else}
-          <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i - 7]}</div>
-        {/if}
-      {/each}
-    </div>
-    {#each Array(6) as _, weekIndex}
-      <div class="week">
-        {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
-          <div
-            class="cell"
-            tabindex="0"
-            on:keydown|self={(e) => calendarDayKeydown(e, calendarDay)}
-            on:click={() => selectDay(calendarDay)}
-            class:disabled={!dayIsInRange(calendarDay, min, max)}
-            class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
-            class:other-month={calendarDay.month !== month}
-          >
-            <span>{calendarDay.number}</span>
-          </div>
+    <div class="calendar-day" tabindex="0" on:keydown={calendarDayKeydown}>
+      <div class="header">
+        {#each Array(7) as _, i}
+          {#if i + iLocale.weekStartsOn < 7}
+            <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i]}</div>
+          {:else}
+            <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i - 7]}</div>
+          {/if}
         {/each}
       </div>
-    {/each}
+      {#each Array(6) as _, weekIndex}
+        <div class="week">
+          {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
+            <div
+              class="cell"
+              on:keydown|self={(e) => calendarDayKeydown(e, calendarDay)}
+              on:click={() => selectDay(calendarDay)}
+              class:disabled={!dayIsInRange(calendarDay, min, max)}
+              class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
+              class:other-month={calendarDay.month !== month}
+            >
+              <span>{calendarDay.number}</span>
+            </div>
+          {/each}
+        </div>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -438,4 +392,13 @@
       color: var(--date-picker-selected-color, inherit)
       background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
       border: 2px solid var(--date-picker-highlight-border, #0269f7)
+
+  .calendar-day:focus
+    outline: none
+  .calendar-day:focus-visible
+    transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+    border: 1px solid rgba(108, 120, 147, 0.3)
+    border-color: var(--date-picker-highlight-border, #0269f7)
+    box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
+
 </style>
