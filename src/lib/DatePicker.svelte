@@ -145,8 +145,29 @@
       e.preventDefault()
     }
   }
+
+  function shiftKeydown(e: KeyboardEvent) {
+    if (e.shiftKey && e.key === 'ArrowUp') {
+      setYear(year - 1)
+    } else if (e.shiftKey && e.key === 'ArrowDown') {
+      setYear(year + 1)
+    } else if (e.shiftKey && e.key === 'ArrowLeft') {
+      setMonth(month - 1)
+    } else if (e.shiftKey && e.key === 'ArrowRight') {
+      setMonth(month + 1)
+    } else {
+      return false
+    }
+    e.preventDefault()
+    return true
+  }
+
   function calendarDayKeydown(e: KeyboardEvent) {
-    if (e.key === 'ArrowUp') {
+    let shift = e.shiftKey || e.altKey
+    if (shift) {
+      shiftKeydown(e)
+      return
+    } else if (e.key === 'ArrowUp') {
       updateValue((value) => {
         value.setDate(value.getDate() - 7)
         return value
