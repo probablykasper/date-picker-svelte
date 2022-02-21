@@ -173,6 +173,10 @@
     if (shift) {
       shiftKeydown(e)
       return
+    } else if (e.key === ' ') {
+      console.log('*** we got here')
+      dispatch('select')
+      e.preventDefault()
     } else if (e.key === 'ArrowUp') {
       updateValue((value) => {
         value.setDate(value.getDate() - 7)
@@ -419,11 +423,13 @@
       background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
       border: 2px solid var(--date-picker-highlight-border, #0269f7)
 
-  .calendar-day:focus
+  .calendar-day
+    padding: 0.25rem
     outline: none
-  .calendar-day:focus-visible
+    border: 1px solid rgba(#808080, 0.3)
+    border-radius: 3px
+  .calendar-day:focus
     transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
-    border: 1px solid rgba(108, 120, 147, 0.3)
     border-color: var(--date-picker-highlight-border, #0269f7)
     box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
 
