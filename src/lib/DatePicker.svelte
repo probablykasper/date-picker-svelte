@@ -174,7 +174,6 @@
       shiftKeydown(e)
       return
     } else if (e.key === ' ') {
-      console.log('*** we got here')
       dispatch('select')
       e.preventDefault()
     } else if (e.key === 'ArrowUp') {
