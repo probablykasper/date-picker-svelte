@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Use well-supported `:focus` instead of `:focus-within`
+
 ## 2.0.0 - 2021 Feb 17
 - **Breaking**: Allow DateInput/DatePicker value to be `null`
 - **Breaking**: The value is now `null` by default
