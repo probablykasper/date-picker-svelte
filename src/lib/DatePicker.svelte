@@ -128,11 +128,17 @@
     return date >= minDate && date <= maxDate
   }
   function yearKeydown(e: KeyboardEvent) {
-    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    if (e.key === 'ArrowUp') {
       setYear(year - 1)
       e.preventDefault()
-    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    } else if (e.key === 'ArrowDown') {
       setYear(year + 1)
+      e.preventDefault()
+    } else if (e.key === 'ArrowLeft') {
+      setMonth(month - 1)
+      e.preventDefault()
+    } else if (e.key === 'ArrowRight') {
+      setMonth(month + 1)
       e.preventDefault()
     }
   }
