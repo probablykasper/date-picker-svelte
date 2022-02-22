@@ -423,9 +423,9 @@
       border: 2px solid var(--date-picker-highlight-border, #0269f7)
 
   .calendar-day
-    padding: 0.25rem
+    padding: 0.75rem 0.25rem 0.25rem
     outline: none
-    border: 1px solid rgba(#808080, 0.3)
+    border: 1px solid rgba(#808080, 0.1)
     border-radius: 3px
   .calendar-day:focus
     transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
