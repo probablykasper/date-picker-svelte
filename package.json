@@ -74,11 +74,6 @@
   "prettier": {
     "printWidth": 100,
     "semi": false,
-    "singleQuote": true,
-    "htmlWhitespaceSensitivity": "strict",
-    "svelteSortOrder": "options-scripts-markup-styles",
-    "svelteStrictMode": false,
-    "svelteAllowShorthand": true,
-    "svelteIndentScriptAndStyle": true
+    "singleQuote": true
   }
 }
