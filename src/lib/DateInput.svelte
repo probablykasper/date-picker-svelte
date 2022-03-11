@@ -42,6 +42,8 @@
   export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
   /** Placeholder text to show when input field is empty */
   export let placeholder = '2020-12-31 23:00:00'
+  /** name attribute to show on input */
+  export let name
   /** Whether the text is valid */
   export let valid = true
 
@@ -142,6 +144,7 @@
     class:invalid={!valid}
     type="text"
     bind:value={text}
+    {name}
     {placeholder}
     on:focus={() => (visible = true)}
     on:mousedown={() => (visible = true)}
