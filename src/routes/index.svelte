@@ -22,9 +22,7 @@
 </ul>
 
 <h2>Install</h2>
-<pre class="language-">
-  npm install -D date-picker-svelte
-</pre>
+<pre class="language-">npm install -D date-picker-svelte</pre>
 
 <h2>DateInput</h2>
 <DateInput />
