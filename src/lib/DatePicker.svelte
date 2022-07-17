@@ -210,7 +210,7 @@
       })
     } else if (e.key === 'Enter') {
       dispatch('select')
-    }else {
+    } else {
       return
     }
     e.preventDefault()
