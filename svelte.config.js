@@ -16,6 +16,9 @@ const config = {
     adapter: adapter({
       fallback: null,
     }),
+    prerender: {
+      default: true,
+    },
   },
 }
 
