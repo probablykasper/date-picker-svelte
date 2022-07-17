@@ -22,10 +22,14 @@
       subscribe: innerStore.subscribe,
       set: (d: Date | null) => {
         if (d === null) {
-          innerStore.set(null)
+          if (!delayUpdate) {
+            innerStore.set(null)
+          }
           value = d
         } else if (d.getTime() !== $innerStore?.getTime()) {
-          innerStore.set(d)
+          if (!delayUpdate) {
+            innerStore.set(d)
+          }
           value = d
         }
       },
@@ -101,6 +105,8 @@
   export let visible = false
   /** Close the date popup when a date is selected */
   export let closeOnSelection = false
+  /** Wait with updating the date until a date is selected */
+  export let delayUpdate = false
 
   // handle on:focusout for parent element. If the parent element loses
   // focus (e.g input element), visible is set to false
@@ -133,6 +139,9 @@
     dispatch('select', e.detail)
     if (closeOnSelection) {
       visible = false
+    }
+    if (delayUpdate) {
+      innerStore.set(value)
     }
   }
 </script>

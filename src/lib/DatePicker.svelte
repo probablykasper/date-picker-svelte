@@ -208,7 +208,9 @@
         value.setDate(value.getDate() + 1)
         return value
       })
-    } else {
+    } else if (e.key === 'Enter') {
+      dispatch('select')
+    }else {
       return
     }
     e.preventDefault()

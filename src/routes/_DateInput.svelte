@@ -10,6 +10,7 @@
   let valid: boolean
   let visible: boolean
   let closeOnSelection: boolean
+  let delayUpdate: boolean
   let format: string
 </script>
 
@@ -24,6 +25,7 @@
     bind:format
     bind:visible
     bind:closeOnSelection
+    bind:delayUpdate
   />
 
   <svelte:fragment slot="right">
@@ -36,6 +38,7 @@
     <Prop label="format" bind:value={format} />
     <Prop label="visible" bind:value={visible} />
     <Prop label="closeOnSelection" bind:value={closeOnSelection} />
+    <Prop label="delayUpdate" bind:value={delayUpdate} />
     <Prop label="locale">Default</Prop>
   </svelte:fragment>
 </Split>
