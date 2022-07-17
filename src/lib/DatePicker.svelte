@@ -65,11 +65,12 @@
   let highlightedDate = shownDate
   function shouldHighlightCalendarDay(day: CalendarDay) {
     return (
-      day.year === year &&
       day.month === month &&
       day.number === dayOfMonth &&
       (!browseWithoutSelecting ||
-        (year === highlightedDate.getFullYear() && month === highlightedDate.getMonth()))
+        (day.year === year &&
+          year === highlightedDate.getFullYear() &&
+          month === highlightedDate.getMonth()))
     )
   }
 
