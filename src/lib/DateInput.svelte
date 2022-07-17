@@ -165,6 +165,7 @@
         {min}
         {max}
         {locale}
+        {browseWithoutSelecting}
       />
     </div>
   {/if}

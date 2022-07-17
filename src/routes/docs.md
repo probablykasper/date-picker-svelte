@@ -62,12 +62,13 @@ The component will not assign a date value until a specific date is selected in 
 
 ### Props
 
-| Prop     | Type         | Description                            |
-| :------- | :----------- | :------------------------------------- |
-| `value`  | Date \| null | Date value                             |
-| `min`    | Date         | The earliest year the user can select  |
-| `max`    | Date         | The latest year the user can select    |
-| `locale` | Locale       | Locale object for internationalization |
+| Prop                     | Type         | Description                                          |
+| :----------------------- | :----------- | :--------------------------------------------------- |
+| `value`                  | Date \| null | Date value                                           |
+| `min`                    | Date         | The earliest year the user can select                |
+| `max`                    | Date         | The latest year the user can select                  |
+| `locale`                 | Locale       | Locale object for internationalization               |
+| `browseWithoutSelecting` | bool         | Wait with updating the date until a date is selected |
 
 ## Internationalization
 

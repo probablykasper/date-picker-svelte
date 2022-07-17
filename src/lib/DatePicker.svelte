@@ -57,6 +57,21 @@
   /** Locale object for internationalization */
   export let locale: Locale = {}
   $: iLocale = getInnerLocale(locale)
+  /** Wait with updating the date until a date is selected */
+  export let browseWithoutSelecting = false
+  // The highlighted date shown in the popup. When `browseWithoutSelecting`
+  // is set to `true`, it is used to help determine whether a calendar day should
+  // be highlighted.
+  let highlightedDate = shownDate
+  function shouldHighlightCalendarDay(day: CalendarDay) {
+    return (
+      day.year === year &&
+      day.month === month &&
+      day.number === dayOfMonth &&
+      (!browseWithoutSelecting ||
+        (year === highlightedDate.getFullYear() && month === highlightedDate.getMonth()))
+    )
+  }
 
   let year = shownDate.getFullYear()
   const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
@@ -113,6 +128,7 @@
         value.setFullYear(calendarDay.year)
         value.setMonth(calendarDay.month)
         value.setDate(calendarDay.number)
+        highlightedDate = value
         return value
       })
     }
@@ -191,21 +207,25 @@
     } else if (e.key === 'ArrowUp') {
       updateValue((value) => {
         value.setDate(value.getDate() - 7)
+        highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowDown') {
       updateValue((value) => {
         value.setDate(value.getDate() + 7)
+        highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowLeft') {
       updateValue((value) => {
         value.setDate(value.getDate() - 1)
+        highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowRight') {
       updateValue((value) => {
         value.setDate(value.getDate() + 1)
+        highlightedDate = value
         return value
       })
     } else if (e.key === 'Enter') {
@@ -292,7 +312,7 @@
             class="cell"
             on:click={() => selectDay(calendarDay)}
             class:disabled={!dayIsInRange(calendarDay, min, max)}
-            class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
+            class:selected={shouldHighlightCalendarDay(calendarDay)}
             class:other-month={calendarDay.month !== month}
           >
             <span>{calendarDay.number}</span>
