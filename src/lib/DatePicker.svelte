@@ -29,7 +29,7 @@
   /** Update the shownDate. The date is only selected if a date is already selected */
   function updateShownDate(updater: (date: Date) => Date) {
     shownDate = updater(new Date(shownDate.getTime()))
-    if (value && shownDate.getTime() !== value.getTime()) {
+    if (!browseWithoutSelecting && value && shownDate.getTime() !== value.getTime()) {
       setValue(shownDate)
     }
   }
@@ -64,14 +64,11 @@
   // be highlighted.
   let highlightedDate = shownDate
   function shouldHighlightCalendarDay(day: CalendarDay) {
-    return (
-      day.month === month &&
-      day.number === dayOfMonth &&
-      (!browseWithoutSelecting ||
-        (day.year === year &&
-          year === highlightedDate.getFullYear() &&
-          month === highlightedDate.getMonth()))
-    )
+    return browseWithoutSelecting
+      ? day.year === highlightedDate.getFullYear() &&
+          day.month === highlightedDate.getMonth() &&
+          day.number === highlightedDate.getDate()
+      : day.month === month && day.number === dayOfMonth
   }
 
   let year = shownDate.getFullYear()
@@ -206,30 +203,31 @@
       shiftKeydown(e)
       return
     } else if (e.key === 'ArrowUp') {
-      updateValue((value) => {
+      updateShownDate((value) => {
         value.setDate(value.getDate() - 7)
         highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowDown') {
-      updateValue((value) => {
+      updateShownDate((value) => {
         value.setDate(value.getDate() + 7)
         highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowLeft') {
-      updateValue((value) => {
+      updateShownDate((value) => {
         value.setDate(value.getDate() - 1)
         highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowRight') {
-      updateValue((value) => {
+      updateShownDate((value) => {
         value.setDate(value.getDate() + 1)
         highlightedDate = value
         return value
       })
     } else if (e.key === 'Enter') {
+      setValue(shownDate)
       dispatch('select')
     } else {
       return
