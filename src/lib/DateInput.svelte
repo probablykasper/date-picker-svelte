@@ -22,14 +22,10 @@
       subscribe: innerStore.subscribe,
       set: (d: Date | null) => {
         if (d === null) {
-          if (!browseWithoutSelecting) {
-            innerStore.set(null)
-          }
+          innerStore.set(null)
           value = d
         } else if (d.getTime() !== $innerStore?.getTime()) {
-          if (!browseWithoutSelecting) {
-            innerStore.set(d)
-          }
+          innerStore.set(d)
           value = d
         }
       },
@@ -140,9 +136,7 @@
     if (closeOnSelection) {
       visible = false
     }
-    if (browseWithoutSelecting) {
-      innerStore.set(value)
-    }
+    innerStore.set(value)
   }
 </script>
 
