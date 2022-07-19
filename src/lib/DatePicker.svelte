@@ -29,7 +29,7 @@
   /** Update the shownDate. The date is only selected if a date is already selected */
   function updateShownDate(updater: (date: Date) => Date) {
     shownDate = updater(new Date(shownDate.getTime()))
-    if (value && shownDate.getTime() !== value.getTime()) {
+    if (!browseWithoutSelecting && value && shownDate.getTime() !== value.getTime()) {
       setValue(shownDate)
     }
   }
@@ -57,6 +57,19 @@
   /** Locale object for internationalization */
   export let locale: Locale = {}
   $: iLocale = getInnerLocale(locale)
+  /** Wait with updating the date until a date is selected */
+  export let browseWithoutSelecting = false
+  // The highlighted date shown in the popup. When `browseWithoutSelecting`
+  // is set to `true`, it is used to help determine whether a calendar day should
+  // be highlighted.
+  let highlightedDate = shownDate
+  function shouldHighlightCalendarDay(day: CalendarDay) {
+    return browseWithoutSelecting
+      ? day.year === highlightedDate.getFullYear() &&
+          day.month === highlightedDate.getMonth() &&
+          day.number === highlightedDate.getDate()
+      : day.month === month && day.number === dayOfMonth
+  }
 
   let year = shownDate.getFullYear()
   const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
@@ -113,6 +126,7 @@
         value.setFullYear(calendarDay.year)
         value.setMonth(calendarDay.month)
         value.setDate(calendarDay.number)
+        highlightedDate = value
         return value
       })
     }
@@ -189,25 +203,32 @@
       shiftKeydown(e)
       return
     } else if (e.key === 'ArrowUp') {
-      updateValue((value) => {
+      updateShownDate((value) => {
         value.setDate(value.getDate() - 7)
+        highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowDown') {
-      updateValue((value) => {
+      updateShownDate((value) => {
         value.setDate(value.getDate() + 7)
+        highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowLeft') {
-      updateValue((value) => {
+      updateShownDate((value) => {
         value.setDate(value.getDate() - 1)
+        highlightedDate = value
         return value
       })
     } else if (e.key === 'ArrowRight') {
-      updateValue((value) => {
+      updateShownDate((value) => {
         value.setDate(value.getDate() + 1)
+        highlightedDate = value
         return value
       })
+    } else if (e.key === 'Enter') {
+      setValue(shownDate)
+      dispatch('select')
     } else {
       return
     }
@@ -290,7 +311,7 @@
             class="cell"
             on:click={() => selectDay(calendarDay)}
             class:disabled={!dayIsInRange(calendarDay, min, max)}
-            class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
+            class:selected={shouldHighlightCalendarDay(calendarDay)}
             class:other-month={calendarDay.month !== month}
           >
             <span>{calendarDay.number}</span>
