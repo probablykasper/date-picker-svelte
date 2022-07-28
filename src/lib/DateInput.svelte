@@ -136,7 +136,6 @@
     if (closeOnSelection) {
       visible = false
     }
-    innerStore.set(value)
   }
 </script>
 
