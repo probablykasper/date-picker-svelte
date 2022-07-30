@@ -16,13 +16,12 @@
 
   function setValue(d: Date) {
     if (d.getTime() !== value?.getTime()) {
-      value = cloneDate(d)
-      clamp(min, max)
+      browseDate = clamp(d, min, max)
+      value = cloneDate(browseDate)
     }
   }
   function browse(d: Date) {
-    browseDate = value ? cloneDate(d) : cloneDate(defaultDate)
-    clamp(min, max)
+    browseDate = clamp(d, min, max)
     if (!browseWithoutSelecting) {
       setValue(browseDate)
     }
@@ -38,17 +37,19 @@
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest year the user can select */
   export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
-  function clamp(min: Date, max: Date) {
-    if (browseDate > max) {
-      browseDate = cloneDate(max)
-    } else if (browseDate < min) {
-      browseDate = cloneDate(min)
-    }
+  $: if (value && value > max) {
+    value = cloneDate(max)
+  } else if (value && value < min) {
+    value = cloneDate(min)
   }
-
-  $: if (value) {
-    clamp(min, max)
-    browseDate = cloneDate(value)
+  function clamp(d: Date, min: Date, max: Date) {
+    if (browseDate > max) {
+      return cloneDate(max)
+    } else if (browseDate < min) {
+      return cloneDate(min)
+    } else {
+      return cloneDate(d)
+    }
   }
 
   let years = getYears(min, max)
@@ -68,16 +69,14 @@
   export let browseWithoutSelecting = false
 
   let browseYear = browseDate.getFullYear()
-  function getBrowseYear(tmpPickerDate: Date) {
-    browseMonth = tmpPickerDate.getMonth()
+  function getBrowseYear(d: Date) {
+    browseYear = d.getFullYear()
   }
   $: getBrowseYear(browseDate)
   function setYear(newYear: number) {
     browseDate.setFullYear(newYear)
     browseDate = browseDate
-    if (value) {
-      browse(browseDate)
-    }
+    browse(browseDate)
   }
   $: setYear(browseYear)
 
@@ -98,16 +97,17 @@
 
     const maxDate = getMonthLength(newYear, newMonth)
     const newDate = Math.min(browseDate.getDate(), maxDate)
-    browseDate = new Date(
-      newYear,
-      newMonth,
-      newDate,
-      browseDate.getHours(),
-      browseDate.getMinutes(),
-      browseDate.getSeconds(),
-      browseDate.getMilliseconds()
+    browse(
+      new Date(
+        newYear,
+        newMonth,
+        newDate,
+        browseDate.getHours(),
+        browseDate.getMinutes(),
+        browseDate.getSeconds(),
+        browseDate.getMilliseconds()
+      )
     )
-    browse(browseDate)
   }
   $: setMonth(browseMonth)
 
