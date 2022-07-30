@@ -22,9 +22,9 @@
   }
   function browse(d: Date) {
     browseDate = value ? cloneDate(d) : cloneDate(defaultDate)
+    clamp(min, max)
     if (!browseWithoutSelecting) {
-      setValue(d)
-      clamp(min, max)
+      setValue(browseDate)
     }
   }
 
@@ -33,20 +33,23 @@
 
   /** The date shown in the popup when none is selected */
   let browseDate = value ? cloneDate(value) : cloneDate(defaultDate)
-  $: if (value) browseDate = cloneDate(value)
 
   /** The earliest year the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest year the user can select */
   export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
   function clamp(min: Date, max: Date) {
-    if (browseDate && browseDate > max) {
-      setValue(max)
-    } else if (browseDate && browseDate < min) {
-      setValue(min)
+    if (browseDate > max) {
+      browseDate = cloneDate(max)
+    } else if (browseDate < min) {
+      browseDate = cloneDate(min)
     }
   }
-  $: if (value) clamp(min, max)
+
+  $: if (value) {
+    clamp(min, max)
+    browseDate = cloneDate(value)
+  }
 
   let years = getYears(min, max)
   $: years = getYears(min, max)
