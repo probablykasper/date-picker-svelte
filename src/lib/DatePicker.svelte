@@ -22,7 +22,7 @@
   }
   function browse(d: Date) {
     browseDate = clamp(d, min, max)
-    if (!browseWithoutSelecting) {
+    if (!browseWithoutSelecting && value) {
       setValue(browseDate)
     }
   }
@@ -38,9 +38,9 @@
   /** The latest year the user can select */
   export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
   $: if (value && value > max) {
-    value = cloneDate(max)
+    setValue(max)
   } else if (value && value < min) {
-    value = cloneDate(min)
+    setValue(min)
   }
   function clamp(d: Date, min: Date, max: Date) {
     if (browseDate > max) {
