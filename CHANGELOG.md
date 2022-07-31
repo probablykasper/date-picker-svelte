@@ -1,6 +1,7 @@
 # Changelog
 
-## Next
+## 2.1.0 - 2022 Jul 31
+- Add `browseWithoutSelecting` property
 - Use well-supported `:focus` instead of `:focus-within`
 
 ## 2.0.0 - 2021 Feb 17
