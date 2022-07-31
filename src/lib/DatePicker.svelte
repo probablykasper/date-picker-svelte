@@ -7,37 +7,51 @@
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
+  function cloneDate(d: Date) {
+    return new Date(d.getTime())
+  }
+
   /** Date value. It's `null` if no date is selected */
   export let value: Date | null = null
+
   function setValue(d: Date) {
     if (d.getTime() !== value?.getTime()) {
-      value = d
+      browseDate = clamp(d, min, max)
+      value = cloneDate(browseDate)
     }
   }
-  function updateValue(updater: (date: Date) => Date) {
-    const newValue = updater(new Date(shownDate.getTime()))
-    setValue(newValue)
+  function browse(d: Date) {
+    browseDate = clamp(d, min, max)
+    if (!browseWithoutSelecting && value) {
+      setValue(browseDate)
+    }
   }
 
   /** Default Date to use */
   const defaultDate = new Date()
 
-  /** The date shown in the popup, for when `value` is null */
-  let shownDate = value ?? defaultDate
-  $: if (value) shownDate = value
-
-  /** Update the shownDate. The date is only selected if a date is already selected */
-  function updateShownDate(updater: (date: Date) => Date) {
-    shownDate = updater(new Date(shownDate.getTime()))
-    if (value && shownDate.getTime() !== value.getTime()) {
-      setValue(shownDate)
-    }
-  }
+  /** The date shown in the popup when none is selected */
+  let browseDate = value ? cloneDate(value) : cloneDate(defaultDate)
 
   /** The earliest year the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest year the user can select */
   export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+  $: if (value && value > max) {
+    setValue(max)
+  } else if (value && value < min) {
+    setValue(min)
+  }
+  function clamp(d: Date, min: Date, max: Date) {
+    if (browseDate > max) {
+      return cloneDate(max)
+    } else if (browseDate < min) {
+      return cloneDate(min)
+    } else {
+      return cloneDate(d)
+    }
+  }
+
   let years = getYears(min, max)
   $: years = getYears(min, max)
   function getYears(min: Date, max: Date) {
@@ -48,78 +62,68 @@
     return years
   }
 
-  $: if (shownDate > max) {
-    updateShownDate(() => max)
-  } else if (shownDate < min) {
-    updateShownDate(() => min)
-  }
-
   /** Locale object for internationalization */
   export let locale: Locale = {}
   $: iLocale = getInnerLocale(locale)
+  /** Wait with updating the date until a date is selected */
+  export let browseWithoutSelecting = false
 
-  let year = shownDate.getFullYear()
-  const getYear = (tmpPickerDate: Date) => (year = tmpPickerDate.getFullYear())
-  function setYear(year: number) {
-    updateShownDate((tmpPickerDate) => {
-      tmpPickerDate.setFullYear(year)
-      return tmpPickerDate
-    })
+  let browseYear = browseDate.getFullYear()
+  function getBrowseYear(d: Date) {
+    browseYear = d.getFullYear()
   }
-  $: getYear(shownDate)
-  $: setYear(year)
+  $: getBrowseYear(browseDate)
+  function setYear(newYear: number) {
+    browseDate.setFullYear(newYear)
+    browseDate = browseDate
+    browse(browseDate)
+  }
+  $: setYear(browseYear)
 
-  let month = shownDate.getMonth()
-  const getMonth = (tmpPickerDate: Date) => (month = tmpPickerDate.getMonth())
-  function setMonth(month: number) {
-    let newYear = year
-    let newMonth = month
-    if (month === 12) {
+  let browseMonth = browseDate.getMonth()
+  function getBrowseMonth(d: Date) {
+    browseMonth = d.getMonth()
+  }
+  $: getBrowseMonth(browseDate)
+  function setMonth(newMonth: number) {
+    let newYear = browseDate.getFullYear()
+    if (newMonth === 12) {
       newMonth = 0
       newYear++
-    } else if (month === -1) {
+    } else if (newMonth === -1) {
       newMonth = 11
       newYear--
     }
 
     const maxDate = getMonthLength(newYear, newMonth)
-    const newDate = Math.min(shownDate.getDate(), maxDate)
-    updateShownDate((date) => {
-      return new Date(
+    const newDate = Math.min(browseDate.getDate(), maxDate)
+    browse(
+      new Date(
         newYear,
         newMonth,
         newDate,
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds(),
-        date.getMilliseconds()
+        browseDate.getHours(),
+        browseDate.getMinutes(),
+        browseDate.getSeconds(),
+        browseDate.getMilliseconds()
       )
-    })
+    )
   }
-  $: getMonth(shownDate)
-  $: setMonth(month)
+  $: setMonth(browseMonth)
 
-  let dayOfMonth = value?.getDate() || null
-  $: dayOfMonth = value?.getDate() || null
+  $: calendarDays = getCalendarDays(browseDate, iLocale.weekStartsOn)
 
-  $: calendarDays = getCalendarDays(shownDate, iLocale.weekStartsOn)
-
-  function setDay(calendarDay: CalendarDay) {
-    if (dayIsInRange(calendarDay, min, max)) {
-      updateValue((value) => {
-        value.setFullYear(0)
-        value.setMonth(0)
-        value.setDate(1)
-        value.setFullYear(calendarDay.year)
-        value.setMonth(calendarDay.month)
-        value.setDate(calendarDay.number)
-        return value
-      })
-    }
-  }
   function selectDay(calendarDay: CalendarDay) {
-    setDay(calendarDay)
-    dispatch('select')
+    if (dayIsInRange(calendarDay, min, max)) {
+      browseDate.setFullYear(0)
+      browseDate.setMonth(0)
+      browseDate.setDate(1)
+      browseDate.setFullYear(calendarDay.year)
+      browseDate.setMonth(calendarDay.month)
+      browseDate.setDate(calendarDay.number)
+      setValue(browseDate)
+      dispatch('select')
+    }
   }
   function dayIsInRange(calendarDay: CalendarDay, min: Date, max: Date) {
     const date = new Date(calendarDay.year, calendarDay.month, calendarDay.number)
@@ -129,13 +133,13 @@
   }
   function shiftKeydown(e: KeyboardEvent) {
     if (e.shiftKey && e.key === 'ArrowUp') {
-      setYear(year - 1)
+      setYear(browseDate.getFullYear() - 1)
     } else if (e.shiftKey && e.key === 'ArrowDown') {
-      setYear(year + 1)
+      setYear(browseDate.getFullYear() + 1)
     } else if (e.shiftKey && e.key === 'ArrowLeft') {
-      setMonth(month - 1)
+      setMonth(browseDate.getMonth() - 1)
     } else if (e.shiftKey && e.key === 'ArrowRight') {
-      setMonth(month + 1)
+      setMonth(browseDate.getMonth() + 1)
     } else {
       return false
     }
@@ -148,13 +152,13 @@
       shiftKeydown(e)
       return
     } else if (e.key === 'ArrowUp') {
-      setYear(year - 1)
+      setYear(browseDate.getFullYear() - 1)
     } else if (e.key === 'ArrowDown') {
-      setYear(year + 1)
+      setYear(browseDate.getFullYear() + 1)
     } else if (e.key === 'ArrowLeft') {
-      setMonth(month - 1)
+      setMonth(browseDate.getMonth() - 1)
     } else if (e.key === 'ArrowRight') {
-      setMonth(month + 1)
+      setMonth(browseDate.getMonth() + 1)
     } else {
       shiftKeydown(e)
       return
@@ -167,13 +171,13 @@
       shiftKeydown(e)
       return
     } else if (e.key === 'ArrowUp') {
-      setMonth(month - 1)
+      setMonth(browseDate.getFullYear() - 1)
     } else if (e.key === 'ArrowDown') {
-      setMonth(month + 1)
+      setMonth(browseDate.getFullYear() + 1)
     } else if (e.key === 'ArrowLeft') {
-      setMonth(month - 1)
+      setMonth(browseDate.getFullYear() - 1)
     } else if (e.key === 'ArrowRight') {
-      setMonth(month + 1)
+      setMonth(browseDate.getFullYear() + 1)
     } else {
       shiftKeydown(e)
       return
@@ -189,25 +193,20 @@
       shiftKeydown(e)
       return
     } else if (e.key === 'ArrowUp') {
-      updateValue((value) => {
-        value.setDate(value.getDate() - 7)
-        return value
-      })
+      browseDate.setDate(browseDate.getDate() - 7)
+      setValue(browseDate)
     } else if (e.key === 'ArrowDown') {
-      updateValue((value) => {
-        value.setDate(value.getDate() + 7)
-        return value
-      })
+      browseDate.setDate(browseDate.getDate() + 7)
+      setValue(browseDate)
     } else if (e.key === 'ArrowLeft') {
-      updateValue((value) => {
-        value.setDate(value.getDate() - 1)
-        return value
-      })
+      browseDate.setDate(browseDate.getDate() - 1)
+      setValue(browseDate)
     } else if (e.key === 'ArrowRight') {
-      updateValue((value) => {
-        value.setDate(value.getDate() + 1)
-        return value
-      })
+      browseDate.setDate(browseDate.getDate() + 1)
+      setValue(browseDate)
+    } else if (e.key === 'Enter') {
+      setValue(browseDate)
+      dispatch('select')
     } else {
       return
     }
@@ -218,7 +217,7 @@
 <div class="date-time-picker" on:focusout tabindex="0" on:keydown={keydown}>
   <div class="tab-container" tabindex="-1">
     <div class="top">
-      <div class="page-button" tabindex="-1" on:click={() => setMonth(month - 1)}>
+      <div class="page-button" tabindex="-1" on:click={() => setMonth(browseDate.getMonth() - 1)}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
           ><path
             d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
@@ -227,11 +226,17 @@
         >
       </div>
       <div class="dropdown month">
-        <select bind:value={month} on:keydown={monthKeydown}>
+        <select
+          bind:value={browseMonth}
+          on:input={() => {
+            setMonth(browseMonth)
+          }}
+          on:keydown={monthKeydown}
+        >
           {#each iLocale.months as monthName, i}
             <option
-              disabled={new Date(year, i, getMonthLength(year, i), 23, 59, 59, 999) < min ||
-                new Date(year, i) > max}
+              disabled={new Date(browseYear, i, getMonthLength(browseYear, i), 23, 59, 59, 999) <
+                min || new Date(browseYear, i) > max}
               value={i}>{monthName}</option
             >
           {/each}
@@ -245,7 +250,7 @@
         -->
         <select class="dummy-select" tabindex="-1">
           {#each iLocale.months as monthName, i}
-            <option value={i} selected={i === month}>{monthName}</option>
+            <option value={i} selected={i === browseMonth}>{monthName}</option>
           {/each}
         </select>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -253,7 +258,7 @@
         >
       </div>
       <div class="dropdown year">
-        <select bind:value={year} on:keydown={yearKeydown}>
+        <select bind:value={browseYear} on:keydown={yearKeydown}>
           {#each years as v}
             <option value={v}>{v}</option>
           {/each}
@@ -261,14 +266,14 @@
         <!-- style <select> button without affecting menu popup -->
         <select class="dummy-select" tabindex="-1">
           {#each years as v}
-            <option value={v} selected={v === year}>{v}</option>
+            <option value={v} selected={v === browseDate.getFullYear()}>{v}</option>
           {/each}
         </select>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
           ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
         >
       </div>
-      <div class="page-button" tabindex="-1" on:click={() => setMonth(month + 1)}>
+      <div class="page-button" tabindex="-1" on:click={() => setMonth(browseDate.getMonth() + 1)}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
           ><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg
         >
@@ -290,8 +295,10 @@
             class="cell"
             on:click={() => selectDay(calendarDay)}
             class:disabled={!dayIsInRange(calendarDay, min, max)}
-            class:selected={calendarDay.month === month && calendarDay.number === dayOfMonth}
-            class:other-month={calendarDay.month !== month}
+            class:selected={calendarDay.year === value?.getFullYear() &&
+              calendarDay.month === value?.getMonth() &&
+              calendarDay.number === value.getDate()}
+            class:other-month={calendarDay.month !== browseMonth}
           >
             <span>{calendarDay.number}</span>
           </div>

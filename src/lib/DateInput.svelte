@@ -101,6 +101,8 @@
   export let visible = false
   /** Close the date popup when a date is selected */
   export let closeOnSelection = false
+  /** Wait with updating the date until a date is selected */
+  export let browseWithoutSelecting = false
 
   // handle on:focusout for parent element. If the parent element loses
   // focus (e.g input element), visible is set to false
@@ -156,6 +158,7 @@
         {min}
         {max}
         {locale}
+        {browseWithoutSelecting}
       />
     </div>
   {/if}
