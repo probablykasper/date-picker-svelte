@@ -44,6 +44,8 @@
   export let placeholder = '2020-12-31 23:00:00'
   /** Whether the text is valid */
   export let valid = true
+  /** Disable the input */
+  export let disabled = false
 
   /** Format string */
   export let format = 'yyyy-MM-dd HH:mm:ss'
@@ -145,6 +147,7 @@
     type="text"
     bind:value={text}
     {placeholder}
+    {disabled}
     on:focus={() => (visible = true)}
     on:mousedown={() => (visible = true)}
     on:input={input}
