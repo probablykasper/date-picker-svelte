@@ -59,7 +59,7 @@ Check the [docs](https://date-picker-svelte.kasper.space/docs) to learn more
 1. Update `CHANGELOG.md`
 2. Check for errors
     ```
-    npm run check
+    npm run lint
     ```
 3. Bump the version number
     ```

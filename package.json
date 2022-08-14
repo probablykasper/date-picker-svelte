@@ -9,8 +9,7 @@
     "build:package": "svelte-kit package",
     "build:site": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "prettier --check --plugin-search-dir=. src *.js && eslint src *.js",
+    "lint": "prettier --check --plugin-search-dir=. src *.js && eslint src *.js && svelte-check",
     "format": "prettier --write --plugin-search-dir=. src *.js && eslint --fix src *.js",
     "test": "jest tests",
     "test:coverage": "jest --collect-coverage --collectCoverageFrom=src/lib/**"
