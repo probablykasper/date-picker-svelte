@@ -226,13 +226,7 @@
         >
       </div>
       <div class="dropdown month">
-        <select
-          bind:value={browseMonth}
-          on:input={() => {
-            setMonth(browseMonth)
-          }}
-          on:keydown={monthKeydown}
-        >
+        <select bind:value={browseMonth} on:keydown={monthKeydown}>
           {#each iLocale.months as monthName, i}
             <option
               disabled={new Date(browseYear, i, getMonthLength(browseYear, i), 23, 59, 59, 999) <
