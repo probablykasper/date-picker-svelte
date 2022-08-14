@@ -171,9 +171,9 @@
       shiftKeydown(e)
       return
     } else if (e.key === 'ArrowUp') {
-      setMonth(browseDate.getFullYear() - 1)
+      setMonth(browseDate.getMonth() - 1)
     } else if (e.key === 'ArrowDown') {
-      setMonth(browseDate.getFullYear() + 1)
+      setMonth(browseDate.getMonth() + 1)
     } else if (e.key === 'ArrowLeft') {
       setMonth(browseDate.getFullYear() - 1)
     } else if (e.key === 'ArrowRight') {

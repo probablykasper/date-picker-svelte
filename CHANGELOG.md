@@ -3,6 +3,7 @@
 ## Next
 - Fix broken month dropdown on Firefox
 - Fix unreliable clamping to min/max dates
+- Fix month `Up/Down` arrow key shortcuts
 
 ## 2.1.0 - 2022 Jul 31
 - Add `browseWithoutSelecting` property
