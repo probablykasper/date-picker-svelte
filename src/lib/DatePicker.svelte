@@ -68,23 +68,14 @@
   /** Wait with updating the date until a date is selected */
   export let browseWithoutSelecting = false
 
-  let browseYear = browseDate.getFullYear()
-  function getBrowseYear(d: Date) {
-    browseYear = d.getFullYear()
-  }
-  $: getBrowseYear(browseDate)
+  $: browseYear = browseDate.getFullYear()
   function setYear(newYear: number) {
     browseDate.setFullYear(newYear)
     browseDate = browseDate
     browse(browseDate)
   }
-  $: setYear(browseYear)
 
-  let browseMonth = browseDate.getMonth()
-  function getBrowseMonth(d: Date) {
-    browseMonth = d.getMonth()
-  }
-  $: getBrowseMonth(browseDate)
+  $: browseMonth = browseDate.getMonth()
   function setMonth(newMonth: number) {
     let newYear = browseDate.getFullYear()
     if (newMonth === 12) {
@@ -109,7 +100,6 @@
       )
     )
   }
-  $: setMonth(browseMonth)
 
   $: calendarDays = getCalendarDays(browseDate, iLocale.weekStartsOn)
 
@@ -226,7 +216,11 @@
         >
       </div>
       <div class="dropdown month">
-        <select bind:value={browseMonth} on:keydown={monthKeydown}>
+        <select
+          value={browseMonth}
+          on:keydown={monthKeydown}
+          on:input={(e) => setMonth(parseInt(e.currentTarget.value))}
+        >
           {#each iLocale.months as monthName, i}
             <option
               disabled={new Date(browseYear, i, getMonthLength(browseYear, i), 23, 59, 59, 999) <
@@ -252,7 +246,11 @@
         >
       </div>
       <div class="dropdown year">
-        <select bind:value={browseYear} on:keydown={yearKeydown}>
+        <select
+          value={browseYear}
+          on:input={(e) => setYear(parseInt(e.currentTarget.value))}
+          on:keydown={yearKeydown}
+        >
           {#each years as v}
             <option value={v}>{v}</option>
           {/each}
