@@ -1,5 +1,9 @@
 # Changelog
 
+## Next
+- Fix broken month dropdown on Firefox
+- Fix unreliable clamping to min/max dates
+
 ## 2.1.0 - 2022 Jul 31
 - Add `browseWithoutSelecting` property
 - Use well-supported `:focus` instead of `:focus-within`

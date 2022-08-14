@@ -43,9 +43,9 @@
     setValue(min)
   }
   function clamp(d: Date, min: Date, max: Date) {
-    if (browseDate > max) {
+    if (d > max) {
       return cloneDate(max)
-    } else if (browseDate < min) {
+    } else if (d < min) {
       return cloneDate(min)
     } else {
       return cloneDate(d)
