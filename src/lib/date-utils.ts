@@ -5,8 +5,8 @@ export function isLeapYear(year: number): boolean {
 }
 export function getMonthLength(year: number, month: number): number {
   const feb = isLeapYear(year) ? 29 : 28
-  const monthLenghts = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-  return monthLenghts[month]
+  const monthLengths = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  return monthLengths[month]
 }
 
 export function toText(date: Date | null, formatTokens: FormatToken[]): string {
