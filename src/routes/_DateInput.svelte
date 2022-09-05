@@ -9,6 +9,7 @@
   let max: Date
   let valid: boolean
   let visible: boolean
+  let disabled: boolean
   let closeOnSelection: boolean
   let browseWithoutSelecting: boolean
   let format: string
@@ -24,6 +25,7 @@
     bind:valid
     bind:format
     bind:visible
+    bind:disabled
     bind:closeOnSelection
     bind:browseWithoutSelecting
   />
@@ -37,6 +39,7 @@
     <Prop label="valid" bind:value={valid} />
     <Prop label="format" bind:value={format} />
     <Prop label="visible" bind:value={visible} />
+    <Prop label="disabled" bind:value={disabled} />
     <Prop label="closeOnSelection" bind:value={closeOnSelection} />
     <Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
     <Prop label="locale">Default</Prop>
