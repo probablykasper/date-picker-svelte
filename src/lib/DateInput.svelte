@@ -186,7 +186,7 @@
       border-color: var(--date-picker-highlight-border, #0269f7)
       box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
     &:disabled
-      color: rgba(103, 113, 137, 0.3)
+      opacity: 0.5
   .invalid
     border: 1px solid rgba(#f92f72, 0.5)
     background-color: rgba(#f92f72, 0.1)
