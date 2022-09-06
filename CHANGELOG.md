@@ -1,7 +1,7 @@
 # Changelog
 
-## Next
-- Add `disabled` property 
+## 2.2.0 - 2022 Sep 6
+- Add `disabled` property
 
 ## 2.1.1 - 2022 Aug 15
 - Fix broken month dropdown on Firefox
