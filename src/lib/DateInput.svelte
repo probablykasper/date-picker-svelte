@@ -44,7 +44,7 @@
   export let placeholder = '2020-12-31 23:00:00'
   /** Whether the text is valid */
   export let valid = true
-  /** Property for disable input **/
+  /** Disable the input **/
   export let disabled = false
 
   /** Format string */
