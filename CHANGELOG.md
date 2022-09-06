@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Add `disabled` property 
+
 ## 2.1.1 - 2022 Aug 15
 - Fix broken month dropdown on Firefox
 - Fix unreliable clamping to min/max dates

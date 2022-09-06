@@ -38,6 +38,7 @@ The component will not assign a date value until a specific date is selected in 
 | `valid`                  | bool         | Whether the text is valid                            |
 | `format`                 | string       | Format string                                        |
 | `visible`                | bool         | Whether the date popup is visible                    |
+| `disabled`               | bool         | Disable the input                                    |
 | `closeOnSelection`       | bool         | Close the date popup when a date is selected         |
 | `browseWithoutSelecting` | bool         | Wait with updating the date until a date is selected |
 | `locale`                 | Locale       | Locale object for internationalization               |

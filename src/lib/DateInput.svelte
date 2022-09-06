@@ -44,6 +44,8 @@
   export let placeholder = '2020-12-31 23:00:00'
   /** Whether the text is valid */
   export let valid = true
+  /** Disable the input **/
+  export let disabled = false
 
   /** Format string */
   export let format = 'yyyy-MM-dd HH:mm:ss'
@@ -145,11 +147,12 @@
     type="text"
     bind:value={text}
     {placeholder}
+    {disabled}
     on:focus={() => (visible = true)}
     on:mousedown={() => (visible = true)}
     on:input={input}
   />
-  {#if visible}
+  {#if visible && !disabled}
     <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
       <DateTimePicker
         on:focusout={onFocusOut}
@@ -182,6 +185,8 @@
     &:focus
       border-color: var(--date-picker-highlight-border, #0269f7)
       box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
+    &:disabled
+      opacity: 0.5
   .invalid
     border: 1px solid rgba(#f92f72, 0.5)
     background-color: rgba(#f92f72, 0.1)
