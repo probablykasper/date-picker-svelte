@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { localeFromDateFnsLocale } from '$lib'
   import DatePicker from '$lib/DatePicker.svelte'
+  import { localeFromDateFnsLocale } from '$lib'
   import Prop from './_prop.svelte'
   import Split from './_split.svelte'
   // had to import it this way to avoid errors
