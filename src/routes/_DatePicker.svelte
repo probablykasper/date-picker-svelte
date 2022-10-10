@@ -1,9 +1,8 @@
 <script lang="ts">
-  import DatePicker from '$lib/DatePicker.svelte'
   import { localeFromDateFnsLocale } from '$lib'
+  import DatePicker from '$lib/DatePicker.svelte'
   import Prop from './_prop.svelte'
   import Split from './_split.svelte'
-
   // had to import it this way to avoid errors
   // in `npm run build:site` or `npm run check`:
   import hy from 'date-fns/locale/hy/index.js'

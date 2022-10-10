@@ -360,6 +360,7 @@
     &:hover
       background-color: rgba(#808080, 0.08)
       border: 1px solid rgba(#808080, 0.08)
+      cursor: var(--date-hover-arrow-cursor, pointer)
     svg
       width: 0.68rem
       height: 0.68rem
@@ -390,6 +391,8 @@
     border: 1px solid rgba(108, 120, 147, 0.3)
     outline: none
     transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+    &:hover
+      cursor: var(--month-year-select-hover-cursor, pointer)
 
   .header
     display: flex
@@ -415,6 +418,7 @@
     &:hover
       border: 1px solid rgba(#808080, 0.08)
       background-color: rgba(#808080, 0.08)
+      cursor: var(--date-hover-cursor, pointer)
     &.disabled
       visibility: hidden
     &.disabled:hover

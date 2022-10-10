@@ -111,6 +111,12 @@ Lengths:
 
 - `--date-input-width`
 
+Hover Cursors:
+
+- `--date-hover-cursor`
+- `--date-hover-arrow-cursor`
+- `--month-year-select-hover-cursor`
+
 Dark theme example:
 
 ```css
