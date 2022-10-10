@@ -114,7 +114,7 @@ Lengths:
 Hover Cursors:
 
 - `--date-hover-cursor`
-- `--date-hover-arrow-cursor`
+- `--next-previous-arrow-hover-cursor`
 - `--month-year-select-hover-cursor`
 
 Dark theme example:

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { getMonthLength, getCalendarDays } from './date-utils'
-  import type { CalendarDay } from './date-utils'
-  import { getInnerLocale } from './locale'
-  import type { Locale } from './locale'
   import { createEventDispatcher } from 'svelte'
+  import type { CalendarDay } from './date-utils'
+  import { getCalendarDays, getMonthLength } from './date-utils'
+  import type { Locale } from './locale'
+  import { getInnerLocale } from './locale'
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
@@ -360,7 +360,7 @@
     &:hover
       background-color: rgba(#808080, 0.08)
       border: 1px solid rgba(#808080, 0.08)
-      cursor: var(--date-hover-arrow-cursor, pointer)
+      cursor: var(--next-previous-arrow-hover-cursor, pointer)
     svg
       width: 0.68rem
       height: 0.68rem
