@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix month dropdown left/right arrow shortcuts
+
 ## 2.2.0 - 2022 Sep 6
 - Add `disabled` property
 

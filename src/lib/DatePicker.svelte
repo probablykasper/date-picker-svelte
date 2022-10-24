@@ -160,14 +160,10 @@
     if (shift) {
       shiftKeydown(e)
       return
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       setMonth(browseDate.getMonth() - 1)
-    } else if (e.key === 'ArrowDown') {
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
       setMonth(browseDate.getMonth() + 1)
-    } else if (e.key === 'ArrowLeft') {
-      setMonth(browseDate.getFullYear() - 1)
-    } else if (e.key === 'ArrowRight') {
-      setMonth(browseDate.getFullYear() + 1)
     } else {
       shiftKeydown(e)
       return
