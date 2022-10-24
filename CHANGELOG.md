@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.2.1 - 2022 Oct 24
 - Fix month dropdown left/right arrow shortcuts
 
 ## 2.2.0 - 2022 Sep 6
