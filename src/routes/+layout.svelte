@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte'
 
+  export const prerender = true
+
   let systemTheme: string | null = null
   onMount(() => {
     const prefersDarkMQ = matchMedia('(prefers-color-scheme: dark)')
@@ -84,7 +86,7 @@
 </div>
 
 <style lang="sass">
-  @import url('./_prism-holi-theme.css')
+  @import url('./prism-holi-theme.css')
   :global(:root)
     --primary: #1a79ff
     --input-highlight-border: rgb(2, 105, 247)

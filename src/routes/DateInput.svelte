@@ -1,7 +1,7 @@
 <script lang="ts">
   import DateInput from '$lib/DateInput.svelte'
-  import Prop from './_prop.svelte'
-  import Split from './_split.svelte'
+  import Prop from './prop.svelte'
+  import Split from './split.svelte'
 
   let placeholder: string
   let value: Date
