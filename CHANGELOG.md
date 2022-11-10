@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.2.3 - 2022 Nov 10
 - Improve Tailwind compatibility
 
 ## 2.2.2 - 2022 Nov 10
