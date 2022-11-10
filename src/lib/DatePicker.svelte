@@ -344,6 +344,7 @@
       width: 8px
       padding: 0rem 0.5rem
       pointer-events: none
+      box-sizing: content-box
   .month
     flex-grow: 1
   .year
@@ -397,6 +398,7 @@
     border: 1px solid rgba(108, 120, 147, 0.3)
     outline: none
     transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+    background-image: none
 
   .header
     display: flex

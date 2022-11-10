@@ -1,5 +1,9 @@
 # Changelog
 
+## Next
+- Fix accessibility hints
+- Improve Tailwind compatibility
+
 ## 2.2.1 - 2022 Oct 24
 - Fix month dropdown left/right arrow shortcuts
 
