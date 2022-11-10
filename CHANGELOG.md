@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.2.2 - 2022 Nov 10
 - Fix accessibility hints
 - Improve Tailwind compatibility
 
