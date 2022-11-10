@@ -200,17 +200,22 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div class="date-time-picker" on:focusout tabindex="0" on:keydown={keydown}>
   <div class="tab-container" tabindex="-1">
     <div class="top">
-      <div class="page-button" tabindex="-1" on:click={() => setMonth(browseDate.getMonth() - 1)}>
+      <button
+        class="page-button"
+        tabindex="-1"
+        on:click={() => setMonth(browseDate.getMonth() - 1)}
+      >
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
           ><path
             d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"
             transform="rotate(180, 12, 12)"
           /></svg
         >
-      </div>
+      </button>
       <div class="dropdown month">
         <select
           value={browseMonth}
@@ -261,11 +266,15 @@
           ><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
         >
       </div>
-      <div class="page-button" tabindex="-1" on:click={() => setMonth(browseDate.getMonth() + 1)}>
+      <button
+        class="page-button"
+        tabindex="-1"
+        on:click={() => setMonth(browseDate.getMonth() + 1)}
+      >
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
           ><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" /></svg
         >
-      </div>
+      </button>
     </div>
     <div class="header">
       {#each Array(7) as _, i}
@@ -279,6 +288,7 @@
     {#each Array(6) as _, weekIndex}
       <div class="week">
         {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
             class="cell"
             on:click={() => selectDay(calendarDay)}
@@ -344,6 +354,7 @@
     opacity: 0.75
     outline: none
   .page-button
+    background-color: transparent
     width: 1.5rem
     height: 1.5rem
     flex-shrink: 0
