@@ -383,7 +383,7 @@
     border-color: var(--date-picker-highlight-border, #0269f7)
     box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
   select:not(.dummy-select)
-    border-radius: 100px
+    opacity: 0
   select
     font-size: inherit
     font-family: inherit
