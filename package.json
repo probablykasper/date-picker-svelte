@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "svelte-kit package && vite build",
-    "build:package": "svelte-kit package",
+    "build": "svelte-package && vite build",
+    "build:package": "svelte-package",
     "build:site": "vite build",
     "preview": "vite preview",
     "lint": "prettier --check --plugin-search-dir=. src *.js && eslint src *.js && svelte-check",
@@ -17,6 +17,7 @@
   "devDependencies": {
     "@sveltejs/adapter-static": "1.0.0-next.48",
     "@sveltejs/kit": "1.0.0-next.539",
+    "@sveltejs/package": "^1.0.0-next.5",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "babel-jest": "^29.3.1",

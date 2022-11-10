@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
 
-  export const prerender = true
-
   let systemTheme: string | null = null
   onMount(() => {
     const prefersDarkMQ = matchMedia('(prefers-color-scheme: dark)')
