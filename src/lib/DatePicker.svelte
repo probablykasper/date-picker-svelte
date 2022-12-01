@@ -205,6 +205,7 @@
   <div class="tab-container" tabindex="-1">
     <div class="top">
       <button
+        type="button"
         class="page-button"
         tabindex="-1"
         on:click={() => setMonth(browseDate.getMonth() - 1)}
@@ -267,6 +268,7 @@
         >
       </div>
       <button
+        type="button"
         class="page-button"
         tabindex="-1"
         on:click={() => setMonth(browseDate.getMonth() + 1)}

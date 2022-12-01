@@ -64,7 +64,7 @@
           /></svg
         >
       </a>
-      <button class="icon theme-toggle" on:click={toggleTheme}>
+      <button type="button" class="icon theme-toggle" on:click={toggleTheme}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           enable-background="new 0 0 24 24"

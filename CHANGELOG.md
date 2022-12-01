@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix buttons causing form submissions
+
 ## 2.2.3 - 2022 Nov 10
 - Improve Tailwind compatibility
 
