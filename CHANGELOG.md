@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.2.4 - 2022 Dec 1
 - Fix buttons causing form submissions
 
 ## 2.2.3 - 2022 Nov 10
