@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix month/year not updating when `value` is assigned to
+
 ## 2.2.4 - 2022 Dec 1
 - Fix buttons causing form submissions
 

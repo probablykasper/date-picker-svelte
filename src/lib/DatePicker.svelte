@@ -32,6 +32,9 @@
 
   /** The date shown in the popup when none is selected */
   let browseDate = value ? cloneDate(value) : cloneDate(defaultDate)
+  $: if (browseDate.getTime() !== value?.getTime()) {
+    browseDate = value ? cloneDate(value) : browseDate
+  }
 
   /** The earliest year the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
