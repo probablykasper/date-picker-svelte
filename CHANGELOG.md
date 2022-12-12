@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.2.5 - 2022 Dec 13
 - Fix month/year not updating when `value` is assigned to
 
 ## 2.2.4 - 2022 Dec 1
