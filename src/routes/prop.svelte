@@ -1,7 +1,7 @@
 <script lang="ts">
   import DateInput from '$lib/DateInput.svelte'
 
-  export let value: unknown = null
+  export let value: unknown = undefined
   export let label: string
   let jsonValue = ''
   $: if (value instanceof Object) {

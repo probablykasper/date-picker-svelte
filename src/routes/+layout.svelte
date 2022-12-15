@@ -84,7 +84,6 @@
 </div>
 
 <style lang="sass">
-  @import url('./prism-holi-theme.css')
   :global(:root)
     --primary: #1a79ff
     --input-highlight-border: rgb(2, 105, 247)
