@@ -7,7 +7,7 @@
   import type { FormatToken } from './parse'
   import DateTimePicker from './DatePicker.svelte'
   import { writable } from 'svelte/store'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
 
@@ -45,6 +45,22 @@
   
   /** Set a custom name for this input so it can be referenced*/
   export let inputName = 'svelteDateInput';
+
+  /** Dynamically set data attributes on the input field */
+  type dataAttr = {
+    name: string;
+    value: string
+  };
+  export let dataAttrs: Array<dataAttr> = [];
+  onMount(() => {
+    const inputElement = document.querySelector('.date-time-field input');
+    for(let dataAttr of dataAttrs){
+      if(inputElement != null){
+        inputElement.setAttribute('data-' + dataAttr.name, dataAttr.value)
+      }
+    }
+  });
+  
   /** Whether the text is valid */
   export let valid = true
   /** Disable the input **/
