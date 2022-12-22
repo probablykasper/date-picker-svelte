@@ -20,6 +20,11 @@
   </li>
   <li>Keyboard shortcuts</li>
 </ul>
+<p>Extra features in this fork:</p>
+<ul>
+  <li>Allows a custom name attribute to be assigned to the DateInput</li>
+  <li>Allows custom data attributes to be assigned to the DateInput</li>
+</ul>
 
 <h2>Install</h2>
 <pre class="language-">npm install -D date-picker-svelte</pre>

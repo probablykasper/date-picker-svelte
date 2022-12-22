@@ -18,7 +18,9 @@
 
 <div class="prop">
   <div class="label">{label}</div>
-  {#if typeof value === 'string'}
+  {#if label == 'dataAttrs'}
+    <div class="dataAttrs"><slot /></div>
+  {:else if typeof value === 'string'}
     <input type="text" bind:value />
   {:else if typeof value === 'boolean'}
     <input type="checkbox" bind:checked={value} />
@@ -45,6 +47,16 @@
     display: inline-block
     width: 195px
     flex-shrink: 0
+  .dataAttrs
+    color: var(--foreground)
+    background: var(--input-background)
+    border: 1px solid rgba(103, 113, 137, 0.3)
+    border-radius: 3px
+    box-sizing: border-box
+    padding: 4px 6px
+    outline: none
+    font-size: 13px
+    width: 180px
   input[type='text'], textarea
     color: var(--foreground)
     background: var(--input-background)
