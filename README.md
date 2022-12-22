@@ -14,6 +14,10 @@ Features:
 - Autopunctuation (e.g typing "20201111111111" gives you "2020-11-11 11:11:11" with the default format)
 - Keyboard shortcuts
 
+Extra features in this fork:
+- Allows a custom name attribute to be assigned to the DateInput
+- Allows custom data attributes to be assigned to the DateInput
+
 [Demo](https://date-picker-svelte.kasper.space/demo) • [Documentation](https://date-picker-svelte.kasper.space/docs) • [REPL](https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=3)
 
 ![](Screenshot.png)
