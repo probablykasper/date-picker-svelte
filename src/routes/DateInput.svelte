@@ -3,12 +3,12 @@
   import Prop from './prop.svelte'
   import Split from './split.svelte'
 
-  const localDataAttrs: Array<{name: string, value: string}> = [
+  const localDataAttrs: Array<{ name: string; value: string }> = [
     {
       name: 'exampleName',
-      value: 'exampleValue'
-    }
-  ];
+      value: 'exampleValue',
+    },
+  ]
 
   let placeholder: string
   let value: Date
@@ -20,7 +20,7 @@
   let closeOnSelection: boolean
   let browseWithoutSelecting: boolean
   let format: string
-  let inputName: string = 'custom-input-name';
+  let inputName = 'custom-input-name'
 </script>
 
 <Split>
@@ -53,7 +53,7 @@
     <Prop label="closeOnSelection" bind:value={closeOnSelection} />
     <Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
     <Prop label="locale">Default</Prop>
-    <Prop label="inputName" bind:value={inputName}></Prop>
-    <Prop label="dataAttrs">{'[{ name: \'exampleName\', value: \'exampleValue\' }]'}</Prop>
+    <Prop label="inputName" bind:value={inputName} />
+    <Prop label="dataAttrs">{"[{ name: 'exampleName', value: 'exampleValue' }]"}</Prop>
   </svelte:fragment>
 </Split>
