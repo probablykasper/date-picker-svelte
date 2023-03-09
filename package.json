@@ -36,6 +36,9 @@
     "typescript": "^4.9.4",
     "vite": "^4.0.1"
   },
+  "peerDependencies": {
+    "svelte": "^3.24.0"
+  },
   "license": "MIT",
   "homepage": "https://date-picker-svelte.kasper.space",
   "repository": {
