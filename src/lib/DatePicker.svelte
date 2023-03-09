@@ -27,6 +27,8 @@
     }
   }
 
+  const todayDate = new Date()
+
   /** Default Date to use */
   const defaultDate = new Date()
 
@@ -301,6 +303,9 @@
             class:selected={calendarDay.year === value?.getFullYear() &&
               calendarDay.month === value?.getMonth() &&
               calendarDay.number === value.getDate()}
+            class:today={calendarDay.year === todayDate.getFullYear() &&
+              calendarDay.month === todayDate.getMonth() &&
+              calendarDay.number === todayDate.getDate()}
             class:other-month={calendarDay.month !== browseMonth}
           >
             <span>{calendarDay.number}</span>
@@ -428,6 +433,10 @@
     border: 2px solid transparent
     &:hover
       border: 1px solid rgba(#808080, 0.08)
+    &.today
+      font-weight: 600
+      border: 2px solid var(--date-picker-today-border, rgba(#808080, 0.3))
+    &:hover
       background-color: rgba(#808080, 0.08)
     &.disabled
       visibility: hidden

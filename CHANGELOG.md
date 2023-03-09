@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Outline today in the date picker
+
 ## 2.2.5 - 2022 Dec 13
 - Fix month/year not updating when `value` is assigned to
 
