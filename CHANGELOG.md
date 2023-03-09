@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.3.0 - 2023 Mar 9
 - Outline today in the date picker
 
 ## 2.2.5 - 2022 Dec 13
