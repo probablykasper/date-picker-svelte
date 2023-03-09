@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2.3.0 - 2023 Mar 9
-- Outline today in the date picker
+- Outline today in the date picker (@VladimirLakodei)
 
 ## 2.2.5 - 2022 Dec 13
 - Fix month/year not updating when `value` is assigned to
