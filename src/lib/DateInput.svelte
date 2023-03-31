@@ -143,6 +143,7 @@
 
 <div class="date-time-field" on:focusout={onFocusOut} on:keydown={keydown}>
   <input
+    class={$$props.class}
     class:invalid={!valid}
     type="text"
     bind:value={text}
