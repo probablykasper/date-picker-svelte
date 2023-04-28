@@ -46,6 +46,9 @@
   export let valid = true
   /** Disable the input **/
   export let disabled = false
+  /** Pass custom classes */
+  let classes = ''
+  export { classes as class }
 
   /** Format string */
   export let format = 'yyyy-MM-dd HH:mm:ss'
@@ -141,7 +144,7 @@
   }
 </script>
 
-<div class="date-time-field" on:focusout={onFocusOut} on:keydown={keydown}>
+<div class="date-time-field { classes }" on:focusout={onFocusOut} on:keydown={keydown}>
   <input
     class:invalid={!valid}
     type="text"
