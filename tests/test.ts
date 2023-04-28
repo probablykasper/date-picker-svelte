@@ -1,9 +1,9 @@
 import { describe, expect, test } from '@jest/globals'
 import { nb } from 'date-fns/locale'
 
-import { getCalendarDays, getMonthDays, toText } from '../src/lib/date-utils'
-import { createFormat, parse } from '../src/lib/parse'
-import { getInnerLocale, localeFromDateFnsLocale } from '../src/lib/locale'
+import { getCalendarDays, getMonthDays, toText } from '../src/lib/date-utils.js'
+import { createFormat, parse } from '../src/lib/parse.js'
+import { getInnerLocale, localeFromDateFnsLocale } from '../src/lib/locale.js'
 
 describe('date-utils', () => {
   test('getMonthDays', () => {

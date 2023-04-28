@@ -1,10 +1,9 @@
 <script lang="ts">
   import { fly } from 'svelte/transition'
   import { cubicInOut } from 'svelte/easing'
-  import { toText } from './date-utils'
-  import type { Locale } from './locale'
-  import { parse, createFormat } from './parse'
-  import type { FormatToken } from './parse'
+  import { toText } from './date-utils.js'
+  import type { Locale } from './locale.js'
+  import { parse, createFormat, type FormatToken } from './parse.js'
   import DateTimePicker from './DatePicker.svelte'
   import { writable } from 'svelte/store'
   import { createEventDispatcher } from 'svelte'

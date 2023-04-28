@@ -1,4 +1,4 @@
-import { getMonthLength } from './date-utils'
+import { getMonthLength } from './date-utils.js'
 
 type RuleToken = {
   id: string

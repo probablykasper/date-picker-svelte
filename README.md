@@ -64,13 +64,9 @@ Check the [docs](https://date-picker-svelte.kasper.space/docs) to learn more
     ```
     npm version --no-git-tag <version>
     ```
-4. Generate the package
+4. Publish
     ```
-    npm run build:package
+    npm publish
     ```
-5. Publish the package
-    ```
-    npm publish ./package
-    ```
-6. Commit with a tag in format "v#.#.#"
-7. Create GitHub release with release notes
+5. Commit with a tag in format "v#.#.#"
+6. Create GitHub release with release notes

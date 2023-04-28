@@ -3,7 +3,7 @@ import { mdsvex } from 'mdsvex'
 import { vitePreprocess } from '@sveltejs/kit/vite'
 
 /** @type {import('@sveltejs/kit').Config} */
-const config = {
+export default {
   extensions: ['.svelte', '.md'],
   preprocess: [
     vitePreprocess(),
@@ -18,5 +18,3 @@ const config = {
     }),
   },
 }
-
-export default config

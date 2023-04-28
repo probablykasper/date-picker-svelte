@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { getMonthLength, getCalendarDays } from './date-utils'
-  import type { CalendarDay } from './date-utils'
-  import { getInnerLocale } from './locale'
-  import type { Locale } from './locale'
+  import { getMonthLength, getCalendarDays, type CalendarDay } from './date-utils.js'
+  import { getInnerLocale, type Locale } from './locale.js'
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher<{ select: undefined }>()
@@ -300,8 +298,9 @@
             class="cell"
             on:click={() => selectDay(calendarDay)}
             class:disabled={!dayIsInRange(calendarDay, min, max)}
-            class:selected={calendarDay.year === value?.getFullYear() &&
-              calendarDay.month === value?.getMonth() &&
+            class:selected={value &&
+              calendarDay.year === value.getFullYear() &&
+              calendarDay.month === value.getMonth() &&
               calendarDay.number === value.getDate()}
             class:today={calendarDay.year === todayDate.getFullYear() &&
               calendarDay.month === todayDate.getMonth() &&
