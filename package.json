@@ -6,13 +6,14 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && npm run package",
+    "build:site": "vite build",
     "preview": "vite preview",
     "package": "svelte-kit sync && svelte-package && publint",
     "prepublishOnly": "npm run package",
     "lint": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && eslint src && prettier --check src",
     "format": "prettier --write src && eslint --fix src",
-    "test": "jest tests",
-    "test:coverage": "jest --collect-coverage --collectCoverageFrom=src/lib/**"
+    "test": "vitest",
+    "test:coverage": "vitest --coverage"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^2.0.2",
@@ -20,21 +21,20 @@
     "@sveltejs/package": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.1",
-    "babel-jest": "^29.5.0",
+    "@vitest/coverage-c8": "^0.30.1",
     "date-fns": "^2.29.3",
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-svelte": "^2.27.1",
-    "jest": "^29.5.0",
     "mdsvex": "^0.10.6",
     "prettier": "^2.8.8",
     "prettier-plugin-svelte": "^2.10.0",
     "sass": "^1.62.1",
     "svelte": "^3.58.0",
     "svelte-check": "^3.2.0",
-    "ts-jest": "^29.1.0",
     "typescript": "^5.0.4",
-    "vite": "^4.3.3"
+    "vite": "^4.3.3",
+    "vitest": "^0.30.1"
   },
   "peerDependencies": {
     "svelte": "^3.24.0"
@@ -121,16 +121,6 @@
     "svelte",
     "front-end"
   ],
-  "jest": {
-    "transform": {
-      "^.+\\.ts$": "ts-jest",
-      "^.+\\.js$": "babel-jest"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ]
-  },
   "prettier": {
     "printWidth": 100,
     "semi": false,

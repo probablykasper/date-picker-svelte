@@ -1,20 +1,22 @@
-import { describe, expect, test } from '@jest/globals'
+import { describe, it, expect, test } from 'vitest'
 import { nb } from 'date-fns/locale'
+import { getCalendarDays, getMonthDays, toText } from './date-utils.js'
+import { createFormat, parse } from './parse.js'
+import { getInnerLocale, localeFromDateFnsLocale } from './locale.js'
 
-import { getCalendarDays, getMonthDays, toText } from '../src/lib/date-utils.js'
-import { createFormat, parse } from '../src/lib/parse.js'
-import { getInnerLocale, localeFromDateFnsLocale } from '../src/lib/locale.js'
-
-describe('date-utils', () => {
-  test('getMonthDays', () => {
+describe('getMonthDays', () => {
+  it('gets the correct amount of days', () => {
     const feb2021 = getMonthDays(2021, 1)
     expect(feb2021.length).toEqual(28)
   })
-  test('getMonthDays leap year', () => {
+  it('works with leap years', () => {
     const feb2020 = getMonthDays(2020, 1)
     expect(feb2020.length).toEqual(29)
   })
-  test('getCalendarDays weekdays', () => {
+})
+
+describe('getCalendarDays', () => {
+  it('works for all months in 1995-2025', () => {
     const weekdayStartsOn = 1 // monday
     for (let year = 1995; year < 2025; year++) {
       for (let month = 0; month < 11; month++) {
@@ -40,7 +42,8 @@ describe('date-utils', () => {
       }
     }
   })
-  test('getCalendarDays prev/next months', () => {
+
+  it('gets the correct correct days from the prev/next month', () => {
     const jan2020 = new Date(2020, 0, 1, 0, 0, 0, 0)
     const jan2020CalDays = getCalendarDays(jan2020, 1)
     expect(jan2020CalDays).toEqual([
@@ -75,46 +78,57 @@ describe('date-utils', () => {
       { year: 2020, month: 0, number: 5 },
     ])
   })
-  test('toText', () => {
-    const format = createFormat('yyyy-MM-dd HH:mm:ss')
-    const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
-    expect(text).toEqual('2020-01-01 00:00:00')
-  })
 })
 
-test('formatting', () => {
+test('toText', () => {
+  const format = createFormat('yyyy-MM-dd HH:mm:ss')
+  const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
+  expect(text).toEqual('2020-01-01 00:00:00')
+})
+
+describe('Formatting', () => {
   const baseDate = new Date(1234, 0, 1, 0, 0, 0, 999)
   const format = createFormat('yyyy--MM-dd HH:mm:ss')
 
-  const basic = parse('1234--12-31 23:59:59', format, baseDate)
-  expect(basic).toEqual({
-    date: new Date(1234, 11, 31, 23, 59, 59, 999),
-    missingPunctuation: '',
+  it('works with a basic date', () => {
+    const result = parse('1234--12-31 23:59:59', format, baseDate)
+    expect(result).toEqual({
+      date: new Date(1234, 11, 31, 23, 59, 59, 999),
+      missingPunctuation: '',
+    })
   })
 
-  const withMissingPunctuation = parse('2345', format, baseDate)
-  expect(withMissingPunctuation).toEqual({
-    date: null,
-    missingPunctuation: '--',
+  it('handles missing punctuation', () => {
+    const result = parse('2345', format, baseDate)
+    expect(result).toEqual({
+      date: null,
+      missingPunctuation: '--',
+    })
   })
 
-  const minuteOverflow = parse('1234--12-31 23:99:59', format, baseDate)
-  expect(minuteOverflow).toEqual({
-    date: null,
-    missingPunctuation: '',
+  it('fails with too high minute', () => {
+    const result = parse('1234--12-31 23:99:59', format, baseDate)
+    expect(result).toEqual({
+      date: null,
+      missingPunctuation: '',
+    })
   })
 
-  // separate test because some months have less than 31 days
-  const dayOfMonthOverflow = parse('1234--02-31 23:59:59', format, baseDate)
-  expect(dayOfMonthOverflow).toEqual({
-    date: null,
-    missingPunctuation: '',
+  it('fails with too high date-of-month', () => {
+    // separate test because some months have less than 31 days
+    const dayOfMonthOverflow = parse('1234--02-31 23:59:59', format, baseDate)
+    expect(dayOfMonthOverflow).toEqual({
+      date: null,
+      missingPunctuation: '',
+    })
   })
 
-  const noNumber = parse('1234--02-31 23:59:5d', format, baseDate)
-  expect(noNumber).toEqual({
-    date: null,
-    missingPunctuation: '',
+  it('fails when the second has a non-numeric character', () => {
+    const noNumber = parse('1234--02-31 23:59:5d', format, baseDate)
+    expect(noNumber).toEqual({
+      date: null,
+      missingPunctuation: '',
+    })
   })
 })
 
