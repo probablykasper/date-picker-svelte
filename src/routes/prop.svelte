@@ -29,7 +29,7 @@
       max={new Date(new Date().getFullYear() + 5, 0)}
     />
   {:else if value instanceof Object}
-    <textarea type="text" bind:value={jsonValue} on:input={jsonInput} />
+    <textarea bind:value={jsonValue} on:input={jsonInput} />
   {:else}
     <div>
       <slot />

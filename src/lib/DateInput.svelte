@@ -144,7 +144,7 @@
   }
 </script>
 
-<div class="date-time-field { classes }" on:focusout={onFocusOut} on:keydown={keydown}>
+<div class="date-time-field {classes}" on:focusout={onFocusOut} on:keydown={keydown}>
   <input
     class:invalid={!valid}
     type="text"
