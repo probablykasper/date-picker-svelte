@@ -74,6 +74,7 @@
   $: browseYear = browseDate.getFullYear()
   function setYear(newYear: number) {
     browseDate.setFullYear(newYear)
+    /* eslint-disable-next-line no-self-assign */
     browseDate = browseDate
     browse(browseDate)
   }
@@ -282,6 +283,7 @@
       </button>
     </div>
     <div class="header">
+      <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
       {#each Array(7) as _, i}
         {#if i + iLocale.weekStartsOn < 7}
           <div class="header-cell">{iLocale.weekdays[iLocale.weekStartsOn + i]}</div>
@@ -290,6 +292,7 @@
         {/if}
       {/each}
     </div>
+    <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
     {#each Array(6) as _, weekIndex}
       <div class="week">
         {#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
