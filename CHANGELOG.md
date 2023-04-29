@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.4.1 - 2023 Apr 29
 - Fix browsing not working with `browseWithoutSelecting` when a date is selected
 
 ## 2.4.0 - 2023 Apr 29
