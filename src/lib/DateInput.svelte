@@ -8,7 +8,10 @@
   import { writable } from 'svelte/store'
   import { createEventDispatcher } from 'svelte'
 
-  const dispatch = createEventDispatcher<{ select: undefined }>()
+  const dispatch = createEventDispatcher<{
+    /** Fires when the user selects a new value in the DatePicker by clicking on a date or by pressing enter */
+    select: undefined
+  }>()
 
   /** Default date to display in picker before value is assigned */
   const defaultDate = new Date()

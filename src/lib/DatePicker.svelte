@@ -3,7 +3,10 @@
   import { getInnerLocale, type Locale } from './locale.js'
   import { createEventDispatcher } from 'svelte'
 
-  const dispatch = createEventDispatcher<{ select: undefined }>()
+  const dispatch = createEventDispatcher<{
+    /** Fires when the user selects a new value by clicking on a date or by pressing enter */
+    select: undefined
+  }>()
 
   function cloneDate(d: Date) {
     return new Date(d.getTime())
