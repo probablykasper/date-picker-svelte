@@ -1,6 +1,6 @@
 {
   "name": "date-picker-svelte",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Date and time picker for Svelte",
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "vite build && npm run package",
     "build:site": "vite build",
     "preview": "vite preview",
-    "package": "svelte-kit sync && svelte-package && publint",
+    "package": "svelte-package",
     "prepublishOnly": "npm run package",
     "lint": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && eslint src && prettier --check src",
     "format": "prettier --write src && eslint --fix src",

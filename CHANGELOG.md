@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0 - 2023 Apr 29
+- Add `class` prop (@jdtjenkins)
+- Fix vite-plugin-svelte resolve config conflict warning
+
 ## 2.3.0 - 2023 Mar 9
 - Outline today in the date picker (@VladimirLakodei)
 
