@@ -33,12 +33,6 @@
   /** Default Date to use */
   const defaultDate = new Date()
 
-  /** The date shown in the popup when none is selected */
-  let browseDate = value ? cloneDate(value) : cloneDate(defaultDate)
-  $: if (browseDate.getTime() !== value?.getTime() && !browseWithoutSelecting) {
-    browseDate = value ? cloneDate(value) : browseDate
-  }
-
   /** The earliest year the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
   /** The latest year the user can select */
@@ -56,6 +50,12 @@
     } else {
       return cloneDate(d)
     }
+  }
+
+  /** The date shown in the popup when none is selected */
+  let browseDate = value ? cloneDate(value) : cloneDate(clamp(defaultDate, min, max))
+  $: if (browseDate.getTime() !== value?.getTime() && !browseWithoutSelecting) {
+    browseDate = value ? cloneDate(value) : browseDate
   }
 
   let years = getYears(min, max)

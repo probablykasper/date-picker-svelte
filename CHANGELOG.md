@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix blank date picker when no date is selected and current date is outside min/max range
+
 ## 2.4.1 - 2023 Apr 29
 - Fix browsing not working with `browseWithoutSelecting` when a date is selected
 
