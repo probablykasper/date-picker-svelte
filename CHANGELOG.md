@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix browsing not working with `browseWithoutSelecting` when a date is selected
+
 ## 2.4.0 - 2023 Apr 29
 - Add `class` prop (@jdtjenkins)
 - Fix vite-plugin-svelte resolve config conflict warning

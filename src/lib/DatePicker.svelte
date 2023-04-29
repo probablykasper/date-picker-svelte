@@ -35,7 +35,7 @@
 
   /** The date shown in the popup when none is selected */
   let browseDate = value ? cloneDate(value) : cloneDate(defaultDate)
-  $: if (browseDate.getTime() !== value?.getTime()) {
+  $: if (browseDate.getTime() !== value?.getTime() && !browseWithoutSelecting) {
     browseDate = value ? cloneDate(value) : browseDate
   }
 
@@ -77,8 +77,6 @@
   $: browseYear = browseDate.getFullYear()
   function setYear(newYear: number) {
     browseDate.setFullYear(newYear)
-    /* eslint-disable-next-line no-self-assign */
-    browseDate = browseDate
     browse(browseDate)
   }
 
