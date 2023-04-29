@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.4.2 - 2023 Apr 29
 - Fix blank date picker when no date is selected and current date is outside min/max range
 
 ## 2.4.1 - 2023 Apr 29
