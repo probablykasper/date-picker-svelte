@@ -11,7 +11,7 @@
     "package": "svelte-package",
     "prepublishOnly": "npm run package",
     "lint": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && eslint src && prettier --check src",
-    "format": "prettier --write src && eslint --fix src",
+    "format": "eslint --fix src && prettier --write src",
     "test": "vitest",
     "test:coverage": "vitest --coverage"
   },
