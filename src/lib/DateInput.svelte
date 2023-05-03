@@ -10,7 +10,9 @@
 
   const dispatch = createEventDispatcher<{
     /** Fires when the user selects a new value in the DatePicker by clicking on a date or by pressing enter */
-    select: undefined
+    select: undefined,
+    /** Fires when the date changes */
+    update: { value: Date | null },
   }>()
 
   /** Default date to display in picker before value is assigned */
@@ -67,6 +69,7 @@
 
   export let text = toText($store, formatTokens)
   let textHistory = [text, text]
+  let last_valid_text = text
   $: textHistory = [textHistory[1], text]
 
   function textUpdate(text: string, formatTokens: FormatToken[]) {
@@ -85,6 +88,10 @@
         value = null
         store.set(null)
       }
+    }
+    if (valid && (text !== last_valid_text)) {
+      last_valid_text = text
+      dispatch('update', { value })
     }
   }
   $: textUpdate(text, formatTokens)
