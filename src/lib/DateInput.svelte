@@ -66,8 +66,6 @@
   $: valueUpdate($store, formatTokens)
 
   export let text = toText($store, formatTokens)
-  let textHistory = [text, text]
-  $: textHistory = [textHistory[1], text]
 
   function textUpdate(text: string, formatTokens: FormatToken[]) {
     if (text.length) {
@@ -88,21 +86,6 @@
     }
   }
   $: textUpdate(text, formatTokens)
-
-  function input(e: unknown) {
-    if (
-      e instanceof InputEvent &&
-      e.inputType === 'insertText' &&
-      typeof e.data === 'string' &&
-      text === textHistory[0] + e.data
-    ) {
-      // check for missing punctuation, and add if there is any
-      let result = parse(textHistory[0], formatTokens, $store)
-      if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
-        text = textHistory[0] + result.missingPunctuation + e.data
-      }
-    }
-  }
 
   /** Whether the date popup is visible */
   export let visible = false
@@ -150,12 +133,27 @@
   <input
     class:invalid={!valid}
     type="text"
-    bind:value={text}
+    value={text}
     {placeholder}
     {disabled}
     on:focus={() => (visible = true)}
     on:mousedown={() => (visible = true)}
-    on:input={input}
+    on:input={(e) => {
+      if (
+        e instanceof InputEvent &&
+        e.inputType === 'insertText' &&
+        typeof e.data === 'string' &&
+        e.currentTarget.value === text + e.data
+      ) {
+        // check for missing punctuation, and add if there is any
+        let result = parse(text, formatTokens, $store)
+        if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
+          text = text + result.missingPunctuation + e.data
+          return
+        }
+      }
+      text = e.currentTarget.value
+    }}
   />
   {#if visible && !disabled}
     <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
