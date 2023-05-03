@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.3 - 2023 May 3
+- Fix Firefox autopunctuation
+
 ## 2.4.2 - 2023 Apr 29
 - Fix blank date picker when no date is selected and current date is outside min/max range
 
