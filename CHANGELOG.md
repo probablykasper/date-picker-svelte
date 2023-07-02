@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Add Svelte 4 support
+
 ## 2.4.3 - 2023 May 3
 - Fix Firefox autopunctuation
 

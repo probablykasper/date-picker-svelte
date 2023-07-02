@@ -206,6 +206,7 @@
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="date-time-picker" on:focusout tabindex="0" on:keydown={keydown}>
   <div class="tab-container" tabindex="-1">
     <div class="top">

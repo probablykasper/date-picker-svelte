@@ -129,6 +129,7 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="date-time-field {classes}" on:focusout={onFocusOut} on:keydown={keydown}>
   <input
     class:invalid={!valid}
