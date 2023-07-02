@@ -1,6 +1,6 @@
 {
   "name": "date-picker-svelte",
-  "version": "2.4.3",
+  "version": "2.5.0",
   "description": "Date and time picker for Svelte",
   "type": "module",
   "scripts": {
