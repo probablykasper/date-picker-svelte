@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5.1 - 2023 Jul 2
+- Fix wrong version published
+
 ## 2.5.0 - 2023 Jul 2
 - Add Svelte 4 support
 
