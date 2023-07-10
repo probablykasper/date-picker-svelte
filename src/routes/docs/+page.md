@@ -50,6 +50,7 @@ Example format string: `yyyy-MM-dd HH:mm:ss`
 | Pattern | Result example |
 | :------ | :------------- |
 | `yyyy`  | 2021           |
+| `yy`    | 21             |
 | `MM`    | 12             |
 | `dd`    | 31             |
 | `HH`    | 23             |
