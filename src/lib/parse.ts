@@ -104,6 +104,10 @@ const ruleTokens: RuleToken[] = [
     toString: (d: Date) => d.getFullYear().toString(),
   },
   {
+    id: 'yy',
+    toString: (d: Date) => d.getFullYear().toString().slice(-2),
+  },
+  {
     id: 'MM',
     toString: (d: Date) => twoDigit(d.getMonth() + 1),
   },
