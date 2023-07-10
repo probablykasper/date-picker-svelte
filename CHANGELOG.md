@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.6.0 - 2023 Jul 11
+- Add 'yy' format (@erezarnon)
+
 ## 2.5.1 - 2023 Jul 2
 - Fix wrong version published
 
