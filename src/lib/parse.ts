@@ -57,6 +57,9 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
   function parseToken(token: FormatToken) {
     if (typeof token === 'string') {
       parseString(token)
+    } else if (token.id === 'yy') {
+      const value = parseUint(/^[0-9]{2}/, 0, 99)
+      if (value !== null) year = 2000 + value
     } else if (token.id === 'yyyy') {
       const value = parseUint(/^[0-9]{4}/, 0, 9999)
       if (value !== null) year = value
@@ -102,6 +105,10 @@ const ruleTokens: RuleToken[] = [
   {
     id: 'yyyy',
     toString: (d: Date) => d.getFullYear().toString(),
+  },
+  {
+    id: 'yy',
+    toString: (d: Date) => d.getFullYear().toString().slice(-2),
   },
   {
     id: 'MM',
