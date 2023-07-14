@@ -21,11 +21,17 @@
   <li>Keyboard shortcuts</li>
 </ul>
 
+<!-- svelte-ignore a11y-missing-content -->
+<a id="install" />
 <h2>Install</h2>
 <pre class="language-">npm install -D date-picker-svelte</pre>
 
+<!-- svelte-ignore a11y-missing-content -->
+<a id="dateinput" />
 <h2>DateInput</h2>
 <DateInput />
 
+<!-- svelte-ignore a11y-missing-content -->
+<a id="datepicker" />
 <h2>DatePicker</h2>
 <DatePicker />
