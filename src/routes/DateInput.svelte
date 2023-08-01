@@ -13,6 +13,7 @@
   let closeOnSelection: boolean
   let browseWithoutSelecting: boolean
   let format: string
+  let dynamicPositioning: boolean
 </script>
 
 <Split>
@@ -28,6 +29,7 @@
     bind:disabled
     bind:closeOnSelection
     bind:browseWithoutSelecting
+    bind:dynamicPositioning
   />
 
   <svelte:fragment slot="right">
@@ -42,6 +44,7 @@
     <Prop label="disabled" bind:value={disabled} />
     <Prop label="closeOnSelection" bind:value={closeOnSelection} />
     <Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
+    <Prop label="dynamicPositioning" bind:value={dynamicPositioning} />
     <Prop label="locale">Default</Prop>
   </svelte:fragment>
 </Split>
