@@ -130,37 +130,26 @@
 
   let dateField: HTMLElement;
   let pickerElement: HTMLElement | null;
-  let pickerTop: number|undefined = undefined;
-  let pickerLeft: number = 0;
-  /** Whether the date popup positiones its self to best fit on the screen*/
+  let pickerTopPosition: number|undefined = undefined;
+  let pickerLeftPosition: number = 0;
+  /** Lets the date popup positions its self, to best fit on the screen*/
   export let dynamicPositioning = false
 
   $: if (visible && dateField.firstElementChild && pickerElement && dynamicPositioning) {
-    // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up visually
-    const rect = dateField.firstElementChild.getBoundingClientRect();
-    const screenHeight = window.innerHeight;
-    const screenWidth = window.innerWidth;
-    const pickerHeight = pickerElement.offsetHeight;
-    const pickerWidth = pickerElement.offsetWidth;
-
-    // Check if the .date-time-field is in the bottom or top half of the screen
-    if (rect.top + rect.height / 2 > screenHeight / 2) {
-      // If it's in the bottom half, open DateTimePicker above the .date-time-field
-      pickerTop = -(pickerHeight+1);
-    } else {
-      // If it's in the top half, open DateTimePicker below the .date-time-field
-      pickerTop = rect.height;
+    // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
+    const referenceElement = dateField.firstElementChild.getBoundingClientRect();
+    if (referenceElement.top + referenceElement.height / 2 > window.innerHeight / 2) {
+      // If .date-time-field is on the bottom half of the screen, open date popup up
+      pickerTopPosition = -(pickerElement.offsetHeight+1);
     }
-
-    // Check if the .date-time-field is in the left or right half of the screen
-    if (rect.left + rect.width / 2 > screenWidth / 2) {
-      // If it's in the bottom right, open DateTimePicker to the left the .date-time-field
-      pickerLeft = -(pickerWidth-rect.width);
+    if (referenceElement.left + referenceElement.width / 2 > window.innerWidth / 2) {
+      // If date-time-field is on the right of the screen, open date popup to the left.
+      pickerLeftPosition = -(pickerElement.offsetWidth-referenceElement.width);
     }
   } else {
-    // This ensures that its default position of the DateTimePicker is down and to the right.
-    pickerTop = undefined;
-    pickerLeft = 0;
+    // This ensures that its default position of the date popup is down and to the right
+    pickerTopPosition = undefined;
+    pickerLeftPosition = 0;
   }
 
 </script>
@@ -193,7 +182,7 @@
     }}
   />
   {#if visible && !disabled}
-    <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }} style={`left: ${pickerLeft}px; top: ${pickerTop}px;`} bind:this={pickerElement}>
+    <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }} style={`left: ${pickerLeftPosition}px; top: ${pickerTopPosition}px;`} bind:this={pickerElement}>
       <DateTimePicker
         on:focusout={onFocusOut}
         on:select={onSelect}
