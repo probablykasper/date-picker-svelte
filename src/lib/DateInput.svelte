@@ -128,34 +128,38 @@
     }
   }
 
-  let dateField: HTMLElement;
-  let pickerElement: HTMLElement | null;
-  let pickerTopPosition: number|undefined = undefined;
-  let pickerLeftPosition: number = 0;
+  let dateField: HTMLElement
+  let pickerElement: HTMLElement | null
+  let pickerTopPosition: number | undefined = undefined
+  let pickerLeftPosition: number = 0
   /** Lets the date popup positions its self, to best fit on the screen*/
   export let dynamicPositioning = false
 
   $: if (visible && dateField.firstElementChild && pickerElement && dynamicPositioning) {
     // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
-    const referenceElement = dateField.firstElementChild.getBoundingClientRect();
+    const referenceElement = dateField.firstElementChild.getBoundingClientRect()
     if (referenceElement.top + referenceElement.height / 2 > window.innerHeight / 2) {
       // If .date-time-field is on the bottom half of the screen, open date popup up
-      pickerTopPosition = -(pickerElement.offsetHeight+1);
+      pickerTopPosition = -(pickerElement.offsetHeight + 1)
     }
     if (referenceElement.left + referenceElement.width / 2 > window.innerWidth / 2) {
       // If date-time-field is on the right of the screen, open date popup to the left.
-      pickerLeftPosition = -(pickerElement.offsetWidth-referenceElement.width);
+      pickerLeftPosition = -(pickerElement.offsetWidth - referenceElement.width)
     }
   } else {
     // This ensures that the default position of the date popup is down and to the right
-    pickerTopPosition = undefined;
-    pickerLeftPosition = 0;
+    pickerTopPosition = undefined
+    pickerLeftPosition = 0
   }
-
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="date-time-field {classes}" on:focusout={onFocusOut} on:keydown={keydown} bind:this={dateField}>
+<div
+  class="date-time-field {classes}"
+  on:focusout={onFocusOut}
+  on:keydown={keydown}
+  bind:this={dateField}
+>
   <input
     class:invalid={!valid}
     type="text"
@@ -182,7 +186,13 @@
     }}
   />
   {#if visible && !disabled}
-    <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }} style={`left: ${pickerLeftPosition}px; top: ${pickerTopPosition}px;`} bind:this={pickerElement}>
+    <div
+      class="picker"
+      class:visible
+      transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}
+      style={`left: ${pickerLeftPosition}px; top: ${pickerTopPosition}px;`}
+      bind:this={pickerElement}
+    >
       <DateTimePicker
         on:focusout={onFocusOut}
         on:select={onSelect}
