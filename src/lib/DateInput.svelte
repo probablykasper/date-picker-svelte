@@ -147,7 +147,7 @@
       pickerLeftPosition = -(pickerElement.offsetWidth-referenceElement.width);
     }
   } else {
-    // This ensures that its default position of the date popup is down and to the right
+    // This ensures that the default position of the date popup is down and to the right
     pickerTopPosition = undefined;
     pickerLeftPosition = 0;
   }
