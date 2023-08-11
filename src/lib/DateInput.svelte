@@ -142,7 +142,7 @@
     const datePopupOferflow = pickerElement.offsetWidth - referenceElement.width
     if (referenceElement.top + referenceElement.height / 2 > window.innerHeight / 2) {
       // If .date-time-field is on the bottom half of the screen, open date popup up
-      pickerTopPosition = -(pickerElement.offsetHeight + 1)
+      pickerTopPosition = -(pickerElement.offsetHeight + 2)
     }
     if (referenceElement.left + referenceElement.width / 2 > widowWidth / 2) {
       // If date-time-field is on the right of the screen, open date popup to the left.
