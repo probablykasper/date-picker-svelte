@@ -131,7 +131,7 @@
   }
 
   /** Example implementation of isDateDisabled*/
-  function isDateDisabled(date: Date) {
+  function isDateDisabled(date: CalendarDay) {
     if (date.year === disabledDate.getFullYear() && date.month === disabledDate.getMonth() && date.number === disabledDate.getDate()) return true
     return false
   }

@@ -53,7 +53,7 @@
   }
 
   /** Checks whether a date is disabled or not*/
-  export let isDateDisabled: (date: Date) => boolean | undefined = (date:Date) => {
+  export let isDateDisabled: (date: CalendarDay) => boolean | undefined = (date:CalendarDay) => {
     return false
   }
 
