@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fly } from 'svelte/transition'
   import { cubicInOut } from 'svelte/easing'
-  import { toText } from './date-utils.js'
+  import { toText, type CalendarDay } from './date-utils.js'
   import type { Locale } from './locale.js'
   import { parse, createFormat, type FormatToken } from './parse.js'
   import DateTimePicker from './DatePicker.svelte'
