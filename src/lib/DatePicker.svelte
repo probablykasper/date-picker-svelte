@@ -52,6 +52,11 @@
     }
   }
 
+  /** Checks whether a date is disabled or not*/
+  export let isDateDisabled: (date: Date) => boolean | undefined = (date:Date) => {
+    return false
+  }
+
   /** The date shown in the popup when none is selected */
   let browseDate = value ? cloneDate(value) : cloneDate(clamp(defaultDate, min, max))
   $: if (browseDate.getTime() !== value?.getTime() && !browseWithoutSelecting) {
@@ -302,7 +307,7 @@
           <div
             class="cell"
             on:click={() => selectDay(calendarDay)}
-            class:disabled={!dayIsInRange(calendarDay, min, max)}
+            class:disabled={!dayIsInRange(calendarDay, min, max) || isDateDisabled(calendarDay)}
             class:selected={value &&
               calendarDay.year === value.getFullYear() &&
               calendarDay.month === value.getMonth() &&
