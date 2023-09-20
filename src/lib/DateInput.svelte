@@ -128,16 +128,16 @@
     }
   }
 
-  let dateField: HTMLElement
+  let InputElement: HTMLInputElement
   let pickerElement: HTMLElement | null
   let pickerTopPosition: number | undefined = undefined
   let pickerLeftPosition: number = 0
   /** Lets the date popup positions its self, to best fit on the screen*/
   export let dynamicPositioning = false
 
-  $: if (visible && dateField.firstElementChild && pickerElement && dynamicPositioning) {
+  $: if (visible && pickerElement && dynamicPositioning) {
     // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
-    const referenceElement = dateField.firstElementChild.getBoundingClientRect()
+    const referenceElement = InputElement.getBoundingClientRect()
     const widowWidth = window.innerWidth
     const datePopupOferflow = pickerElement.offsetWidth - referenceElement.width
     if (referenceElement.top + referenceElement.height / 2 > window.innerHeight / 2) {
@@ -163,13 +163,9 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div
-  class="date-time-field {classes}"
-  on:focusout={onFocusOut}
-  on:keydown={keydown}
-  bind:this={dateField}
->
+<div class="date-time-field {classes}" on:focusout={onFocusOut} on:keydown={keydown}>
   <input
+    bind:this={InputElement}
     class:invalid={!valid}
     type="text"
     value={text}
