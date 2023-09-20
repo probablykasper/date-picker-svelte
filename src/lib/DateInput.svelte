@@ -139,18 +139,18 @@
     // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
     const referenceElement = InputElement.getBoundingClientRect()
     const widowWidth = window.innerWidth
-    const datePopupOferflow = pickerElement.offsetWidth - referenceElement.width
+    const datePopupOverflow = pickerElement.offsetWidth - referenceElement.width
     if (referenceElement.top + referenceElement.height / 2 > window.innerHeight / 2) {
       // If .date-time-field is on the bottom half of the screen, open date popup up
       pickerTopPosition = -(pickerElement.offsetHeight + 2)
     }
     if (referenceElement.left + referenceElement.width / 2 > widowWidth / 2) {
       // If date-time-field is on the right of the screen, open date popup to the left.
-      pickerLeftPosition = -datePopupOferflow
+      pickerLeftPosition = -datePopupOverflow
     }
     if (
-      datePopupOferflow + 5 > referenceElement.left &&
-      datePopupOferflow + 5 > widowWidth - referenceElement.left - referenceElement.width
+      datePopupOverflow + 5 > referenceElement.left &&
+      datePopupOverflow + 5 > widowWidth - referenceElement.left - referenceElement.width
     ) {
       // IF window is small open date popup in the middle of the screen to make sure it fits on the screen
       pickerLeftPosition = -(referenceElement.left - (widowWidth - pickerElement.offsetWidth) / 2)
