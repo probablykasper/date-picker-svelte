@@ -53,9 +53,7 @@
   }
 
   /** Checks whether a date is disabled or not*/
-  export let isDateDisabled: (date: CalendarDay) => boolean | undefined = (date:CalendarDay) => {
-    return false
-  }
+  export let isDateDisabled: (date: CalendarDay) => boolean | void = () => {}
 
   /** The date shown in the popup when none is selected */
   let browseDate = value ? cloneDate(value) : cloneDate(clamp(defaultDate, min, max))
