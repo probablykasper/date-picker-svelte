@@ -29,20 +29,20 @@ The component will not assign a date value until a specific date is selected in 
 
 ### <a id="props" />Props
 
-| Prop                     | Type          | Description                                           |
-| :----------------------- | :-----------  | :---------------------------------------------------- |
-| `value`                  | Date \| null  | Date value                                            |
-| `min`                    | Date          | The earliest value the user can select                |
-| `max`                    | Date          | The latest value the user can select                  |
-| `isDateDisabled`         | (CalendarDay) => boolean | Function for disabling dates               |
-| `placeholder`            | string        | Placeholder used when date value is null              |
-| `valid`                  | bool          | Whether the text is valid                             |
-| `format`                 | string        | Format string                                         |
-| `visible`                | bool          | Whether the date popup is visible                     |
-| `disabled`               | bool          | Disable the input                                     |
-| `closeOnSelection`       | bool          | Close the date popup when a date is selected          |
-| `browseWithoutSelecting` | bool          | Wait with updating the date until a value is selected |
-| `locale`                 | Locale        | Locale object for internationalization                |
+| Prop                     | Type                     | Description                                           |
+| :----------------------- | :----------------------- | :---------------------------------------------------- |
+| `value`                  | Date \| null             | Date value                                            |
+| `min`                    | Date                     | The earliest value the user can select                |
+| `max`                    | Date                     | The latest value the user can select                  |
+| `isDateDisabled`         | (CalendarDay) => boolean | Function for disabling dates                          |
+| `placeholder`            | string                   | Placeholder used when date value is null              |
+| `valid`                  | bool                     | Whether the text is valid                             |
+| `format`                 | string                   | Format string                                         |
+| `visible`                | bool                     | Whether the date popup is visible                     |
+| `disabled`               | bool                     | Disable the input                                     |
+| `closeOnSelection`       | bool                     | Close the date popup when a date is selected          |
+| `browseWithoutSelecting` | bool                     | Wait with updating the date until a value is selected |
+| `locale`                 | Locale                   | Locale object for internationalization                |
 
 #### <a id="format-string" />Format string
 
@@ -65,14 +65,14 @@ The component will not assign a date value until a specific date is selected in 
 
 ### <a id="datepicker-props" />Props
 
-| Prop                     | Type         | Description                                          |
-| :----------------------- | :----------- | :--------------------------------------------------- |
-| `value`                  | Date \| null | Date value                                           |
-| `min`                    | Date         | The earliest year the user can select                |
-| `max`                    | Date         | The latest year the user can select                  |
-| `isDateDisabled`         | (CalendarDay) => boolean | Function for disabling dates               |
-| `locale`                 | Locale       | Locale object for internationalization               |
-| `browseWithoutSelecting` | bool         | Wait with updating the date until a date is selected |
+| Prop                     | Type                     | Description                                          |
+| :----------------------- | :----------------------- | :--------------------------------------------------- |
+| `value`                  | Date \| null             | Date value                                           |
+| `min`                    | Date                     | The earliest year the user can select                |
+| `max`                    | Date                     | The latest year the user can select                  |
+| `isDateDisabled`         | (CalendarDay) => boolean | Function for disabling dates                         |
+| `locale`                 | Locale                   | Locale object for internationalization               |
+| `browseWithoutSelecting` | bool                     | Wait with updating the date until a date is selected |
 
 ## <a id="internationalization" />Internationalization
 
