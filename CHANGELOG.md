@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- `DateInput`: Avoid errors when `undefined` is passed as value
+
 ## 2.6.0 - 2023 Jul 11
 - Add 'yy' format (@erezarnon)
 

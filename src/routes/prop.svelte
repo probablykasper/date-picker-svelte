@@ -39,10 +39,12 @@
 
 <style lang="sass">
   .prop
-    display: flex
+    display: block
+    @media (min-width: 450px)
+      display: flex
     padding: 5px 0px
+    align-items: center
   .label
-    display: inline-block
     width: 195px
     flex-shrink: 0
   input[type='text'], textarea
