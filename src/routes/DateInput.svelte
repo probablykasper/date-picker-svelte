@@ -7,7 +7,6 @@
   let value: Date
   let min: Date
   let max: Date
-  let disabledDate: Date
   let valid: boolean
   let visible: boolean
   let disabled: boolean
@@ -22,7 +21,6 @@
     bind:value
     bind:min
     bind:max
-    bind:disabledDate
     bind:placeholder
     bind:valid
     bind:format
@@ -37,7 +35,7 @@
     <Prop label="value">{value}</Prop>
     <Prop label="min" bind:value={min} />
     <Prop label="max" bind:value={max} />
-    <Prop label="disabledDate" bind:value={disabledDate} />
+    <Prop label="isDateDisabled">Function</Prop>
     <Prop label="placeholder" bind:value={placeholder} />
     <Prop label="valid" bind:value={valid} />
     <Prop label="format" bind:value={format} />

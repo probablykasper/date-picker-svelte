@@ -48,8 +48,6 @@
   export let valid = true
   /** Disable the input **/
   export let disabled = false
-  /** Example of a disabled date*/
-  export let disabledDate = new Date(defaultDate.getFullYear(), 10, 12, 0,1)
   /** Pass custom classes */
   let classes = ''
   export { classes as class }
@@ -130,12 +128,8 @@
     }
   }
 
-  /** Example implementation of isDateDisabled*/
-  function isDateDisabled(date: CalendarDay) {
-    if (date.year === disabledDate.getFullYear() && date.month === disabledDate.getMonth() && date.number === disabledDate.getDate()) return true
-    return false
-  }
-
+  /** Checks whether a date is disabled or not */
+  export let isDateDisabled: (date: CalendarDay) => boolean | void = () => {}
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

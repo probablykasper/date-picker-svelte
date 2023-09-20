@@ -52,7 +52,7 @@
     }
   }
 
-  /** Checks whether a date is disabled or not*/
+  /** Checks whether a date is disabled or not */
   export let isDateDisabled: (date: CalendarDay) => boolean | void = () => {}
 
   /** The date shown in the popup when none is selected */

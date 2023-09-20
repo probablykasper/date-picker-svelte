@@ -24,6 +24,7 @@
     <Prop label="value">{value}</Prop>
     <Prop label="min" bind:value={min} />
     <Prop label="max" bind:value={max} />
+    <Prop label="isDateDisabled">Function</Prop>
     <Prop label="locale">date-fns <code>hy</code></Prop>
     <Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
   </div>
