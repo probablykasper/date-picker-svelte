@@ -6,7 +6,7 @@
   import { parse, createFormat, type FormatToken } from './parse.js'
   import DateTimePicker from './DatePicker.svelte'
   import { writable } from 'svelte/store'
-  import { createEventDispatcher } from 'svelte'
+  import { beforeUpdate, createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher<{
     /** Fires when the user selects a new value in the DatePicker by clicking on a date or by pressing enter */
@@ -135,31 +135,46 @@
   /** Lets the date popup positions its self, to best fit on the screen*/
   export let dynamicPositioning = false
 
-  $: if (visible && pickerElement && dynamicPositioning) {
-    // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
-    const referenceElement = InputElement.getBoundingClientRect()
-    const widowWidth = window.innerWidth
-    const datePopupOverflow = pickerElement.offsetWidth - referenceElement.width
-    if (referenceElement.top + referenceElement.height / 2 > window.innerHeight / 2) {
-      // If .date-time-field is on the bottom half of the screen, open date popup up
-      pickerTopPosition = -(pickerElement.offsetHeight + 2)
+  beforeUpdate(() => {
+    if (pickerElement && dynamicPositioning) {
+      // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
+      const referenceElement = InputElement.getBoundingClientRect()
+      const widowWidth = window.innerWidth
+      const datePopupOverflow = pickerElement.offsetWidth - referenceElement.width
+      pickerTopPosition = undefined
+      pickerLeftPosition = 0
+
+      if (referenceElement.top + referenceElement.height / 2 > window.innerHeight / 2) {
+        // If .date-time-field is on the bottom half of the screen, open date popup up
+        pickerTopPosition = -(pickerElement.offsetHeight + 2)
+      }
+      if (referenceElement.left + referenceElement.width / 2 > widowWidth / 2) {
+        // If date-time-field is on the right of the screen, open date popup to the left.
+        pickerLeftPosition = -datePopupOverflow
+      }
+      if (
+        datePopupOverflow + 5 > referenceElement.left &&
+        datePopupOverflow + 5 > widowWidth - referenceElement.left - referenceElement.width
+      ) {
+        // IF window is small open date popup in the middle of the screen to make sure it fits on the screen
+        pickerLeftPosition = -(referenceElement.left - (widowWidth - pickerElement.offsetWidth) / 2)
+      }
+      document.documentElement.style.setProperty('--picker-top-position', `${pickerTopPosition}px`)
+      document.documentElement.style.setProperty(
+        '--picker-left-position',
+        `${pickerLeftPosition}px`
+      )
+    } else {
+      // This ensures that the default position of the date popup is down and to the right
+      pickerTopPosition = undefined
+      pickerLeftPosition = 0
+      document.documentElement.style.setProperty('--picker-top-position', `${pickerTopPosition}px`)
+      document.documentElement.style.setProperty(
+        '--picker-left-position',
+        `${pickerLeftPosition}px`
+      )
     }
-    if (referenceElement.left + referenceElement.width / 2 > widowWidth / 2) {
-      // If date-time-field is on the right of the screen, open date popup to the left.
-      pickerLeftPosition = -datePopupOverflow
-    }
-    if (
-      datePopupOverflow + 5 > referenceElement.left &&
-      datePopupOverflow + 5 > widowWidth - referenceElement.left - referenceElement.width
-    ) {
-      // IF window is small open date popup in the middle of the screen to make sure it fits on the screen
-      pickerLeftPosition = -(referenceElement.left - (widowWidth - pickerElement.offsetWidth) / 2)
-    }
-  } else {
-    // This ensures that the default position of the date popup is down and to the right
-    pickerTopPosition = undefined
-    pickerLeftPosition = 0
-  }
+  })
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -194,8 +209,11 @@
     <div
       class="picker"
       class:visible
-      transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}
-      style={`left: ${pickerLeftPosition}px; top: ${pickerTopPosition}px;`}
+      transition:fly={{
+        duration: 800,
+        easing: cubicInOut,
+        y: (pickerTopPosition ?? 1) < 0 ? 5 : -5,
+      }}
       bind:this={pickerElement}
     >
       <DateTimePicker
@@ -241,6 +259,8 @@
     display: none
     position: absolute
     margin-top: 1px
+    top: var(--picker-top-position)
+    left: var(--picker-left-position)
     z-index: 10
     &.visible
       display: block
