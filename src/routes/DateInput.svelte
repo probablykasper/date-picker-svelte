@@ -13,7 +13,7 @@
   let closeOnSelection: boolean
   let browseWithoutSelecting: boolean
   let format: string
-  let dynamicPositioning: boolean
+  let dynamicPositioning: boolean = true
 </script>
 
 <Split>
