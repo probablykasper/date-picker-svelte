@@ -135,7 +135,7 @@
   /** Lets the date popup positions its self, to best fit on the screen*/
   export let dynamicPositioning = false
 
-  beforeUpdate(() => {
+  function setDatePickerPostion() {
     if (pickerElement && dynamicPositioning) {
       // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
       const referenceElement = InputElement.getBoundingClientRect()
@@ -174,7 +174,12 @@
         `${pickerLeftPosition}px`
       )
     }
+  }
+
+  beforeUpdate(() => {
+    setDatePickerPostion()
   })
+  
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
