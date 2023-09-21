@@ -153,7 +153,7 @@
         showAbove = true
       }
       if (inputRect.left + inputRect.width / 2 > widowWidth / 2) {
-        // If date-time-field is on the right of the screen, open to the left.
+        // If date-time-field is on the right of the screen, open to the left
         pickerLeftPosition = -datePopupOverflow
       } else if (
         // If window is narrow, open in the middle of the screen
@@ -210,7 +210,7 @@
       class:above={showAbove}
       transition:flyAutoPosition
       bind:this={pickerElement}
-      style:--picker-left-position={pickerLeftPosition}
+      style:--picker-left-position="{pickerLeftPosition}px"
     >
       <DateTimePicker
         on:focusout={onFocusOut}
