@@ -154,16 +154,14 @@
         // If .date-time-field is on the bottom half of the screen, open above
         showAbove = true
       }
-      if (rightThreshold > widowWidth) {
+      if (rightThreshold > window.innerWidth) {
         // If date-time-field is on the right of the screen, open to the left
         pickerLeftPosition = -horizontalOverflow
-      }
-      if (
-        horizontalOverflow + 5 > inputRect.left &&
-        horizontalOverflow + 5 > widowWidth - inputRect.left - inputRect.width
-      ) {
-        // If window is narrow, open in the middle of the screen
-        pickerLeftPosition = -(inputRect.left - (widowWidth - pickerElement.offsetWidth) / 2)
+
+        if (inputRect.left < horizontalOverflow + 5) {
+          // If it would overflow on the left too, open in the middle of the screen
+          pickerLeftPosition = -(inputRect.left - (widowWidth - pickerElement.offsetWidth) / 2)
+        }
       }
     }
   }
