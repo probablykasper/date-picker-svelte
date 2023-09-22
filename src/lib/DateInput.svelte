@@ -144,7 +144,6 @@
     if (visible && pickerElement && dynamicPositioning) {
       // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
       const inputRect = InputElement.getBoundingClientRect()
-      const widowWidth = window.innerWidth
       const horizontalOverflow = pickerElement.offsetWidth - inputRect.width
 
       const bottomThreshold = inputRect.bottom + pickerElement.offsetHeight + 5
@@ -160,7 +159,9 @@
 
         if (inputRect.left < horizontalOverflow + 5) {
           // If it would overflow on the left too, open in the middle of the screen
-          pickerLeftPosition = -(inputRect.left - (widowWidth - pickerElement.offsetWidth) / 2)
+          const windowCenterPos = window.innerWidth / 2
+          const newPos = windowCenterPos - pickerElement.offsetWidth / 2
+          pickerLeftPosition = newPos - inputRect.left
         }
       }
     }
