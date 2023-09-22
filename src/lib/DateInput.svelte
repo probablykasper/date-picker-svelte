@@ -145,7 +145,7 @@
       // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
       const inputRect = InputElement.getBoundingClientRect()
       const widowWidth = window.innerWidth
-      const rightPickerOverflow = pickerElement.offsetWidth - inputRect.width
+      const horizontalOverflow = pickerElement.offsetWidth - inputRect.width
 
       const bottomThreshold = inputRect.bottom + pickerElement.offsetHeight + 5
       const rightThreshold = inputRect.left + pickerElement.offsetWidth + 5
@@ -156,11 +156,11 @@
       }
       if (rightThreshold > widowWidth) {
         // If date-time-field is on the right of the screen, open to the left
-        pickerLeftPosition = -rightPickerOverflow
+        pickerLeftPosition = -horizontalOverflow
       }
       if (
-        rightPickerOverflow + 5 > inputRect.left &&
-        rightPickerOverflow + 5 > widowWidth - inputRect.left - inputRect.width
+        horizontalOverflow + 5 > inputRect.left &&
+        horizontalOverflow + 5 > widowWidth - inputRect.left - inputRect.width
       ) {
         // If window is narrow, open in the middle of the screen
         pickerLeftPosition = -(inputRect.left - (widowWidth - pickerElement.offsetWidth) / 2)
