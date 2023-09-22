@@ -154,7 +154,8 @@
       if (inputRect.left + inputRect.width / 2 > widowWidth / 2) {
         // If date-time-field is on the right of the screen, open to the left
         pickerLeftPosition = -rightPickerOverflow
-      } else if (
+      }
+      if (
         // If window is narrow, open in the middle of the screen
         rightPickerOverflow + 5 > inputRect.left &&
         rightPickerOverflow + 5 > widowWidth - inputRect.left - inputRect.width
