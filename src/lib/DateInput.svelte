@@ -147,19 +147,22 @@
       const widowWidth = window.innerWidth
       const rightPickerOverflow = pickerElement.offsetWidth - inputRect.width
 
-      if (inputRect.top + inputRect.height / 2 > window.innerHeight / 2) {
+      const bottomThreshold = inputRect.bottom + pickerElement.offsetHeight + 5
+      const rightThreshold = inputRect.left + pickerElement.offsetWidth + 5
+
+      if (bottomThreshold > window.innerHeight) {
         // If .date-time-field is on the bottom half of the screen, open above
         showAbove = true
       }
-      if (inputRect.left + inputRect.width / 2 > widowWidth / 2) {
+      if (rightThreshold > widowWidth) {
         // If date-time-field is on the right of the screen, open to the left
         pickerLeftPosition = -rightPickerOverflow
       }
       if (
-        // If window is narrow, open in the middle of the screen
         rightPickerOverflow + 5 > inputRect.left &&
         rightPickerOverflow + 5 > widowWidth - inputRect.left - inputRect.width
       ) {
+        // If window is narrow, open in the middle of the screen
         pickerLeftPosition = -(inputRect.left - (widowWidth - pickerElement.offsetWidth) / 2)
       }
     }
