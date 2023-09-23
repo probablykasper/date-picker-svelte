@@ -22,13 +22,13 @@
   const store = (() => {
     return {
       subscribe: innerStore.subscribe,
-      set: (d: Date | null) => {
-        if (d === null) {
+      set: (date: Date | null) => {
+        if (date === null || date === undefined) {
           innerStore.set(null)
-          value = d
-        } else if (d.getTime() !== $innerStore?.getTime()) {
-          innerStore.set(d)
-          value = d
+          value = date
+        } else if (date.getTime() !== $innerStore?.getTime()) {
+          innerStore.set(date)
+          value = date
         }
       },
     }

@@ -19,7 +19,14 @@
     transition: background 80ms cubic-bezier(0.4, 0.0, 0.2, 1), box-shadow 300ms cubic-bezier(0.4, 0.0, 0.2, 1)
     box-shadow: 0px 1px 3px 0px rgba(#000000, 0.05)
     border-radius: 5px
-    padding: 0px 20px
+    padding: 10px
+    flex-direction: column
+    box-shadow: 0px 1px 3px 0px rgba(#000000, 0.05)
+    @media (min-width: 401px)
+      padding: 20px
+    @media (min-width: 701px)
+      flex-direction: row
+    @media(max-width: 700px)
   @media(min-width: 701px)
     section.left
       padding-right: 0px
@@ -28,9 +35,4 @@
       padding-right: 10px
     .spacer
       margin-top: 20px
-  @media(max-width: 700px)
-    .row
-      flex-direction: column
-      padding: 20px
-      box-shadow: 0px 1px 3px 0px rgba(#000000, 0.05)
 </style>
