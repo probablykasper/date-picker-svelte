@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.7.0 - 2023 Sep 23
 - Add `dynamicPositioning` prop to avoid the date popup appearing outside the screen (@stinger567)
 - `DateInput`: Avoid errors when `undefined` is passed as value
 
