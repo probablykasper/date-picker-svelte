@@ -128,7 +128,7 @@
     }
   }
 
-  /** Lets the date popup positions its self, to best fit on the screen*/
+  /** Automatically adjust date popup position to not appear outside the screen */
   export let dynamicPositioning = false
 
   let InputElement: HTMLInputElement
