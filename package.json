@@ -16,25 +16,25 @@
     "test:coverage": "vitest --coverage"
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "^2.0.2",
-    "@sveltejs/kit": "^1.22.3",
-    "@sveltejs/package": "^2.2.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "@vitest/coverage-v8": "^0.33.0",
+    "@sveltejs/adapter-static": "^2.0.3",
+    "@sveltejs/kit": "^1.25.0",
+    "@sveltejs/package": "^2.2.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "@vitest/coverage-v8": "^0.34.5",
     "date-fns": "^2.30.0",
-    "eslint": "^8.45.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-svelte": "^2.32.2",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-svelte": "^2.33.2",
     "mdsvex": "^0.11.0",
     "prettier": "^2.8.8",
     "prettier-plugin-svelte": "^2.10.1",
-    "sass": "^1.63.6",
-    "svelte": "^4.0.5",
-    "svelte-check": "^3.4.6",
-    "typescript": "^5.1.6",
-    "vite": "^4.4.4",
-    "vitest": "^0.33.0"
+    "sass": "^1.68.0",
+    "svelte": "^4.2.1",
+    "svelte-check": "^3.5.2",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.5"
   },
   "peerDependencies": {
     "svelte": "^3.24.0 || ^4.0.0"
@@ -125,8 +125,8 @@
     "printWidth": 100,
     "semi": false,
     "singleQuote": true,
-    "pluginSearchDirs": [
-      "."
+    "plugins": [
+      "prettier-plugin-svelte"
     ]
   }
 }
