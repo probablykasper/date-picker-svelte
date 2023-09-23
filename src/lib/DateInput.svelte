@@ -127,11 +127,60 @@
       visible = false
     }
   }
+
+  /** Automatically adjust date popup position to not appear outside the screen */
+  export let dynamicPositioning = false
+
+  let InputElement: HTMLInputElement
+  let pickerElement: HTMLElement | null
+  let showAbove = false
+  let pickerLeftPosition: number | null = null
+
+  function setDatePickerPosition() {
+    // Defaults
+    showAbove = false
+    pickerLeftPosition = null
+
+    if (visible && pickerElement && dynamicPositioning) {
+      // The child of the dateField is what is visually seen, all calculations should use this to make sure they line up properly
+      const inputRect = InputElement.getBoundingClientRect()
+      const horizontalOverflow = pickerElement.offsetWidth - inputRect.width
+
+      const bottomThreshold = inputRect.bottom + pickerElement.offsetHeight + 5
+      const rightThreshold = inputRect.left + pickerElement.offsetWidth + 5
+
+      if (bottomThreshold > window.innerHeight) {
+        // If .date-time-field is on the bottom half of the screen, open above
+        showAbove = true
+      }
+      if (rightThreshold > window.innerWidth) {
+        // If date-time-field is on the right of the screen, open to the left
+        pickerLeftPosition = -horizontalOverflow
+
+        if (inputRect.left < horizontalOverflow + 5) {
+          // If it would overflow on the left too, open in the middle of the screen
+          const windowCenterPos = window.innerWidth / 2
+          const newPos = windowCenterPos - pickerElement.offsetWidth / 2
+          pickerLeftPosition = newPos - inputRect.left
+        }
+      }
+    }
+  }
+
+  function flyAutoPosition(node: HTMLElement) {
+    setDatePickerPosition()
+    return fly(node, {
+      duration: 200,
+      easing: cubicInOut,
+      y: showAbove ? 5 : -5,
+    })
+  }
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="date-time-field {classes}" on:focusout={onFocusOut} on:keydown={keydown}>
   <input
+    bind:this={InputElement}
     class:invalid={!valid}
     type="text"
     value={text}
@@ -157,7 +206,14 @@
     }}
   />
   {#if visible && !disabled}
-    <div class="picker" class:visible transition:fly={{ duration: 80, easing: cubicInOut, y: -5 }}>
+    <div
+      class="picker"
+      class:visible
+      class:above={showAbove}
+      transition:flyAutoPosition
+      bind:this={pickerElement}
+      style:--picker-left-position="{pickerLeftPosition}px"
+    >
       <DateTimePicker
         on:focusout={onFocusOut}
         on:select={onSelect}
@@ -200,7 +256,10 @@
   .picker
     display: none
     position: absolute
-    margin-top: 1px
+    padding: 1px
+    &.above
+      bottom: 100%
+    left: var(--picker-left-position)
     z-index: 10
     &.visible
       display: block
