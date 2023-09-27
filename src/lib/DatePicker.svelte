@@ -231,6 +231,12 @@
       minuteInput.value = '00'
     }
   }
+
+  function timePickerKeydown(e: KeyboardEvent) {
+    if (e.key == 'Enter') {
+      e.stopPropagation()
+    }
+  }
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -346,7 +352,7 @@
       </div>
     {/each}
     {#if timePicker}
-      <div class="timepicker">
+      <div class="timepicker" on:keydown={timePickerKeydown}>
         <input
           on:change={(e) => setHours(parseInt(e.currentTarget.value))}
           bind:this={hourInput}
@@ -356,7 +362,7 @@
           id="hour24-input-0"
           min="0"
           max="23"
-          value="00"
+          value={browseDate.getHours()}
         /><span class="timepicker-divider-text">:</span><input
           on:change={(e) => setMinutes(parseInt(e.currentTarget.value))}
           aria-label="minutes"
@@ -366,7 +372,7 @@
           max="59"
           class="timepicker-input timepicker-minute"
           id="minute-input-0"
-          value="00"
+          value={browseDate.getMinutes()}
         />
       </div>
     {/if}

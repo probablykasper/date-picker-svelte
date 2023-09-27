@@ -14,11 +14,12 @@
   let max: Date
   let locale = localeFromDateFnsLocale(en)
   let browseWithoutSelecting: boolean
+  let timePicker: boolean
 </script>
 
 <Split>
   <div class="left" slot="left">
-    <DatePicker bind:value bind:min bind:max {locale} bind:browseWithoutSelecting />
+    <DatePicker bind:value bind:min bind:max {locale} bind:browseWithoutSelecting bind:timePicker />
   </div>
   <div slot="right">
     <h3 class="no-top">Props</h3>
@@ -27,5 +28,6 @@
     <Prop label="max" bind:value={max} />
     <Prop label="locale">date-fns <code>hy</code></Prop>
     <Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
+    <Prop label="timePicker" bind:value={timePicker} />
   </div>
 </Split>
