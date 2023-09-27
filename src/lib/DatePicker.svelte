@@ -482,7 +482,7 @@
 
   .week
     display: flex
-  .cell,.timepicker .timepicker-input
+  .cell
     display: flex
     align-items: center
     justify-content: center
@@ -526,6 +526,18 @@
       -moz-appearance: textfield
       font-family: inherit
       text-align: center
+      display: flex
+      align-items: center
+      justify-content: center
+      width: 2rem
+      height: 1.94rem
+      flex-grow: 1
+      border-radius: 5px
+      box-sizing: border-box
+      border: 2px solid transparent
+      &:hover
+        border: 1px solid rgba(#808080, 0.08)
+        background-color: rgba(#808080, 0.08)
       &:focus-visible
         outline: none
         border: none
