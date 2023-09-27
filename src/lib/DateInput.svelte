@@ -26,6 +26,8 @@
         if (date === null || date === undefined) {
           innerStore.set(null)
           value = date
+        } else if (typeof date === 'string') {
+          value = new Date(date)
         } else if (date.getTime() !== $innerStore?.getTime()) {
           innerStore.set(date)
           value = date
