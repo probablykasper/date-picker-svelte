@@ -7,11 +7,12 @@
   // had to import it this way to avoid errors
   // in `npm run build:site` or `npm run check`:
   import hy from 'date-fns/locale/hy/index.js'
+  import en from 'date-fns/locale/en-AU/index.js'
 
   let value: Date
   let min: Date
   let max: Date
-  let locale = localeFromDateFnsLocale(hy)
+  let locale = localeFromDateFnsLocale(en)
   let browseWithoutSelecting: boolean
 </script>
 
