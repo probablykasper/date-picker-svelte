@@ -359,7 +359,6 @@
           aria-label="hours (24hr clock)"
           type="number"
           class="timepicker-input timepicker-hour"
-          id="hour24-input-0"
           min="0"
           max="23"
           value={browseDate.getHours()}
@@ -371,7 +370,6 @@
           min="0"
           max="59"
           class="timepicker-input timepicker-minute"
-          id="minute-input-0"
           value={browseDate.getMinutes()}
         />
       </div>
@@ -534,6 +532,8 @@
       &::input::-webkit-outer-spin-button, &::input::-webkit-outer-spin-button
         -webkit-appearance: none
         margin: 0
+      &.today,&.disabled,&.disabled:hover,&.selected
+        all: unset
 
 
 </style>
