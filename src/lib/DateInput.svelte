@@ -94,6 +94,9 @@
   /** Wait with updating the date until a date is selected */
   export let browseWithoutSelecting = false
 
+  /** Allow Users to select time */
+  export let timePicker: boolean = false
+
   // handle on:focusout for parent element. If the parent element loses
   // focus (e.g input element), visible is set to false
   function onFocusOut(e: FocusEvent) {
@@ -222,6 +225,7 @@
         {max}
         {locale}
         {browseWithoutSelecting}
+        {timePicker}
       />
     </div>
   {/if}

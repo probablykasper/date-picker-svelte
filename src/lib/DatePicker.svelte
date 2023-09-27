@@ -177,7 +177,10 @@
   }
   function keydown(e: KeyboardEvent) {
     let shift = e.shiftKey || e.altKey
-    if ((e.target as HTMLElement)?.tagName === 'SELECT') {
+    if (
+      (e.target as HTMLElement)?.tagName === 'SELECT' ||
+      (e.target as HTMLInputElement)?.classList.contains('timepicker-input')
+    ) {
       return
     }
     if (shift) {
@@ -202,6 +205,31 @@
       return
     }
     e.preventDefault()
+  }
+  /**
+   * Time picker
+   */
+
+  export let timePicker: boolean = false
+  let hourInput: HTMLInputElement
+  let minuteInput: HTMLInputElement
+
+  function setHours(newHour: number) {
+    if (newHour >= 0 && newHour <= 23) {
+      browseDate.setHours(newHour)
+      browse(browseDate)
+    } else {
+      hourInput.value = '00'
+    }
+  }
+
+  function setMinutes(newMinute: number) {
+    if (newMinute >= 0 && newMinute <= 59) {
+      browseDate.setMinutes(newMinute)
+      browse(browseDate)
+    } else {
+      minuteInput.value = '00'
+    }
   }
 </script>
 
@@ -317,6 +345,31 @@
         {/each}
       </div>
     {/each}
+    {#if timePicker}
+      <div class="timepicker">
+        <input
+          on:change={(e) => setHours(parseInt(e.currentTarget.value))}
+          bind:this={hourInput}
+          aria-label="hours (24hr clock)"
+          type="number"
+          class="timepicker-input timepicker-hour"
+          id="hour24-input-0"
+          min="0"
+          max="23"
+          value="00"
+        /><span class="timepicker-divider-text">:</span><input
+          on:change={(e) => setMinutes(parseInt(e.currentTarget.value))}
+          aria-label="minutes"
+          bind:this={minuteInput}
+          type="number"
+          min="0"
+          max="59"
+          class="timepicker-input timepicker-minute"
+          id="minute-input-0"
+          value="00"
+        />
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -425,7 +478,7 @@
 
   .week
     display: flex
-  .cell
+  .cell,.timepicker .timepicker-input
     display: flex
     align-items: center
     justify-content: center
@@ -453,4 +506,28 @@
       color: var(--date-picker-selected-color, inherit)
       background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
       border: 2px solid var(--date-picker-highlight-border, #0269f7)
+  .timepicker
+    display: flex
+    justify-content: center
+    align-items: center
+    margin-block:0.5rem
+    padding: 1px
+    width: fit-content
+    margin-inline: auto
+    border: 2px solid var(--date-picker-today-border, rgba(#808080, 0.3))
+    border-radius: 5px
+    .timepicker-divider-text
+      padding-inline:2px
+    .timepicker-input
+      -moz-appearance: textfield
+      font-family: inherit
+      text-align: center
+      &:focus-visible
+        outline: none
+        border: none
+      &::input::-webkit-outer-spin-button, &::input::-webkit-outer-spin-button
+        -webkit-appearance: none
+        margin: 0
+
+
 </style>
