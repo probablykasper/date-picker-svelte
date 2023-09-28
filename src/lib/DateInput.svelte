@@ -10,7 +10,7 @@
 
   const dispatch = createEventDispatcher<{
     /** Fires when the user selects a new value in the DatePicker by clicking on a date or by pressing enter */
-    select: undefined
+    select: Date
   }>()
 
   /** Default date to display in picker before value is assigned */
@@ -121,7 +121,7 @@
     }
   }
 
-  function onSelect(e: CustomEvent<undefined>) {
+  function onSelect(e: CustomEvent<Date>) {
     dispatch('select', e.detail)
     if (closeOnSelection) {
       visible = false
