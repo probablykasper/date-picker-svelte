@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.8.0 - 2023 Sep 29
 - Add date to `select` event detail
 
 ## 2.7.0 - 2023 Sep 23
