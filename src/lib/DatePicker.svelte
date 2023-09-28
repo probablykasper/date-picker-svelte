@@ -544,8 +544,4 @@
       &::input::-webkit-outer-spin-button, &::input::-webkit-outer-spin-button
         -webkit-appearance: none
         margin: 0
-      &.today,&.disabled,&.disabled:hover,&.selected
-        all: unset
-
-
 </style>
