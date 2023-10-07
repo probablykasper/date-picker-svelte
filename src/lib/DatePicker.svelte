@@ -272,15 +272,31 @@
     }
   }
   function setTimePickerState(key: string) {
-    if (isDigitKey(key)) {
-      let temp = timePickerState + key
-      const digit = parseInt(temp, 10)
+    const digit = parseInt(key, 10)
 
-      if (timePickerActiveField == hourInput && withinHourRange(digit)) {
-        timePickerState = temp
-      } else if (timePickerActiveField == minuteInput && withinMinuteRange(digit)) {
-        timePickerState = temp
-      }
+    if (timePickerActiveField == hourInput && withinHourRange(digit)) {
+      timePickerState = key
+    } else if (timePickerActiveField == minuteInput && withinMinuteRange(digit)) {
+      timePickerState = key
+    }
+  }
+  function increaseStrNumber(str: string) {
+    if (str === '') {
+      return '1'
+    } else {
+      const number = parseInt(str, 10)
+      const incrementedNumber = number + 1
+      return String(incrementedNumber)
+    }
+  }
+
+  function decreaseStrNumber(str: string) {
+    if (str === '' || str === '0') {
+      return '0'
+    } else {
+      const number = parseInt(str, 10)
+      const decrementedNumber = number - 1
+      return String(decrementedNumber)
     }
   }
 
@@ -294,8 +310,14 @@
     } else if ((e.key == 'Tab' && e.shiftKey) || e.key == 'ArrowLeft') {
       hourInput.focus()
     }
-
-    setTimePickerState(e.key)
+    if (isDigitKey(e.key)) {
+      setTimePickerState(timePickerState + e.key)
+    } else if (e.key == 'ArrowUp') {
+      console.log('increase', increaseStrNumber(timePickerState))
+      setTimePickerState(increaseStrNumber(timePickerState))
+    } else if (e.key == 'ArrowDown') {
+      setTimePickerState(decreaseStrNumber(timePickerState))
+    }
 
     if (e.key == 'Backspace' && timePickerState != '') {
       timePickerState = timePickerState.slice(0, -1)
