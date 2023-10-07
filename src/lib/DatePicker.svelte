@@ -234,10 +234,6 @@
   const withinHourRange = (h: number) => h >= 0 && h <= 23
 
   function setHours(newHour: number | typeof NaN) {
-    if (Number.isNaN(newHour)) {
-      hourInput.value = '00'
-      return
-    }
     if (withinHourRange(newHour)) {
       hourInput.value = `${newHour < 10 ? '0' : ''}${newHour}`
       browseDate.setHours(newHour)
@@ -246,10 +242,6 @@
   }
 
   function setMinutes(newMinute: number) {
-    if (Number.isNaN(newMinute)) {
-      minuteInput.value = '00'
-      return
-    }
     if (withinMinuteRange(newMinute)) {
       minuteInput.value = `${newMinute < 10 ? '0' : ''}${newMinute}`
 
@@ -264,10 +256,11 @@
     }
   }
   function setTime(value: string) {
+    const valueInt = value == '' ? 0 : parseInt(value, 10)
     if (hourInput && timePickerActiveField == hourInput) {
-      setHours(parseInt(value, 10))
+      setHours(valueInt)
     } else if (minuteInput && timePickerActiveField == minuteInput) {
-      setMinutes(parseInt(value, 10))
+      setMinutes(valueInt)
     }
   }
   $: {
