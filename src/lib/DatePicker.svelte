@@ -548,7 +548,7 @@
 
   .week
     display: flex
-  .cell,.timepicker .timepicker-input
+  .cell
     display: flex
     align-items: center
     justify-content: center
@@ -584,18 +584,23 @@
     padding: 1px
     width: fit-content
     margin-inline: auto
-    border: 2px solid var(--date-picker-today-border, rgba(#808080, 0.3))
+    border: 1px solid rgba(108, 120, 147, 0.3)
     border-radius: 5px
     .timepicker-divider-text
       padding-inline:2px
     .timepicker-input
+      max-width:1.5rem
+      width: fit-content
+      border: none
+      outline: none
+      height: auto
       -moz-appearance: textfield
       font-family: inherit
       text-align: center
       caret-color: transparent
       &:focus-visible
         outline: none
-        border: 1px solid blue
+        background-color: rgba(#808080, 0.08)
       &::input::-webkit-outer-spin-button, &::input::-webkit-outer-spin-button
         -webkit-appearance: none
         margin: 0
