@@ -1,11 +1,12 @@
 <script lang="ts">
+  import { browser } from '$app/environment'
   import { getMonthLength, getCalendarDays, type CalendarDay } from './date-utils.js'
   import { getInnerLocale, type Locale } from './locale.js'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
 
   const dispatch = createEventDispatcher<{
     /** Fires when the user selects a new value by clicking on a date or by pressing enter */
-    select: Date
+    select: undefined
   }>()
 
   function cloneDate(d: Date) {
@@ -117,7 +118,7 @@
       browseDate.setMonth(calendarDay.month)
       browseDate.setDate(calendarDay.number)
       setValue(browseDate)
-      dispatch('select', cloneDate(browseDate))
+      dispatch('select')
     }
   }
   function dayIsInRange(calendarDay: CalendarDay, min: Date, max: Date) {
@@ -200,7 +201,7 @@
       setValue(browseDate)
     } else if (e.key === 'Enter') {
       setValue(browseDate)
-      dispatch('select', cloneDate(browseDate))
+      dispatch('select')
     } else {
       return
     }
@@ -211,30 +212,100 @@
    */
 
   export let timePicker: boolean = false
+  $: timePickerState = ''
+  let timePickerActiveField: null | HTMLInputElement
+  $: timePickerActiveField = null
+
   let hourInput: HTMLInputElement
   let minuteInput: HTMLInputElement
 
-  function setHours(newHour: number) {
-    if (newHour >= 0 && newHour <= 23) {
+  function setTimePickerActiveField(e: Event) {
+    if (e.target instanceof HTMLInputElement) {
+      timePickerActiveField = e.target
+    }
+  }
+
+  function isDigitKey(key: string) {
+    var digitPattern = /^[0-9]$/
+    return digitPattern.test(key)
+  }
+
+  const withinMinuteRange = (m: number) => m >= 0 && m <= 59
+  const withinHourRange = (h: number) => h >= 0 && h <= 23
+
+  function setHours(newHour: number | typeof NaN) {
+    if (Number.isNaN(newHour)) {
+      hourInput.value = '00'
+      return
+    }
+    if (withinHourRange(newHour)) {
+      hourInput.value = `${newHour < 10 ? '0' : ''}${newHour}`
       browseDate.setHours(newHour)
       browse(browseDate)
-    } else {
-      hourInput.value = '00'
     }
   }
 
   function setMinutes(newMinute: number) {
-    if (newMinute >= 0 && newMinute <= 59) {
+    if (Number.isNaN(newMinute)) {
+      minuteInput.value = '00'
+      return
+    }
+    if (withinMinuteRange(newMinute)) {
+      minuteInput.value = `${newMinute < 10 ? '0' : ''}${newMinute}`
+
       browseDate.setMinutes(newMinute)
       browse(browseDate)
-    } else {
-      minuteInput.value = '00'
+    }
+  }
+
+  function setInitilState(el: typeof timePickerActiveField) {
+    if (el) {
+      timePickerState = el.value == '00' ? '' : el.value
+    }
+  }
+  function setTime(value: string) {
+    if (hourInput && timePickerActiveField == hourInput) {
+      setHours(parseInt(value, 10))
+    } else if (minuteInput && timePickerActiveField == minuteInput) {
+      setMinutes(parseInt(value, 10))
+    }
+  }
+  $: {
+    setInitilState(timePickerActiveField)
+  }
+  $: {
+    if (browser) {
+      setTime(timePickerState)
+    }
+  }
+  function setTimePickerState(key: string) {
+    if (isDigitKey(key)) {
+      let temp = timePickerState + key
+      const digit = parseInt(temp, 10)
+
+      if (timePickerActiveField == hourInput && withinHourRange(digit)) {
+        timePickerState = temp
+      } else if (timePickerActiveField == minuteInput && withinMinuteRange(digit)) {
+        timePickerState = temp
+      }
     }
   }
 
   function timePickerKeydown(e: KeyboardEvent) {
-    if (e.key == 'Enter') {
-      e.stopPropagation()
+    e.preventDefault()
+    if (timePickerActiveField == hourInput) {
+      const keysToMoveNext = Array.from(';:-,.').concat(['ArrowRight', 'Tab'])
+      if (keysToMoveNext.includes(e.key) && !(e.shiftKey && e.key == 'Tab')) {
+        minuteInput.focus()
+      }
+    } else if ((e.key == 'Tab' && e.shiftKey) || e.key == 'ArrowLeft') {
+      hourInput.focus()
+    }
+
+    setTimePickerState(e.key)
+
+    if (e.key == 'Backspace' && timePickerState != '') {
+      timePickerState = timePickerState.slice(0, -1)
     }
   }
 </script>
@@ -354,23 +425,25 @@
     {#if timePicker}
       <div class="timepicker" on:keydown={timePickerKeydown}>
         <input
-          on:change={(e) => setHours(parseInt(e.currentTarget.value))}
           bind:this={hourInput}
+          on:focus={setTimePickerActiveField}
           aria-label="hours (24hr clock)"
           type="number"
           class="timepicker-input timepicker-hour"
+          id="hour24-input-0"
           min="0"
           max="23"
-          value={browseDate.getHours()}
+          value="00"
         /><span class="timepicker-divider-text">:</span><input
-          on:change={(e) => setMinutes(parseInt(e.currentTarget.value))}
+          on:focus={setTimePickerActiveField}
           aria-label="minutes"
           bind:this={minuteInput}
+          value="00"
           type="number"
           min="0"
           max="59"
           class="timepicker-input timepicker-minute"
-          value={browseDate.getMinutes()}
+          id="minute-input-0"
         />
       </div>
     {/if}
@@ -482,7 +555,7 @@
 
   .week
     display: flex
-  .cell
+  .cell,.timepicker .timepicker-input
     display: flex
     align-items: center
     justify-content: center
@@ -526,22 +599,13 @@
       -moz-appearance: textfield
       font-family: inherit
       text-align: center
-      display: flex
-      align-items: center
-      justify-content: center
-      width: 2rem
-      height: 1.94rem
-      flex-grow: 1
-      border-radius: 5px
-      box-sizing: border-box
-      border: 2px solid transparent
-      &:hover
-        border: 1px solid rgba(#808080, 0.08)
-        background-color: rgba(#808080, 0.08)
+      caret-color: transparent
       &:focus-visible
         outline: none
-        border: none
+        border: 1px solid blue
       &::input::-webkit-outer-spin-button, &::input::-webkit-outer-spin-button
         -webkit-appearance: none
         margin: 0
+
+
 </style>
