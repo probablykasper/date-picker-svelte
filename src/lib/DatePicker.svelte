@@ -210,8 +210,7 @@
   /**
    * Time picker
    */
-
-  export let timePicker: boolean = false
+  export let timePrecision: null | 'minute' | 'second' | 'millisecond'
   $: timePickerState = ''
   let timePickerActiveField: null | HTMLInputElement
   $: timePickerActiveField = null
@@ -437,7 +436,7 @@
         {/each}
       </div>
     {/each}
-    {#if timePicker}
+    {#if timePrecision != null}
       <div class="timepicker" on:keydown={timePickerKeydown}>
         <input
           bind:this={hourInput}
