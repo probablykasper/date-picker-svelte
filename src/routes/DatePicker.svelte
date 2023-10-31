@@ -17,7 +17,14 @@
 
 <Split>
   <div class="left" slot="left">
-    <DatePicker bind:value bind:min bind:max {locale} bind:browseWithoutSelecting bind:timePicker />
+    <DatePicker
+      bind:value
+      bind:min
+      bind:max
+      {locale}
+      bind:browseWithoutSelecting
+      timePrecision="minute"
+    />
   </div>
   <div slot="right">
     <h3 class="no-top">Props</h3>
