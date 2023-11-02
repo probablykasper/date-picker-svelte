@@ -2,13 +2,37 @@
   /**
    * Refactor neeeded.
    */
-
   import { browser } from '$app/environment'
-  import { milliseconds } from 'date-fns'
+  const TimePrecision = ['hour', 'minute', 'second', 'millisecond']
+  interface TimeInputField {
+    type: (typeof TimePrecision)[number]
+    min: number
+    max: number
+    inputField?: HTMLInputElement | undefined
+  }
 
+  interface T {
+    [key: (typeof TimePrecision)[number]]: TimeInputField
+  }
+
+  function getRequiredFields(
+    precision: (typeof TimePrecision)[number] | null
+  ): Array<TimeInputField> | undefined {
+    if (!precision) {
+      return
+    }
+    return TimePrecision.slice(0, TimePrecision.indexOf(precision) + 1).map((type) => ({
+      type,
+      min: 0,
+      max: type === 'hour' ? 23 : type === 'millisecond' ? 1000 : 59,
+      inputField: undefined,
+    }))
+  }
   export let browseDate: Date
   export let timePrecision: null | 'minute' | 'second' | 'millisecond'
   export let browse: Function
+  const requiredFields = getRequiredFields(timePrecision)
+  console.log(requiredFields)
 
   let hourInput: HTMLInputElement
   let minuteInput: HTMLInputElement
@@ -175,65 +199,31 @@
       timePickerState = timePickerState.slice(0, -1)
     }
   }
+
+  function handleChange(e: Event) {
+    console.log('value has changed')
+  }
 </script>
 
 <div>
-  {timePrecision}
-
-  {#if timePrecision != null}
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="timepicker" on:keydown={timePickerKeydown}>
-      <input
-        bind:this={hourInput}
-        on:focus={setTimePickerActiveField}
-        aria-label="hours (24hr clock)"
-        data-time-picker-type="hour"
-        type="number"
-        class="timepicker-input timepicker-hour"
-        id="hour24-input-0"
-        min="0"
-        max="23"
-        value="00"
-      /><span class="timepicker-divider-text">:</span><input
-        on:focus={setTimePickerActiveField}
-        aria-label="minutes"
-        bind:this={minuteInput}
-        value="00"
-        data-time-picker-type="minute"
-        type="number"
-        min="0"
-        max="59"
-        class="timepicker-input timepicker-minute"
-        id="minute-input-0"
-      />
-      {#if timePrecision == 'second' || timePrecision == 'millisecond'}
-        <span class="timepicker-divider-text">:</span><input
+  {#if timePrecision != null && requiredFields != undefined}
+    <div class="timepicker">
+      {#each requiredFields as field, i}
+        {#if i != 0}
+          <span class="timepicker-divider-text">:</span>
+        {/if}
+        <input
+          bind:this={field.inputField}
           on:focus={setTimePickerActiveField}
-          aria-label="minutes"
-          bind:this={secondInput}
-          data-time-picker-type="second"
-          value="00"
+          aria-label={field.type}
           type="number"
-          min="0"
-          max="59"
-          class="timepicker-input timepicker-minute"
-          id="minute-input-0"
-        />
-      {/if}
-      {#if timePrecision == 'millisecond'}
-        <span class="timepicker-divider-text">:</span><input
-          on:focus={setTimePickerActiveField}
-          aria-label="minutes"
-          data-time-picker-type="millisecond"
-          bind:this={millisecondInput}
+          class="timepicker-input"
+          id="{field.type}-input-{i}"
+          min={field.min}
+          max={field.max}
           value="00"
-          type="number"
-          min="0"
-          max="1000"
-          class="timepicker-input timepicker-minute"
-          id="minute-input-0"
         />
-      {/if}
+      {/each}
     </div>
   {/if}
 </div>
