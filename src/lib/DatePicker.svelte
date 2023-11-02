@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { browser } from '$app/environment'
   import TimePicker from './TimePicker.svelte'
   import { getMonthLength, getCalendarDays, type CalendarDay } from './date-utils.js'
   import { getInnerLocale, type Locale } from './locale.js'
@@ -464,5 +463,4 @@
       color: var(--date-picker-selected-color, inherit)
       background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
       border: 2px solid var(--date-picker-highlight-border, #0269f7)
-
 </style>
