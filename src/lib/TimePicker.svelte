@@ -1,26 +1,36 @@
 <script lang="ts">
   import { browser } from '$app/environment'
+
   const TimePrecision = ['hour', 'minute', 'second', 'millisecond']
-  const INPUT_SELECTOR_CLS = 'timepicker-input'
+  type PossibleTimeInputFields = (typeof TimePrecision)[number]
   interface TimeInputField {
-    type: (typeof TimePrecision)[number]
+    type: PossibleTimeInputFields
     min: number
     max: number
     inputField?: HTMLInputElement | undefined
     update: (n: number) => void
   }
 
+  export let browseDate: Date
+  export let timePrecision: null | 'minute' | 'second' | 'millisecond'
+  export let browse: Function
+
+  const INPUT_SELECTOR_CLS = 'timepicker-input'
+  let timePickerActiveField: undefined | HTMLInputElement
+  $: timePickerActiveField = undefined
+
+  $: timePickerState = ''
+
   interface T {
-    [key: (typeof TimePrecision)[number]]: TimeInputField
+    [key: PossibleTimeInputFields]: TimeInputField
   }
   const minmax = (min: number, max: number, i: number) => i >= min && i <= max
+  function isDigitKey(key: string) {
+    var digitPattern = /^[0-9]$/
+    return digitPattern.test(key)
+  }
 
-  function getRequiredFields(
-    precision: (typeof TimePrecision)[number] | null
-  ): Array<TimeInputField> | undefined {
-    if (!precision) {
-      return
-    }
+  function getRequiredFields(precision: PossibleTimeInputFields): Array<TimeInputField> {
     return TimePrecision.slice(0, TimePrecision.indexOf(precision) + 1).map((type) => ({
       type,
       min: 0,
@@ -39,7 +49,7 @@
           browseDate.setMinutes(m)
         } else if (this.type == 'second') {
           browseDate.setSeconds(m)
-        } else if (this.type == 'milliseconds') {
+        } else if (this.type == 'millisecond') {
           browseDate.setMilliseconds(m)
         }
 
@@ -47,40 +57,16 @@
       },
     }))
   }
-  export let browseDate: Date
-  export let timePrecision: null | 'minute' | 'second' | 'millisecond'
-  export let browse: Function
-  const requiredFields = getRequiredFields(timePrecision)
-  let timePickerActiveField: null | HTMLInputElement
-  $: timePickerActiveField = null
 
-  $: timePickerState = ''
+  const REQUIED_FIELDS =
+    timePrecision == null || !TimePrecision.includes(timePrecision)
+      ? []
+      : getRequiredFields(timePrecision)
 
-  function setTimePickerActiveField(e: Event) {
-    if (e.target instanceof HTMLInputElement) {
-      timePickerActiveField = e.target
-    }
-  }
   function setInitilState(el: typeof timePickerActiveField) {
     if (el) {
       timePickerState = el.value == '00' ? '' : el.value
     }
-  }
-
-  $: {
-    setInitilState(timePickerActiveField)
-  }
-  let container: HTMLDivElement
-  function isDigitKey(key: string) {
-    var digitPattern = /^[0-9]$/
-    return digitPattern.test(key)
-  }
-
-  const rangeFn = {
-    minute: (m: number) => m >= 0 && m <= 59,
-    second: (s: number) => s >= 0 && s <= 59,
-    hour: (m: number) => m >= 0 && m <= 23,
-    millisecond: (n: number) => n >= 0 && n <= 999,
   }
 
   function setTimePickerState(key: string) {
@@ -103,10 +89,13 @@
     const valueInt = value == '' ? 0 : parseInt(value, 10)
     inputFieldsList[index].update(valueInt)
   }
+  $: {
+    setInitilState(timePickerActiveField)
+  }
 
   $: {
-    if (browser && timePickerActiveField && requiredFields) {
-      setTime(timePickerState, timePickerActiveField, requiredFields)
+    if (browser && timePickerActiveField && REQUIED_FIELDS) {
+      setTime(timePickerState, timePickerActiveField, REQUIED_FIELDS)
     }
   }
 
@@ -134,12 +123,12 @@
 
     return {
       next:
-        requiredFields && requiredFields.length - 1 > elementIndex
-          ? requiredFields[elementIndex + 1].inputField
+        REQUIED_FIELDS && REQUIED_FIELDS.length - 1 > elementIndex
+          ? REQUIED_FIELDS[elementIndex + 1].inputField
           : undefined,
       prev:
-        requiredFields && elementIndex > 0
-          ? requiredFields[elementIndex - 1].inputField
+        REQUIED_FIELDS && elementIndex > 0
+          ? REQUIED_FIELDS[elementIndex - 1].inputField
           : undefined,
     }
   }
@@ -173,16 +162,16 @@
 </script>
 
 <div>
-  {#if timePrecision != null && requiredFields != undefined}
+  {#if timePrecision != null && REQUIED_FIELDS != undefined}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="timepicker" on:keydown={timePickerKeydown} bind:this={container}>
-      {#each requiredFields as field, i}
+    <div class="timepicker" on:keydown={timePickerKeydown}>
+      {#each REQUIED_FIELDS as field, i}
         {#if i != 0}
           <span class="timepicker-divider-text">:</span>
         {/if}
         <input
           bind:this={field.inputField}
-          on:focus={setTimePickerActiveField}
+          on:focus={() => (timePickerActiveField = field.inputField)}
           aria-label={field.type}
           data-type={field.type}
           data-index={i}
