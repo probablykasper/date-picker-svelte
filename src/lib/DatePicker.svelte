@@ -180,8 +180,9 @@
     let shift = e.shiftKey || e.altKey
     if (
       (e.target as HTMLElement)?.tagName === 'SELECT' ||
-      (e.target as HTMLInputElement)?.classList.contains('timepicker-input')
+      (e.target as HTMLElement)?.tagName === 'INPUT'
     ) {
+      // Ignore date/month <select> & TimePicker <input>
       return
     }
     if (shift) {

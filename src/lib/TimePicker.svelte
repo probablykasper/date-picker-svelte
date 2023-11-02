@@ -16,7 +16,6 @@
   export let timePrecision: null | 'minute' | 'second' | 'millisecond'
   export let browse: Function
 
-  const INPUT_SELECTOR_CLS = 'timepicker-input'
   let timePickerActiveField: undefined | HTMLInputElement
   $: timePickerActiveField = undefined
 
@@ -168,7 +167,7 @@
     <div class="timepicker" on:keydown={timePickerKeydown}>
       {#each REQUIED_FIELDS as field, i}
         {#if i != 0}
-          <span class="timepicker-divider-text">:</span>
+          :
         {/if}
         <input
           bind:this={field.inputField}
@@ -177,8 +176,6 @@
           data-type={field.type}
           data-index={i}
           type="number"
-          class={INPUT_SELECTOR_CLS}
-          id="{field.type}-input-{i}"
           min={field.min}
           max={field.max}
           value="00"
@@ -199,22 +196,23 @@
     margin-inline: auto
     border: 1px solid rgba(108, 120, 147, 0.3)
     border-radius: 5px
-    .timepicker-divider-text
-      padding-inline:2px
-    .timepicker-input
-      max-width:1.5rem
-      width: fit-content
-      border: none
+    gap: 2px
+  input
+    max-width:1.5rem
+    width: fit-content
+    border: none
+    outline: none
+    height: auto
+    -moz-appearance: textfield
+    font-family: inherit
+    text-align: center
+    caret-color: transparent
+    background-color: transparent
+    &:focus-visible
       outline: none
-      height: auto
-      -moz-appearance: textfield
-      font-family: inherit
-      text-align: center
-      caret-color: transparent
-      &:focus-visible
-        outline: none
-        background-color: rgba(#808080, 0.08)
-      &::input::-webkit-outer-spin-button, &::input::-webkit-outer-spin-button
-        -webkit-appearance: none
-        margin: 0
+      background-color: rgba(#808080, 0.08)
+    &::-webkit-inner-spin-button
+      appearance: none
+      -webkit-appearance: none
+      margin: 0
 </style>
