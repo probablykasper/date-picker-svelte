@@ -4,6 +4,7 @@
    */
   import { browser } from '$app/environment'
   const TimePrecision = ['hour', 'minute', 'second', 'millisecond']
+  const INPUT_SELECTOR_CLS = 'timepicker-input'
   interface TimeInputField {
     type: (typeof TimePrecision)[number]
     min: number
@@ -58,26 +59,7 @@
   $: {
     setInitilState(timePickerActiveField)
   }
-  /**
-   * Need a better and cleaner implementation for navgiation,
-   * possibly using a circular datastructure
-   */
-  const getSiblings = () => {
-    const type = timePickerActiveField?.dataset.timePickerType
-    let next, prev
-    if (type == 'minute') {
-      prev = hourInput
-      next = secondInput
-    } else if (type == 'second') {
-      next = millisecondInput
-      prev = minuteInput
-    } else if (type == 'millisecond') {
-      prev = secondInput
-    } else if (type == 'hour') {
-      next = minuteInput
-    }
-    return [next, prev]
-  }
+  let container: HTMLDivElement
   function isDigitKey(key: string) {
     var digitPattern = /^[0-9]$/
     return digitPattern.test(key)
@@ -171,11 +153,25 @@
       return String(decrementedNumber)
     }
   }
+  function getSiblings() {
+    const elementIndex = parseInt(timePickerActiveField?.dataset.index as string, 10)
+
+    return {
+      next:
+        requiredFields && requiredFields.length - 1 > elementIndex
+          ? requiredFields[elementIndex + 1].inputField
+          : undefined,
+      prev:
+        requiredFields && elementIndex > 0
+          ? requiredFields[elementIndex - 1].inputField
+          : undefined,
+    }
+  }
 
   function timePickerKeydown(e: KeyboardEvent) {
     e.preventDefault()
     const keysToMoveNext = Array.from(';:-,.').concat(['ArrowRight', 'Tab'])
-    const [next, prev] = getSiblings()
+    const { next, prev } = getSiblings()
     if (keysToMoveNext.includes(e.key) && !(e.shiftKey && e.key == 'Tab')) {
       if (next) {
         next.focus()
@@ -189,7 +185,6 @@
     if (isDigitKey(e.key)) {
       setTimePickerState(timePickerState + e.key)
     } else if (e.key == 'ArrowUp') {
-      console.log('increase', increaseStrNumber(timePickerState))
       setTimePickerState(increaseStrNumber(timePickerState))
     } else if (e.key == 'ArrowDown') {
       setTimePickerState(decreaseStrNumber(timePickerState))
@@ -199,15 +194,12 @@
       timePickerState = timePickerState.slice(0, -1)
     }
   }
-
-  function handleChange(e: Event) {
-    console.log('value has changed')
-  }
 </script>
 
 <div>
   {#if timePrecision != null && requiredFields != undefined}
-    <div class="timepicker">
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div class="timepicker" on:keydown={timePickerKeydown} bind:this={container}>
       {#each requiredFields as field, i}
         {#if i != 0}
           <span class="timepicker-divider-text">:</span>
@@ -216,8 +208,10 @@
           bind:this={field.inputField}
           on:focus={setTimePickerActiveField}
           aria-label={field.type}
+          data-type={field.type}
+          data-index={i}
           type="number"
-          class="timepicker-input"
+          class={INPUT_SELECTOR_CLS}
           id="{field.type}-input-{i}"
           min={field.min}
           max={field.max}
