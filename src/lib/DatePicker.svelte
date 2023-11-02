@@ -211,7 +211,7 @@
   /**
    * Time picker
    */
-  export let timePrecision: null | 'minute' | 'second' | 'millisecond'
+  export let timePrecision: null | 'minute' | 'second' | 'millisecond' = null
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
