@@ -2,11 +2,11 @@
   import TimePicker from './TimePicker.svelte'
   import { getMonthLength, getCalendarDays, type CalendarDay } from './date-utils.js'
   import { getInnerLocale, type Locale } from './locale.js'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher<{
     /** Fires when the user selects a new value by clicking on a date or by pressing enter */
-    select: undefined
+    select: Date
   }>()
 
   function cloneDate(d: Date) {
@@ -118,7 +118,7 @@
       browseDate.setMonth(calendarDay.month)
       browseDate.setDate(calendarDay.number)
       setValue(browseDate)
-      dispatch('select')
+      dispatch('select', cloneDate(browseDate))
     }
   }
   function dayIsInRange(calendarDay: CalendarDay, min: Date, max: Date) {
@@ -201,7 +201,7 @@
       setValue(browseDate)
     } else if (e.key === 'Enter') {
       setValue(browseDate)
-      dispatch('select')
+      dispatch('select', cloneDate(browseDate))
     } else {
       return
     }
