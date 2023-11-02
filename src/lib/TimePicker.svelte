@@ -1,7 +1,4 @@
 <script lang="ts">
-  /**
-   * Refactor neeeded.
-   */
   import { browser } from '$app/environment'
   const TimePrecision = ['hour', 'minute', 'second', 'millisecond']
   const INPUT_SELECTOR_CLS = 'timepicker-input'
@@ -10,11 +7,13 @@
     min: number
     max: number
     inputField?: HTMLInputElement | undefined
+    update: (n: number) => void
   }
 
   interface T {
     [key: (typeof TimePrecision)[number]]: TimeInputField
   }
+  const minmax = (min: number, max: number, i: number) => i >= min && i <= max
 
   function getRequiredFields(
     precision: (typeof TimePrecision)[number] | null
@@ -27,19 +26,31 @@
       min: 0,
       max: type === 'hour' ? 23 : type === 'millisecond' ? 1000 : 59,
       inputField: undefined,
+      update(m: number) {
+        const withinLimit = minmax(this.min, this.max, m)
+        if (!withinLimit && !this.inputField) {
+          return
+        }
+
+        ;(this.inputField as unknown as HTMLInputElement).value = `${m < 10 ? '0' : ''}${m}`
+        if (this.type == 'hour') {
+          browseDate.setHours(m)
+        } else if (this.type == 'minute') {
+          browseDate.setMinutes(m)
+        } else if (this.type == 'second') {
+          browseDate.setSeconds(m)
+        } else if (this.type == 'milliseconds') {
+          browseDate.setMilliseconds(m)
+        }
+
+        browse(browseDate)
+      },
     }))
   }
   export let browseDate: Date
   export let timePrecision: null | 'minute' | 'second' | 'millisecond'
   export let browse: Function
   const requiredFields = getRequiredFields(timePrecision)
-  console.log(requiredFields)
-
-  let hourInput: HTMLInputElement
-  let minuteInput: HTMLInputElement
-  let secondInput: HTMLInputElement
-  let millisecondInput: HTMLInputElement
-
   let timePickerActiveField: null | HTMLInputElement
   $: timePickerActiveField = null
 
@@ -73,64 +84,29 @@
   }
 
   function setTimePickerState(key: string) {
+    if (!timePickerActiveField) {
+      return
+    }
     const digit = parseInt(key, 10)
-    const type = timePickerActiveField?.dataset.timePickerType
-
-    if (type && Object.keys(rangeFn).includes(type) && rangeFn[type](digit)) {
+    const min = parseInt(timePickerActiveField?.min, 10)
+    const max = parseInt(timePickerActiveField?.max, 10)
+    if (minmax(min, max, digit)) {
       timePickerState = key
     }
   }
-
-  function setHours(newHour: number | typeof NaN) {
-    if (rangeFn['hour'](newHour)) {
-      hourInput.value = `${newHour < 10 ? '0' : ''}${newHour}`
-      browseDate.setHours(newHour)
-      browse(browseDate)
-    }
-  }
-
-  function setMinutes(newMinute: number) {
-    if (rangeFn['minute'](newMinute)) {
-      minuteInput.value = `${newMinute < 10 ? '0' : ''}${newMinute}`
-
-      browseDate.setMinutes(newMinute)
-      browse(browseDate)
-    }
-  }
-  function setSeconds(d: number) {
-    if (rangeFn['second'](d)) {
-      secondInput.value = `${d < 10 ? '0' : ''}${d}`
-
-      browseDate.setSeconds(d)
-      browse(browseDate)
-    }
-  }
-  function setMilliseconds(t: number) {
-    if (rangeFn['millisecond'](t)) {
-      millisecondInput.value = `${t < 10 ? '0' : ''}${t}`
-
-      browseDate.setMilliseconds(t)
-      browse(browseDate)
-    }
-  }
-  function setTime(value: string) {
+  function setTime(
+    value: string,
+    inputField: HTMLInputElement,
+    inputFieldsList: Array<TimeInputField>
+  ) {
+    const index = parseInt(inputField.dataset.index as string, 0)
     const valueInt = value == '' ? 0 : parseInt(value, 10)
-    const type = timePickerActiveField?.dataset.timePickerType
-
-    if (hourInput && timePickerActiveField == hourInput) {
-      setHours(valueInt)
-    } else if (minuteInput && timePickerActiveField == minuteInput) {
-      setMinutes(valueInt)
-    } else if (secondInput && timePickerActiveField == secondInput) {
-      setSeconds(valueInt)
-    } else if (millisecondInput && timePickerActiveField == millisecondInput) {
-      setMilliseconds(valueInt)
-    }
+    inputFieldsList[index].update(valueInt)
   }
 
   $: {
-    if (browser) {
-      setTime(timePickerState)
+    if (browser && timePickerActiveField && requiredFields) {
+      setTime(timePickerState, timePickerActiveField, requiredFields)
     }
   }
 
