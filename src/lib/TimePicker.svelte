@@ -3,6 +3,7 @@
 
   const TimePrecision = ['hour', 'minute', 'second', 'millisecond']
   type PossibleTimeInputFields = (typeof TimePrecision)[number]
+
   interface TimeInputField {
     type: PossibleTimeInputFields
     min: number

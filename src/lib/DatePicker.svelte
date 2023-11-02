@@ -327,10 +327,7 @@
       </div>
     {/each}
 
-    <TimePicker timePrecision={null} bind:browseDate {browse} />
-    <TimePicker timePrecision={'minute'} bind:browseDate {browse} />
-    <TimePicker timePrecision={'second'} bind:browseDate {browse} />
-    <TimePicker timePrecision={'millisecond'} bind:browseDate {browse} />
+    <TimePicker {timePrecision} bind:browseDate {browse} />
   </div>
 </div>
 

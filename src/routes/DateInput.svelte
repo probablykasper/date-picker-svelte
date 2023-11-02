@@ -14,7 +14,7 @@
   let browseWithoutSelecting: boolean
   let format: string
   let dynamicPositioning: boolean = true
-  let timePicker: boolean = true
+  let timePrecision: 'minute' | 'second' | 'millisecond' = 'minute'
 </script>
 
 <Split>
@@ -31,7 +31,7 @@
     bind:closeOnSelection
     bind:browseWithoutSelecting
     bind:dynamicPositioning
-    bind:timePicker
+    bind:timePrecision
   />
 
   <svelte:fragment slot="right">
@@ -48,6 +48,6 @@
     <Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
     <Prop label="dynamicPositioning" bind:value={dynamicPositioning} />
     <Prop label="locale">Default</Prop>
-    <Prop label="timePicker" bind:value={timePicker}>{timePicker}</Prop>
+    <Prop label="timePrecision" bind:value={timePrecision}>{timePrecision}</Prop>
   </svelte:fragment>
 </Split>
