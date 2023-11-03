@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.9.0 - 2023 Nov 3
 - Add `timePrecision` prop for showing a time picker (@nihanmubashshir)
 
 ## 2.8.0 - 2023 Sep 29
