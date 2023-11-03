@@ -12,7 +12,7 @@
   let max: Date
   let locale = localeFromDateFnsLocale(hy)
   let browseWithoutSelecting: boolean
-  let timePrecision: null | 'minute' | 'second' | 'millisecond' = 'millisecond'
+  let timePrecision: 'minute' | 'second' | 'millisecond' | null = 'millisecond'
 </script>
 
 <Split>

@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Add `timePrecision` prop for showing a time picker (@nihanmubashshir)
+
 ## 2.8.0 - 2023 Sep 29
 - Add date to `select` event detail
 

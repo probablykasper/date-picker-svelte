@@ -14,7 +14,7 @@
   let browseWithoutSelecting: boolean
   let format: string
   let dynamicPositioning: boolean = true
-  let timePrecision: null | 'minute' | 'second' | 'millisecond' = null
+  let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
 </script>
 
 <Split>

@@ -9,6 +9,7 @@ export default {
     vitePreprocess(),
     mdsvex({
       extensions: ['.md'],
+      smartypants: false,
     }),
   ],
 
