@@ -28,8 +28,8 @@ npm install date-picker-svelte
 
 ```svelte
 <script>
-  import { DateInput } from 'date-picker-svelte'
-  let date = new Date()
+	import { DateInput } from 'date-picker-svelte'
+	let date = new Date()
 </script>
 
 <DateInput bind:value={date} />
@@ -57,16 +57,16 @@ Check the [docs](https://date-picker-svelte.kasper.space/docs) to learn more
 
 1. Update `CHANGELOG.md`
 2. Check for errors
-    ```
-    npm run lint
-    ```
+	```
+	npm run lint
+	```
 3. Bump the version number
-    ```
-    npm version --no-git-tag <version>
-    ```
+	```
+	npm version --no-git-tag <version>
+	```
 4. Publish
-    ```
-    npm publish
-    ```
+	```
+	npm publish
+	```
 5. Commit with a tag in format "v#.#.#"
 6. Create GitHub release with release notes

@@ -1,34 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script>
-      function detectTheme() {
-        var themeOverride = localStorage.getItem('theme')
-        if (themeOverride == 'dark' || themeOverride === 'light') {
-          // Override the system theme
-          return themeOverride
-        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-          // Use the system theme
-          return 'light'
-        } else {
-          // Default theme
-          return 'dark'
-        }
-      }
-      document.documentElement.setAttribute('data-theme', detectTheme())
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="prism-holi-theme.css" />
-    %sveltekit.head%
-  </head>
-  <body>
-    <div>%sveltekit.body%</div>
-  </body>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			function detectTheme() {
+				var themeOverride = localStorage.getItem('theme')
+				if (themeOverride == 'dark' || themeOverride === 'light') {
+					// Override the system theme
+					return themeOverride
+				} else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+					// Use the system theme
+					return 'light'
+				} else {
+					// Default theme
+					return 'dark'
+				}
+			}
+			document.documentElement.setAttribute('data-theme', detectTheme())
+		</script>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="prism-holi-theme.css" />
+		%sveltekit.head%
+	</head>
+	<body>
+		<div>%sveltekit.body%</div>
+	</body>
 </html>

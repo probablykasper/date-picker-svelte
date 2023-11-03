@@ -1,6 +1,6 @@
 <svelte:head>
 
-  <title>Docs • Date Picker Svelte</title>
+<title>Docs • Date Picker Svelte</title>
 </svelte:head>
 
 # Documentation
@@ -15,8 +15,8 @@ npm install -D date-picker-svelte
 
 ```svelte
 <script>
-  import { DateInput } from 'date-picker-svelte'
-  let date = new Date()
+	import { DateInput } from 'date-picker-svelte'
+	let date = new Date()
 </script>
 
 <DateInput bind:value={date} />
@@ -91,10 +91,10 @@ If you use [date-fns](https://date-fns.org/), you can create a Locale object by 
 
 ```js
 <script>
-  import { DatePicker, localeFromDateFnsLocale } from 'date-picker-svelte'
-  import { hy } from 'date-fns/locale'
-  let date = new Date()
-  let locale = localeFromDateFnsLocale(hy)
+	import { DatePicker, localeFromDateFnsLocale } from 'date-picker-svelte'
+	import { hy } from 'date-fns/locale'
+	let date = new Date()
+	let locale = localeFromDateFnsLocale(hy)
 </script>
 
 <DatePicker bind:value={date} {locale} />
@@ -119,7 +119,7 @@ Dark theme example:
 
 ```css
 :root {
-  --date-picker-background: #1b1e27;
-  --date-picker-foreground: #f7f7f7;
+	--date-picker-background: #1b1e27;
+	--date-picker-foreground: #f7f7f7;
 }
 ```

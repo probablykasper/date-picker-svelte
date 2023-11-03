@@ -1,137 +1,138 @@
 {
-  "name": "date-picker-svelte",
-  "version": "2.8.0",
-  "description": "Date and time picker for Svelte",
-  "type": "module",
-  "scripts": {
-    "dev": "vite dev",
-    "build": "vite build && npm run package",
-    "build:site": "vite build",
-    "preview": "vite preview",
-    "package": "svelte-package",
-    "prepublishOnly": "npm run package",
-    "lint": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && eslint src && prettier --check src",
-    "format": "eslint --fix src && prettier --write src",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage"
-  },
-  "devDependencies": {
-    "@sveltejs/adapter-static": "^2.0.3",
-    "@sveltejs/kit": "^1.25.0",
-    "@sveltejs/package": "^2.2.2",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
-    "@vitest/coverage-v8": "^0.34.5",
-    "date-fns": "^2.30.0",
-    "eslint": "^8.50.0",
-    "eslint-config-prettier": "^8.10.0",
-    "eslint-plugin-svelte": "^2.33.2",
-    "mdsvex": "^0.11.0",
-    "prettier": "^2.8.8",
-    "prettier-plugin-svelte": "^2.10.1",
-    "sass": "^1.68.0",
-    "svelte": "^4.2.1",
-    "svelte-check": "^3.5.2",
-    "typescript": "^5.2.2",
-    "vite": "^4.4.9",
-    "vitest": "^0.34.5"
-  },
-  "peerDependencies": {
-    "svelte": "^3.24.0 || ^4.0.0"
-  },
-  "exports": {
-    "./package.json": "./package.json",
-    "./DateInput.svelte": {
-      "types": "./dist/DateInput.svelte.d.ts",
-      "svelte": "./dist/DateInput.svelte",
-      "default": "./dist/DateInput.svelte"
-    },
-    "./DatePicker.svelte": {
-      "types": "./dist/DatePicker.svelte.d.ts",
-      "svelte": "./dist/DatePicker.svelte",
-      "default": "./dist/DatePicker.svelte"
-    },
-    "./TimePicker.svelte": {
-      "types": "./dist/TimePicker.svelte.d.ts",
-      "svelte": "./dist/TimePicker.svelte",
-      "default": "./dist/TimePicker.svelte"
-    },
-    "./date-utils": {
-      "types": "./dist/date-utils.d.ts",
-      "default": "./dist/date-utils.js"
-    },
-    ".": {
-      "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js",
-      "default": "./dist/index.js"
-    },
-    "./locale": {
-      "types": "./dist/locale.d.ts",
-      "default": "./dist/locale.js"
-    },
-    "./parse": {
-      "types": "./dist/parse.d.ts",
-      "default": "./dist/parse.js"
-    }
-  },
-  "files": [
-    "dist",
-    "!dist/**/*.test.*",
-    "!dist/**/*.spec.*"
-  ],
-  "svelte": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    ">4.0": {
-      "DateInput.svelte": [
-        "./dist/DateInput.svelte.d.ts"
-      ],
-      "DatePicker.svelte": [
-        "./dist/DatePicker.svelte.d.ts"
-      ],
-      "date-utils": [
-        "./dist/date-utils.d.ts"
-      ],
-      "index": [
-        "./dist/index.d.ts"
-      ],
-      "locale": [
-        "./dist/locale.d.ts"
-      ],
-      "parse": [
-        "./dist/parse.d.ts"
-      ]
-    }
-  },
-  "license": "MIT",
-  "homepage": "https://date-picker-svelte.kasper.space",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/probablykasper/date-picker-svelte.git"
-  },
-  "bugs": {
-    "url": "https://github.com/probablykasper/date-picker-svelte/issues"
-  },
-  "author": {
-    "name": "Kasper Henningsen",
-    "url": "https://kasper.space"
-  },
-  "keywords": [
-    "date",
-    "time",
-    "date-picker",
-    "datepicker",
-    "date-time-picker",
-    "calendar",
-    "svelte",
-    "front-end"
-  ],
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": true,
-    "plugins": [
-      "prettier-plugin-svelte"
-    ]
-  }
+	"name": "date-picker-svelte",
+	"version": "2.8.0",
+	"description": "Date and time picker for Svelte",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build && npm run package",
+		"build:site": "vite build",
+		"preview": "vite preview",
+		"package": "svelte-package",
+		"prepublishOnly": "npm run package",
+		"lint": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && eslint src && prettier --check src",
+		"format": "eslint --fix src && prettier --write src",
+		"test": "vitest",
+		"test:coverage": "vitest --coverage"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-static": "^2.0.3",
+		"@sveltejs/kit": "^1.25.0",
+		"@sveltejs/package": "^2.2.2",
+		"@typescript-eslint/eslint-plugin": "^6.7.2",
+		"@typescript-eslint/parser": "^6.7.2",
+		"@vitest/coverage-v8": "^0.34.5",
+		"date-fns": "^2.30.0",
+		"eslint": "^8.50.0",
+		"eslint-config-prettier": "^8.10.0",
+		"eslint-plugin-svelte": "^2.33.2",
+		"mdsvex": "^0.11.0",
+		"prettier": "^2.8.8",
+		"prettier-plugin-svelte": "^2.10.1",
+		"sass": "^1.68.0",
+		"svelte": "^4.2.1",
+		"svelte-check": "^3.5.2",
+		"typescript": "^5.2.2",
+		"vite": "^4.4.9",
+		"vitest": "^0.34.5"
+	},
+	"peerDependencies": {
+		"svelte": "^3.24.0 || ^4.0.0"
+	},
+	"exports": {
+		"./package.json": "./package.json",
+		"./DateInput.svelte": {
+			"types": "./dist/DateInput.svelte.d.ts",
+			"svelte": "./dist/DateInput.svelte",
+			"default": "./dist/DateInput.svelte"
+		},
+		"./DatePicker.svelte": {
+			"types": "./dist/DatePicker.svelte.d.ts",
+			"svelte": "./dist/DatePicker.svelte",
+			"default": "./dist/DatePicker.svelte"
+		},
+		"./TimePicker.svelte": {
+			"types": "./dist/TimePicker.svelte.d.ts",
+			"svelte": "./dist/TimePicker.svelte",
+			"default": "./dist/TimePicker.svelte"
+		},
+		"./date-utils": {
+			"types": "./dist/date-utils.d.ts",
+			"default": "./dist/date-utils.js"
+		},
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./locale": {
+			"types": "./dist/locale.d.ts",
+			"default": "./dist/locale.js"
+		},
+		"./parse": {
+			"types": "./dist/parse.d.ts",
+			"default": "./dist/parse.js"
+		}
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"typesVersions": {
+		">4.0": {
+			"DateInput.svelte": [
+				"./dist/DateInput.svelte.d.ts"
+			],
+			"DatePicker.svelte": [
+				"./dist/DatePicker.svelte.d.ts"
+			],
+			"date-utils": [
+				"./dist/date-utils.d.ts"
+			],
+			"index": [
+				"./dist/index.d.ts"
+			],
+			"locale": [
+				"./dist/locale.d.ts"
+			],
+			"parse": [
+				"./dist/parse.d.ts"
+			]
+		}
+	},
+	"license": "MIT",
+	"homepage": "https://date-picker-svelte.kasper.space",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/probablykasper/date-picker-svelte.git"
+	},
+	"bugs": {
+		"url": "https://github.com/probablykasper/date-picker-svelte/issues"
+	},
+	"author": {
+		"name": "Kasper Henningsen",
+		"url": "https://kasper.space"
+	},
+	"keywords": [
+		"date",
+		"time",
+		"date-picker",
+		"datepicker",
+		"date-time-picker",
+		"calendar",
+		"svelte",
+		"front-end"
+	],
+	"prettier": {
+		"useTabs": true,
+		"printWidth": 100,
+		"semi": false,
+		"singleQuote": true,
+		"plugins": [
+			"prettier-plugin-svelte"
+		]
+	}
 }

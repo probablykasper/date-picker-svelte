@@ -1,10 +1,10 @@
 <script lang="ts">
-  import DatePicker from '../DatePicker.svelte'
-  import DateInput from '../DateInput.svelte'
+	import DatePicker from '../DatePicker.svelte'
+	import DateInput from '../DateInput.svelte'
 </script>
 
 <svelte:head>
-  <title>Demo • Date Picker Svelte</title>
+	<title>Demo • Date Picker Svelte</title>
 </svelte:head>
 
 <!-- svelte-ignore a11y-missing-content -->
