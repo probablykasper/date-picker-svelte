@@ -22,12 +22,12 @@ npm install -D date-picker-svelte
 <DateInput bind:value={date} />
 ```
 
-## <a id="dateinput" />DateInput
+<h2 id="dateinput">DateInput</h2>
 
 Component with an input field that shows the DatePicker component on focus.
 The component will not assign a date value until a specific date is selected in the picker or entered into the field.
 
-### <a id="props" />Props
+<h3 id="props">Props</h3>
 
 | Prop                     | Type                                          | Description                                                 |
 | :----------------------- | :-------------------------------------------- | :---------------------------------------------------------- |
@@ -45,7 +45,7 @@ The component will not assign a date value until a specific date is selected in 
 | `dynamicPositioning`     | bool                                          | Dynamicly postions the date popup to best fit on the screen |
 | `locale`                 | Locale                                        | Locale object for internationalization                      |
 
-#### <a id="format-string" />Format string
+<h4 id="format-string">Format string</h4>
 
 Example format string: `yyyy-MM-dd HH:mm:ss`
 
@@ -59,12 +59,12 @@ Example format string: `yyyy-MM-dd HH:mm:ss`
 | `mm`    | 59             |
 | `ss`    | 59             |
 
-## <a id="datepicker" />DatePicker
+<h2 id="datepicker">DatePicker</h2>
 
 Component with a calendar for choosing a date.
 The component will not assign a date value until a specific date is selected in the picker.
 
-### <a id="datepicker-props" />Props
+<h3 id="datepicker-props">Props</h3>
 
 | Prop                     | Type                                          | Description                                          |
 | :----------------------- | :-------------------------------------------- | :--------------------------------------------------- |
@@ -75,9 +75,9 @@ The component will not assign a date value until a specific date is selected in 
 | `locale`                 | Locale                                        | Locale object for internationalization               |
 | `browseWithoutSelecting` | bool                                          | Wait with updating the date until a date is selected |
 
-## <a id="internationalization" />Internationalization
+<h2 id="internationalization">Internationalization</h2>
 
-### <a id="locale" />`Locale`
+<h3 id="locale">`Locale`</h3>
 
 Object to support internationalization. Properties (all are optional):
 
@@ -85,7 +85,7 @@ Object to support internationalization. Properties (all are optional):
 - `months`: Array of month names, January to December. Default: `['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']`
 - `weekStartsOn`: The day the week starts on, 0 = Sunday. Default: `1`
 
-### <a id="localefromdatefnslocale" />`localeFromDateFnsLocale`
+<h3 id="localefromdatefnslocale">`localeFromDateFnsLocale`</h3>
 
 If you use [date-fns](https://date-fns.org/), you can create a Locale object by passing a date-fns locale to this function:
 
@@ -100,7 +100,7 @@ If you use [date-fns](https://date-fns.org/), you can create a Locale object by 
 <DatePicker bind:value={date} {locale} />
 ```
 
-## <a id="css-variables" />CSS variables
+<h2 id="css-variables">CSS variables</h2>
 
 Colors:
 
