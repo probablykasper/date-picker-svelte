@@ -94,8 +94,8 @@
   /** Wait with updating the date until a date is selected */
   export let browseWithoutSelecting = false
 
-  /** Allow Users to select time */
-  export let timePrecision: null | 'minute' | 'second' | 'millisecond' = null
+  /** Show a time picker with the specified precision */
+  export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
 
   // handle on:focusout for parent element. If the parent element loses
   // focus (e.g input element), visible is set to false

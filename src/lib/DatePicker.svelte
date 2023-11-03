@@ -22,6 +22,8 @@
       value = cloneDate(browseDate)
     }
   }
+
+  /** Set the browseDate */
   function browse(d: Date) {
     browseDate = clamp(d, min, max)
     if (!browseWithoutSelecting && value) {
@@ -33,6 +35,9 @@
 
   /** Default Date to use */
   const defaultDate = new Date()
+
+  /** Show a time picker with the specified precision */
+  export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
 
   /** The earliest year the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
@@ -180,7 +185,7 @@
     let shift = e.shiftKey || e.altKey
     if (
       (e.target as HTMLElement)?.tagName === 'SELECT' ||
-      (e.target as HTMLElement)?.tagName === 'INPUT'
+      (e.target as HTMLElement)?.tagName === 'SPAN'
     ) {
       // Ignore date/month <select> & TimePicker <input>
       return
@@ -208,10 +213,6 @@
     }
     e.preventDefault()
   }
-  /**
-   * Time picker
-   */
-  export let timePrecision: null | 'minute' | 'second' | 'millisecond' = null
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -327,7 +328,7 @@
       </div>
     {/each}
 
-    <TimePicker {timePrecision} bind:browseDate {browse} />
+    <TimePicker {timePrecision} {browseDate} {browse} />
   </div>
 </div>
 

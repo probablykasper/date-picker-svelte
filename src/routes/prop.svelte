@@ -34,6 +34,7 @@
       bind:value
       min={new Date(new Date().getFullYear() - 20, 0)}
       max={new Date(new Date().getFullYear() + 5, 0)}
+      dynamicPositioning
     />
   {:else if value instanceof Object}
     <textarea bind:value={jsonValue} on:input={jsonInput} />
