@@ -51,6 +51,11 @@
       "svelte": "./dist/DatePicker.svelte",
       "default": "./dist/DatePicker.svelte"
     },
+    "./TimePicker.svelte": {
+      "types": "./dist/TimePicker.svelte.d.ts",
+      "svelte": "./dist/TimePicker.svelte",
+      "default": "./dist/TimePicker.svelte"
+    },
     "./date-utils": {
       "types": "./dist/date-utils.d.ts",
       "default": "./dist/date-utils.js"
