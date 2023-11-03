@@ -1,4 +1,5 @@
 <script lang="ts">
+  import TimePicker from './TimePicker.svelte'
   import { getMonthLength, getCalendarDays, type CalendarDay } from './date-utils.js'
   import { getInnerLocale, type Locale } from './locale.js'
   import { createEventDispatcher } from 'svelte'
@@ -21,6 +22,8 @@
       value = cloneDate(browseDate)
     }
   }
+
+  /** Set the browseDate */
   function browse(d: Date) {
     browseDate = clamp(d, min, max)
     if (!browseWithoutSelecting && value) {
@@ -32,6 +35,9 @@
 
   /** Default Date to use */
   const defaultDate = new Date()
+
+  /** Show a time picker with the specified precision */
+  export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
 
   /** The earliest year the user can select */
   export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
@@ -177,7 +183,11 @@
   }
   function keydown(e: KeyboardEvent) {
     let shift = e.shiftKey || e.altKey
-    if ((e.target as HTMLElement)?.tagName === 'SELECT') {
+    if (
+      (e.target as HTMLElement)?.tagName === 'SELECT' ||
+      (e.target as HTMLElement)?.tagName === 'SPAN'
+    ) {
+      // Ignore date/month <select> & TimePicker <input>
       return
     }
     if (shift) {
@@ -317,6 +327,8 @@
         {/each}
       </div>
     {/each}
+
+    <TimePicker {timePrecision} {browseDate} {browse} />
   </div>
 </div>
 
