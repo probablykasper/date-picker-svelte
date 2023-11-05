@@ -48,6 +48,8 @@
 	export let valid = true
 	/** Disable the input **/
 	export let disabled = false
+	/** Mandates filling out the input field before submitting the form **/
+	export let required = false
 	/** Pass custom classes */
 	let classes = ''
 	export { classes as class }
@@ -189,6 +191,7 @@
 		value={text}
 		{placeholder}
 		{disabled}
+		{required}
 		on:focus={() => (visible = true)}
 		on:mousedown={() => (visible = true)}
 		on:input={(e) => {
