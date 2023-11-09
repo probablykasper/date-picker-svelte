@@ -189,7 +189,7 @@
 		class:invalid={!valid}
 		type="text"
 		value={text}
-	    id={id || null}
+		id={id || null}
 		{placeholder}
 		{disabled}
 		on:focus={() => (visible = true)}
