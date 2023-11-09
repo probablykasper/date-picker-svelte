@@ -38,10 +38,10 @@
 
 	<svelte:fragment slot="right">
 		<h3 class="no-top">Props</h3>
-		<Prop label="id" bind:value={id} />
 		<Prop label="value">{value}</Prop>
 		<Prop label="min" bind:value={min} />
 		<Prop label="max" bind:value={max} />
+		<Prop label="id" bind:value={id} />
 		<Prop label="placeholder" bind:value={placeholder} />
 		<Prop label="valid" bind:value={valid} />
 		<Prop label="format" bind:value={format} />
