@@ -3,7 +3,7 @@
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
 
-    let id: string
+	let id: string
 	let placeholder: string
 	let value: Date
 	let min: Date
