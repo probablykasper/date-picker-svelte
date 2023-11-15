@@ -48,7 +48,7 @@
 	export let valid = true
 	/** Disable the input **/
 	export let disabled = false
-	/** Mandates filling out the input field before submitting the form **/
+	/** Require a value to submit form **/
 	export let required = false
 	/** Pass custom classes */
 	let classes = ''
