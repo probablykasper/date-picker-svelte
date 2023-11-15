@@ -38,7 +38,6 @@
 
 	/** Show a time picker with the specified precision */
 	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
-
 	/** The earliest year the user can select */
 	export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
 	/** The latest year the user can select */

@@ -3,6 +3,7 @@
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
 
+	let id: string
 	let placeholder: string
 	let value: Date
 	let min: Date
@@ -21,6 +22,7 @@
 <Split>
 	<DateInput
 		slot="left"
+		bind:id
 		bind:value
 		bind:min
 		bind:max
@@ -41,6 +43,7 @@
 		<Prop label="value">{value}</Prop>
 		<Prop label="min" bind:value={min} />
 		<Prop label="max" bind:value={max} />
+		<Prop label="id" bind:value={id} />
 		<Prop label="placeholder" bind:value={placeholder} />
 		<Prop label="valid" bind:value={valid} />
 		<Prop label="format" bind:value={format} />
