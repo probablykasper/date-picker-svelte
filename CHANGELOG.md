@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.10.0 - 2023 Nov 15
 - Add `required` prop (@ChromuSx)
 - Add `id` prop (@portfolioris)
 
