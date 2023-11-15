@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Add `required` prop (@ChromuSx)
+
 ## 2.9.0 - 2023 Nov 3
 - Add `timePrecision` prop for showing a time picker (@nihanmubashshir)
 

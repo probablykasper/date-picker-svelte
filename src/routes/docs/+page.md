@@ -40,6 +40,7 @@ The component will not assign a date value until a specific date is selected in 
 | `format`                 | string                                        | Format string                                               |
 | `visible`                | bool                                          | Whether the date popup is visible                           |
 | `disabled`               | bool                                          | Disable the input                                           |
+| `required`               | bool                                          | Require a value to submit form                              |
 | `closeOnSelection`       | bool                                          | Close the date popup when a date is selected                |
 | `browseWithoutSelecting` | bool                                          | Wait with updating the date until a value is selected       |
 | `dynamicPositioning`     | bool                                          | Dynamicly postions the date popup to best fit on the screen |
