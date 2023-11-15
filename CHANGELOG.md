@@ -2,6 +2,7 @@
 
 ## Next
 - Add `required` prop (@ChromuSx)
+- Add `id` prop (@portfolioris)
 
 ## 2.9.0 - 2023 Nov 3
 - Add `timePrecision` prop for showing a time picker (@nihanmubashshir)
