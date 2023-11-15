@@ -14,7 +14,7 @@ Features:
 - Autopunctuation (e.g typing "20201111111111" gives you "2020-11-11 11:11:11" with the default format)
 - Keyboard shortcuts
 
-[Demo](https://date-picker-svelte.kasper.space/demo) • [Documentation](https://date-picker-svelte.kasper.space/docs) • [REPL](https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=3)
+[Demo](https://date-picker-svelte.kasper.space/demo) • [Documentation](https://date-picker-svelte.kasper.space/docs) • [REPL](https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=4)
 
 ![](Screenshot.png)
 

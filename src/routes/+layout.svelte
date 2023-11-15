@@ -47,7 +47,7 @@
 				<a class="nav-link" href="/docs">Docs</a>
 				<a
 					class="nav-link"
-					href="https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=3">REPL</a
+					href="https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=4">REPL</a
 				>
 			</div>
 		</div>
