@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.10.0 - 2023 Nov 6
+## Next
 - Add `required` prop (@ChromuSx)
 
 ## 2.9.0 - 2023 Nov 3
