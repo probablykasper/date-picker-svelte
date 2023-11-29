@@ -13,11 +13,20 @@
 	let locale = localeFromDateFnsLocale(hy)
 	let browseWithoutSelecting: boolean
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = 'millisecond'
+	let weekly = false
 </script>
 
 <Split>
 	<div class="left" slot="left">
-		<DatePicker bind:value bind:min bind:max {locale} bind:browseWithoutSelecting {timePrecision} />
+		<DatePicker
+			bind:value
+			bind:min
+			bind:max
+			{locale}
+			bind:browseWithoutSelecting
+			{timePrecision}
+			bind:weekly
+		/>
 	</div>
 	<div slot="right">
 		<h3 class="no-top">Props</h3>
@@ -31,5 +40,6 @@
 			bind:value={timePrecision}
 			values={[null, 'minute', 'second', 'millisecond']}>{timePrecision}</Prop
 		>
+		<Prop label="weekly" bind:value={weekly} />
 	</div>
 </Split>

@@ -29,23 +29,24 @@ The component will not assign a date value until a specific date is selected in 
 
 <h3 id="props">Props</h3>
 
-| Prop                     | Type                                          | Description                                                   |
-| :----------------------- | :-------------------------------------------- | :------------------------------------------------------------ |
-| `value`                  | Date \| null                                  | Date value                                                    |
-| `min`                    | Date                                          | The earliest value the user can select                        |
-| `max`                    | Date                                          | The latest value the user can select                          |
-| `placeholder`            | string                                        | Placeholder used when date value is null                      |
-| `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision               |
-| `id`                     | string \| null                                | Set the input element's ID attribute                          |
-| `valid`                  | bool                                          | Whether the text is valid                                     |
-| `format`                 | string                                        | Format string                                                 |
-| `visible`                | bool                                          | Whether the date popup is visible                             |
-| `disabled`               | bool                                          | Disable the input                                             |
-| `required`               | bool                                          | Require a value to submit form                                |
-| `closeOnSelection`       | bool                                          | Close the date popup when a date is selected                  |
-| `browseWithoutSelecting` | bool                                          | Wait with updating the date until a value is selected         |
-| `dynamicPositioning`     | bool                                          | Dynamically postions the date popup to best fit on the screen |
-| `locale`                 | Locale                                        | Locale object for internationalization                        |
+| Prop                     | Type                                          | Description                                                          |
+| :----------------------- | :-------------------------------------------- | :------------------------------------------------------------------- |
+| `value`                  | Date \| null                                  | Date value                                                           |
+| `min`                    | Date                                          | The earliest value the user can select                               |
+| `max`                    | Date                                          | The latest value the user can select                                 |
+| `placeholder`            | string                                        | Placeholder used when date value is null                             |
+| `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision                      |
+| `id`                     | string \| null                                | Set the input element's ID attribute                                 |
+| `valid`                  | bool                                          | Whether the text is valid                                            |
+| `format`                 | string                                        | Format string                                                        |
+| `visible`                | bool                                          | Whether the date popup is visible                                    |
+| `disabled`               | bool                                          | Disable the input                                                    |
+| `required`               | bool                                          | Require a value to submit form                                       |
+| `closeOnSelection`       | bool                                          | Close the date popup when a date is selected                         |
+| `browseWithoutSelecting` | bool                                          | Wait with updating the date until a value is selected                |
+| `dynamicPositioning`     | bool                                          | Dynamically postions the date popup to best fit on the screen        |
+| `locale`                 | Locale                                        | Locale object for internationalization                               |
+| `weekly`                 | bool                                          | Selection should be a whole week with value set to first day of week |
 
 <h4 id="format-string">Format string</h4>
 
@@ -68,14 +69,15 @@ The component will not assign a date value until a specific date is selected in 
 
 <h3 id="datepicker-props">Props</h3>
 
-| Prop                     | Type                                          | Description                                          |
-| :----------------------- | :-------------------------------------------- | :--------------------------------------------------- |
-| `value`                  | Date \| null                                  | Date value                                           |
-| `min`                    | Date                                          | The earliest year the user can select                |
-| `max`                    | Date                                          | The latest year the user can select                  |
-| `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision      |
-| `locale`                 | Locale                                        | Locale object for internationalization               |
-| `browseWithoutSelecting` | bool                                          | Wait with updating the date until a date is selected |
+| Prop                     | Type                                          | Description                                                          |
+| :----------------------- | :-------------------------------------------- | :------------------------------------------------------------------- |
+| `value`                  | Date \| null                                  | Date value                                                           |
+| `min`                    | Date                                          | The earliest year the user can select                                |
+| `max`                    | Date                                          | The latest year the user can select                                  |
+| `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision                      |
+| `locale`                 | Locale                                        | Locale object for internationalization                               |
+| `browseWithoutSelecting` | bool                                          | Wait with updating the date until a date is selected                 |
+| `weekly`                 | bool                                          | Selection should be a whole week with value set to first day of week |
 
 <h2 id="internationalization">Internationalization</h2>
 

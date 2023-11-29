@@ -91,6 +91,9 @@
 	}
 	$: textUpdate(text, formatTokens)
 
+	/** Selection should be a whole week with value set to first day of week */
+	export let weekly = false
+
 	/** Whether the date popup is visible */
 	export let visible = false
 	/** Close the date popup when a date is selected */
@@ -232,6 +235,7 @@
 				{locale}
 				{browseWithoutSelecting}
 				{timePrecision}
+				{weekly}
 			/>
 		</div>
 	{/if}

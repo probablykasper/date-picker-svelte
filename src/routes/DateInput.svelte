@@ -17,6 +17,7 @@
 	let format: string
 	let dynamicPositioning: boolean = true
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+	let weekly = false
 </script>
 
 <Split>
@@ -36,6 +37,7 @@
 		bind:browseWithoutSelecting
 		bind:dynamicPositioning
 		bind:timePrecision
+		bind:weekly
 	/>
 
 	<svelte:fragment slot="right">
@@ -59,5 +61,6 @@
 			bind:value={timePrecision}
 			values={[null, 'minute', 'second', 'millisecond']}>{timePrecision}</Prop
 		>
+		<Prop label="weekly" bind:value={weekly} />
 	</svelte:fragment>
 </Split>

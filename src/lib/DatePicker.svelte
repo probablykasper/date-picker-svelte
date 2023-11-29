@@ -19,6 +19,9 @@
 	function setValue(d: Date) {
 		if (d.getTime() !== value?.getTime()) {
 			browseDate = clamp(d, min, max)
+			if (weekly) {
+				browseDate = getFirstDayOfWeek(browseDate)
+			}
 			value = cloneDate(browseDate)
 		}
 	}
@@ -35,6 +38,9 @@
 
 	/** Default Date to use */
 	const defaultDate = new Date()
+
+	/** Selection should be a whole week with value set to first day of week */
+	export let weekly = false
 
 	/** Show a time picker with the specified precision */
 	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
@@ -131,6 +137,30 @@
 		const maxDate = new Date(max.getFullYear(), max.getMonth(), max.getDate())
 		return date >= minDate && date <= maxDate
 	}
+	function weekIsInRange(calendarDays: CalendarDay[], weekIndex: number) {
+		const week = calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7)
+		return week.some((calendarDay) => dayIsInRange(calendarDay, min, max))
+	}
+	function weekIsSelected(calendarDays: CalendarDay[], weekIndex: number) {
+		const firstDayOfWeek = calendarDays[weekIndex * 7]
+		return (
+			value &&
+			firstDayOfWeek.year === value.getFullYear() &&
+			firstDayOfWeek.month === value.getMonth() &&
+			firstDayOfWeek.number === value.getDate()
+		)
+	}
+	function getFirstDayOfWeek(dateObject: Date) {
+		const weekStartsOn = iLocale.weekStartsOn || 0
+		const dayOfWeek = dateObject.getDay(),
+			firstDayOfWeek = new Date(dateObject),
+			diff = dayOfWeek >= weekStartsOn ? dayOfWeek - weekStartsOn : 6 - dayOfWeek
+
+		firstDayOfWeek.setDate(dateObject.getDate() - diff)
+		firstDayOfWeek.setHours(0, 0, 0, 0)
+
+		return firstDayOfWeek
+	}
 	function shiftKeydown(e: KeyboardEvent) {
 		if (e.shiftKey && e.key === 'ArrowUp') {
 			setYear(browseDate.getFullYear() - 1)
@@ -199,10 +229,18 @@
 			browseDate.setDate(browseDate.getDate() + 7)
 			setValue(browseDate)
 		} else if (e.key === 'ArrowLeft') {
-			browseDate.setDate(browseDate.getDate() - 1)
+			if (weekly) {
+				browseDate.setDate(browseDate.getDate() - 7)
+			} else {
+				browseDate.setDate(browseDate.getDate() - 1)
+			}
 			setValue(browseDate)
 		} else if (e.key === 'ArrowRight') {
-			browseDate.setDate(browseDate.getDate() + 1)
+			if (weekly) {
+				browseDate.setDate(browseDate.getDate() + 7)
+			} else {
+				browseDate.setDate(browseDate.getDate() + 1)
+			}
 			setValue(browseDate)
 		} else if (e.key === 'Enter') {
 			setValue(browseDate)
@@ -305,7 +343,12 @@
 		</div>
 		<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 		{#each Array(6) as _, weekIndex}
-			<div class="week">
+			<div
+				class="week"
+				class:weekly
+				class:disabled={!weekIsInRange(calendarDays, weekIndex)}
+				class:selected={weekIsSelected(calendarDays, weekIndex)}
+			>
 				{#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<div
@@ -436,6 +479,25 @@
 
 	.week
 		display: flex
+		&.weekly
+			border-radius: 5px
+			outline-offset: -1px
+			&:hover:not(.disabled):not(.selected)
+				outline: 1px solid rgba(#808080, 0.08)
+				background-color: rgba(#808080, 0.08)
+			&.selected
+				outline: 2px solid var(--date-picker-highlight-border, #0269f7)
+				color: var(--date-picker-selected-color, inherit)
+				background: var(--date-picker-selected-background, rgba(2, 105, 247, 0.2))
+			.cell:not(.today)
+				&:hover
+					border: 2px solid transparent
+					background-color: transparent
+			.cell
+				&.selected
+					border: none
+					background-color: transparent
+
 	.cell
 		display: flex
 		align-items: center
