@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.10.1 - 2023 Dec 6
 - Fix view not updating when value changes externally with `browseWithoutSelecting`
 
 ## 2.10.0 - 2023 Nov 15
