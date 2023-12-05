@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix view not updating when value changes externally with `browseWithoutSelecting`
+
 ## 2.10.0 - 2023 Nov 15
 - Add `required` prop (@ChromuSx)
 - Add `id` prop (@portfolioris)

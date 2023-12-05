@@ -59,8 +59,11 @@
 
 	/** The date shown in the popup when none is selected */
 	let browseDate = value ? cloneDate(value) : cloneDate(clamp(defaultDate, min, max))
-	$: if (browseDate.getTime() !== value?.getTime() && !browseWithoutSelecting) {
-		browseDate = value ? cloneDate(value) : browseDate
+	$: setBrowseDate(value)
+	function setBrowseDate(value: Date | null) {
+		if (browseDate.getTime() !== value?.getTime()) {
+			browseDate = value ? cloneDate(value) : browseDate
+		}
 	}
 
 	let years = getYears(min, max)
