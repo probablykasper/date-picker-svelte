@@ -1,13 +1,16 @@
 <script lang="ts">
-	import TimePicker from './TimePicker.svelte'
-	import { getMonthLength, getCalendarDays, type CalendarDay } from './date-utils.js'
-	import { getInnerLocale, type Locale } from './locale.js'
 	import { createEventDispatcher } from 'svelte'
+	import TimePicker from './TimePicker.svelte'
+	import { getCalendarDays, getMonthLength, type CalendarDay } from './date-utils.js'
+	import { getInnerLocale, type Locale } from './locale.js'
 
 	const dispatch = createEventDispatcher<{
 		/** Fires when the user selects a new value by clicking on a date or by pressing enter */
 		select: Date
 	}>()
+
+	let monthDivRef: HTMLDivElement
+	let yearDivRef: HTMLDivElement
 
 	function cloneDate(d: Date) {
 		return new Date(d.getTime())
@@ -235,11 +238,14 @@
 					/></svg
 				>
 			</button>
-			<div class="dropdown month">
+			<div class="dropdown month" tabindex="-1" bind:this={monthDivRef}>
 				<select
 					value={browseMonth}
 					on:keydown={monthKeydown}
-					on:input={(e) => setMonth(parseInt(e.currentTarget.value))}
+					on:input={(e) => {
+						setMonth(parseInt(e.currentTarget.value))
+						monthDivRef && monthDivRef.focus()
+					}}
 				>
 					{#each iLocale.months as monthName, i}
 						<option
@@ -265,10 +271,13 @@
 					><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
 				>
 			</div>
-			<div class="dropdown year">
+			<div class="dropdown year" tabindex="-1" bind:this={yearDivRef}>
 				<select
 					value={browseYear}
-					on:input={(e) => setYear(parseInt(e.currentTarget.value))}
+					on:input={(e) => {
+						setYear(parseInt(e.currentTarget.value))
+						yearDivRef && yearDivRef.focus()
+					}}
 					on:keydown={yearKeydown}
 				>
 					{#each years as v}
