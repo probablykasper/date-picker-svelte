@@ -153,6 +153,7 @@
 			aria-label="Hours"
 			tabindex="0"
 			contenteditable
+			inputmode="numeric"
 			on:keydown={keydown}
 			on:input={input}
 			on:focus={focus}>{('00' + browseDate.getHours()).slice(-2)}</span
@@ -163,6 +164,7 @@
 			aria-label="Minutes"
 			tabindex="0"
 			contenteditable
+			inputmode="numeric"
 			on:keydown={keydown}
 			on:input={input}
 			on:focus={focus}>{('00' + browseDate.getMinutes()).slice(-2)}</span
@@ -174,6 +176,7 @@
 				aria-label="Seconds"
 				tabindex="0"
 				contenteditable
+				inputmode="numeric"
 				on:keydown={keydown}
 				on:input={input}
 				on:focus={focus}>{('00' + browseDate.getSeconds()).slice(-2)}</span
@@ -185,6 +188,7 @@
 					aria-label="Milliseconds"
 					tabindex="0"
 					contenteditable
+					inputmode="numeric"
 					on:keydown={keydown}
 					on:input={input}
 					on:focus={focus}>{('000' + browseDate.getMilliseconds()).slice(-3)}</span
