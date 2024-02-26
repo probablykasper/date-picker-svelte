@@ -23,9 +23,16 @@
 		}
 	}
 
+	function setValueDate(d: Date) {
+		if (d.getTime() !== value?.getTime()) {
+			browseDate = clampDate(d, min, max)
+			value = cloneDate(browseDate)
+		}
+	}
+
 	/** Set the browseDate */
 	function browse(d: Date) {
-		browseDate = clamp(d, min, max)
+		browseDate = clampDate(d, min, max)
 		if (!browseWithoutSelecting && value) {
 			setValue(browseDate)
 		}
@@ -64,9 +71,25 @@
 			return cloneDate(d)
 		}
 	}
+	function clampDate(d: Date, min: Date, max: Date) {
+		const limit = clamp(d, min, max)
+		if (limit.getTime() !== d.getTime()) {
+			d = new Date(
+				limit.getFullYear(),
+				limit.getMonth(),
+				limit.getDate(),
+				d.getHours(),
+				d.getMinutes(),
+				d.getSeconds(),
+				d.getMilliseconds(),
+			)
+			d = clamp(d, min, max)
+		}
+		return d
+	}
 
 	/** The date shown in the popup when none is selected */
-	let browseDate = value ? cloneDate(value) : cloneDate(clamp(defaultDate, min, max))
+	let browseDate = value ? cloneDate(value) : cloneDate(clampDate(defaultDate, min, max))
 	$: setBrowseDate(value)
 	function setBrowseDate(value: Date | null) {
 		if (browseDate.getTime() !== value?.getTime()) {
@@ -132,7 +155,7 @@
 			browseDate.setFullYear(calendarDay.year)
 			browseDate.setMonth(calendarDay.month)
 			browseDate.setDate(calendarDay.number)
-			setValue(browseDate)
+			setValueDate(browseDate)
 			dispatch('select', cloneDate(browseDate))
 		}
 	}
@@ -205,16 +228,16 @@
 			return
 		} else if (e.key === 'ArrowUp') {
 			browseDate.setDate(browseDate.getDate() - 7)
-			setValue(browseDate)
+			setValueDate(browseDate)
 		} else if (e.key === 'ArrowDown') {
 			browseDate.setDate(browseDate.getDate() + 7)
-			setValue(browseDate)
+			setValueDate(browseDate)
 		} else if (e.key === 'ArrowLeft') {
 			browseDate.setDate(browseDate.getDate() - 1)
-			setValue(browseDate)
+			setValueDate(browseDate)
 		} else if (e.key === 'ArrowRight') {
 			browseDate.setDate(browseDate.getDate() + 1)
-			setValue(browseDate)
+			setValueDate(browseDate)
 		} else if (e.key === 'Enter') {
 			setValue(browseDate)
 			dispatch('select', cloneDate(browseDate))
