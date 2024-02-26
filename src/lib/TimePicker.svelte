@@ -20,17 +20,17 @@
 			const delta = e.key === 'ArrowUp' ? 1 : -1
 			set_value(e.currentTarget, value + delta, true)
 			e.preventDefault()
+			select(e.currentTarget)
 		} else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || ':;-,.'.includes(e.key)) {
 			const field_index = fields.indexOf(e.currentTarget)
 			const delta = e.key === 'ArrowLeft' ? -1 : 1
 			const el = fields[field_index + delta]
-			if (field_index >= 0 && el) {
-				el.focus()
-				return
-			}
 			e.preventDefault()
+			if (el) {
+				el.focus()
+				select(el)
+			}
 		}
-		select(e.currentTarget)
 	}
 
 	function get_value(node: HTMLElement) {
