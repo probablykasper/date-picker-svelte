@@ -384,8 +384,12 @@
 			box-sizing: content-box
 	.month
 		flex-grow: 1
+		&:focus 
+			outline: none
 	.year
 		flex-grow: 1
+		&:focus 
+			outline: none
 	svg
 		display: block
 		fill: var(--date-picker-foreground, #000000)
