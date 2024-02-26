@@ -232,7 +232,9 @@
 				{locale}
 				{browseWithoutSelecting}
 				{timePrecision}
-			/>
+			>
+				<slot />
+			</DateTimePicker>
 		</div>
 	{/if}
 </div>

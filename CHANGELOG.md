@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next
+- Add component slot, for adding your own child elements
 - Don't clamp time of day when settig date/month/year
 - Fix time field sometimes showing a value outside `min`/`max`
 - Fix time field losing highlight after pressing left/right arrow keys

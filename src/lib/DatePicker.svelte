@@ -362,6 +362,8 @@
 		{/each}
 
 		<TimePicker {timePrecision} bind:browseDate {setTime} />
+
+		<slot />
 	</div>
 </div>
 
