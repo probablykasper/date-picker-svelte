@@ -215,6 +215,8 @@
 		position: relative
 		z-index: 1
 		padding: 4px 0px
+		&:not(:focus)::selection
+			background-color: transparent
 		&:first-child
 			padding-left: 6px
 		&:last-child

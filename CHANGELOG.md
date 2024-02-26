@@ -5,6 +5,7 @@
 - Fix time field sometimes showing a value outside `min`/`max`
 - Fix time field losing highlight after pressing left/right arrow keys
 - Use numeric keyboard in time field
+- Fix time field not losing highlight
 
 ## 2.10.1 - 2023 Dec 6
 - Fix view not updating when value changes externally with `browseWithoutSelecting`
