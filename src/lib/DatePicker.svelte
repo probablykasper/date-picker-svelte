@@ -31,6 +31,14 @@
 		}
 	}
 
+	function setTime(d: Date) {
+		browseDate = clamp(d, min, max)
+		if (value) {
+			setValue(browseDate)
+		}
+		return browseDate
+	}
+
 	const todayDate = new Date()
 
 	/** Default Date to use */
@@ -330,7 +338,7 @@
 			</div>
 		{/each}
 
-		<TimePicker {timePrecision} {browseDate} {browse} />
+		<TimePicker {timePrecision} bind:browseDate {setTime} />
 	</div>
 </div>
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix time field sometimes showing a value outside `min`/`max`
+
 ## 2.10.1 - 2023 Dec 6
 - Fix view not updating when value changes externally with `browseWithoutSelecting`
 

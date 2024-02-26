@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let browseDate: Date
 	export let timePrecision: 'minute' | 'second' | 'millisecond' | null
-	export let browse: (d: Date) => void
+	export let setTime: (d: Date) => Date
 
 	let fields: (HTMLSpanElement | undefined | null)[] = []
 
@@ -63,8 +63,30 @@
 			return { label, len: 2, max: 59 } as const
 		} else if (label === 'Seconds') {
 			return { label, len: 2, max: 59 } as const
-		} else {
+		} else if (label === 'Milliseconds') {
 			return { label, len: 3, max: 999 } as const
+		} else {
+			throw new Error('Invalid label ' + label)
+		}
+	}
+
+	$: setText(browseDate)
+	function setText(d: Date) {
+		const hours = ('00' + d.getHours()).slice(-2)
+		const minutes = ('00' + d.getMinutes()).slice(-2)
+		const seconds = ('00' + d.getSeconds()).slice(-2)
+		const milliseconds = ('000' + d.getMilliseconds()).slice(-3)
+		if (fields[0] && fields[0].innerText !== hours) {
+			fields[0].innerText = hours
+		}
+		if (fields[1] && fields[1].innerText !== minutes) {
+			fields[1].innerText = minutes
+		}
+		if (fields[2] && fields[2].innerText !== seconds) {
+			fields[2].innerText = seconds
+		}
+		if (fields[3] && fields[3].innerText !== milliseconds) {
+			fields[3].innerText = milliseconds
 		}
 	}
 
@@ -79,16 +101,10 @@
 			browseDate.setSeconds(value)
 		} else if (field.label === 'Milliseconds') {
 			browseDate.setMilliseconds(value)
-		} else {
-			throw new Error('Invalid label ' + field.label)
 		}
 
-		const length = field.label === 'Milliseconds' ? 3 : 2
-		const text_value = ('000' + value).slice(-length)
-		if (text_value !== node.innerText) {
-			node.innerText = text_value
-		}
-		browse(browseDate)
+		browseDate = setTime(browseDate)
+		setText(browseDate)
 	}
 
 	function parse(text: string, length: number) {
