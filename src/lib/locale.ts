@@ -50,7 +50,7 @@ type DateFnsLocale = {
 /** Create a Locale from a date-fns locale */
 export function localeFromDateFnsLocale(dateFnsLocale: DateFnsLocale): InnerLocale {
 	const locale = getLocaleDefaults()
-	if (typeof dateFnsLocale?.options?.weekStartsOn === 'number') {
+	if (typeof dateFnsLocale.options?.weekStartsOn === 'number') {
 		locale.weekStartsOn = dateFnsLocale.options.weekStartsOn
 	}
 	if (dateFnsLocale.localize) {
