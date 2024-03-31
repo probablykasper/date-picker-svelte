@@ -80,10 +80,18 @@ describe('getCalendarDays', () => {
 	})
 })
 
-test('toText', () => {
-	const format = createFormat('yyyy-MM-dd HH:mm:ss')
-	const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
-	expect(text).toEqual('2020-01-01 00:00:00')
+describe('toText', () => {
+	test('basic conversion', () => {
+		const format = createFormat('yyyy-MM-dd HH:mm:ss')
+		const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
+		expect(text).toEqual('2020-01-01 00:00:00')
+	})
+
+	test('conversion to month string', () => {
+		const format = createFormat('dd M yyyy HH:mm:ss')
+		const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
+		expect(text).toEqual('01 Jan 2020 00:00:00')
+	})
 })
 
 describe('Formatting', () => {
@@ -95,6 +103,24 @@ describe('Formatting', () => {
 		expect(result).toEqual({
 			date: new Date(1234, 11, 31, 23, 59, 59, 999),
 			missingPunctuation: '',
+		})
+	})
+
+	it ('works with a short month date', () => {
+		const format = createFormat('dd M yyyy HH:mm:ss')
+		const result = parse('31 Dec 2022 23:59:59', format, baseDate)
+		expect(result).toEqual({
+			date: new Date(2022, 0, 31, 23, 59, 59, 999),
+			missingPunctuation: "",
+		})
+	})
+
+	if ('handles badly formed month name', () => {
+		const format = createFormat('dd M yyyy HH:mm:ss')
+		const result = parse('31 Dex 2022 23:59:59', format, baseDate)
+		expect(result).toEqual({
+			date: null,
+			missingPunctuation: "",
 		})
 	})
 

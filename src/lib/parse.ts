@@ -1,5 +1,7 @@
 import { getMonthLength } from './date-utils.js'
 
+const shortMonthName = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
 type RuleToken = {
 	id: string
 	toString: (d: Date) => string
@@ -54,6 +56,19 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
 		}
 	}
 
+	function parseShortMonth() {
+			const monthName = str.slice(0, 3);
+			str = str.slice(3)
+
+			const n = shortMonthName.indexOf(monthName);
+			if (n>=0) {
+				return n
+			} else {
+				valid = false
+				return null
+			}
+	}
+
 	function parseToken(token: FormatToken) {
 		if (typeof token === 'string') {
 			parseString(token)
@@ -63,7 +78,9 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
 		} else if (token.id === 'yyyy') {
 			const value = parseUint(/^[0-9]{4}/, 0, 9999)
 			if (value !== null) year = value
-		} else if (token.id === 'MM') {
+		} else if (token.id === 'M') {
+			const value = parseShortMonth();
+		}	else if (token.id === 'MM') {
 			const value = parseUint(/^[0-9]{2}/, 1, 12)
 			if (value !== null) month = value - 1
 		} else if (token.id === 'dd') {
@@ -113,6 +130,10 @@ const ruleTokens: RuleToken[] = [
 	{
 		id: 'MM',
 		toString: (d: Date) => twoDigit(d.getMonth() + 1),
+	},
+	{
+		id: 'M',
+		toString: (d: Date) => shortMonthName[d.getMonth()],
 	},
 	{
 		id: 'dd',
