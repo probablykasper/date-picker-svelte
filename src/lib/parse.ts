@@ -78,11 +78,12 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
 		} else if (token.id === 'yyyy') {
 			const value = parseUint(/^[0-9]{4}/, 0, 9999)
 			if (value !== null) year = value
-		} else if (token.id === 'M') {
-			const value = parseShortMonth();
-		}	else if (token.id === 'MM') {
+		} else if (token.id === 'MM') {
 			const value = parseUint(/^[0-9]{2}/, 1, 12)
 			if (value !== null) month = value - 1
+		}else if (token.id === 'MMM') {
+			const value = parseShortMonth();
+			if (value !== null) month = value
 		} else if (token.id === 'dd') {
 			const value = parseUint(/^[0-9]{2}/, 1, 31)
 			if (value !== null) day = value
@@ -128,12 +129,12 @@ const ruleTokens: RuleToken[] = [
 		toString: (d: Date) => d.getFullYear().toString().slice(-2),
 	},
 	{
-		id: 'MM',
-		toString: (d: Date) => twoDigit(d.getMonth() + 1),
+		id: 'MMM',
+		toString: (d: Date) => shortMonthName[d.getMonth()],
 	},
 	{
-		id: 'M',
-		toString: (d: Date) => shortMonthName[d.getMonth()],
+		id: 'MM',
+		toString: (d: Date) => twoDigit(d.getMonth() + 1),
 	},
 	{
 		id: 'dd',
