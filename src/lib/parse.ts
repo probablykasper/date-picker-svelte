@@ -1,6 +1,19 @@
 import { getMonthLength } from './date-utils.js'
 
-const shortMonthName = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const shortMonthName = [
+	'Jan',
+	'Feb',
+	'Mar',
+	'Apr',
+	'May',
+	'Jun',
+	'Jul',
+	'Aug',
+	'Sep',
+	'Oct',
+	'Nov',
+	'Dec',
+]
 
 type RuleToken = {
 	id: string
@@ -57,16 +70,16 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
 	}
 
 	function parseShortMonth() {
-			const monthName = str.slice(0, 3);
-			str = str.slice(3)
+		const monthName = str.slice(0, 3)
+		str = str.slice(3)
 
-			const n = shortMonthName.indexOf(monthName);
-			if (n>=0) {
-				return n
-			} else {
-				valid = false
-				return null
-			}
+		const n = shortMonthName.indexOf(monthName)
+		if (n >= 0) {
+			return n
+		} else {
+			valid = false
+			return null
+		}
 	}
 
 	function parseToken(token: FormatToken) {
@@ -81,8 +94,8 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
 		} else if (token.id === 'MM') {
 			const value = parseUint(/^[0-9]{2}/, 1, 12)
 			if (value !== null) month = value - 1
-		}else if (token.id === 'MMM') {
-			const value = parseShortMonth();
+		} else if (token.id === 'MMM') {
+			const value = parseShortMonth()
 			if (value !== null) month = value
 		} else if (token.id === 'dd') {
 			const value = parseUint(/^[0-9]{2}/, 1, 31)

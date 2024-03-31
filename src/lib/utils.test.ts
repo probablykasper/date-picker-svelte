@@ -106,21 +106,21 @@ describe('Formatting', () => {
 		})
 	})
 
-	it ('works with a short month date', () => {
+	it('works with a short month date', () => {
 		const format = createFormat('dd MMM yyyy HH:mm:ss')
 		const result = parse('31 Dec 2022 23:59:59', format, baseDate)
 		expect(result).toEqual({
 			date: new Date(2022, 11, 31, 23, 59, 59, 999),
-			missingPunctuation: "",
+			missingPunctuation: '',
 		})
 	})
 
-	it ('handles badly formed month name', () => {
+	it('handles badly formed month name', () => {
 		const format = createFormat('dd MMM yyyy HH:mm:ss')
 		const result = parse('31 Dex 2022 23:59:59', format, baseDate)
 		expect(result).toEqual({
 			date: null,
-			missingPunctuation: "",
+			missingPunctuation: '',
 		})
 	})
 
