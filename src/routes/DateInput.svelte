@@ -17,6 +17,10 @@
 	let format: string
 	let dynamicPositioning: boolean = true
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+	let disabledDay1 = new Date()
+	let disabledDay2 = new Date(disabledDay1)
+	disabledDay2.setDate(disabledDay1.getDate() + 1)
+	let disabledDates = [disabledDay1, disabledDay2]
 </script>
 
 <Split>
@@ -36,6 +40,7 @@
 		bind:browseWithoutSelecting
 		bind:dynamicPositioning
 		bind:timePrecision
+		bind:disabledDates
 	/>
 
 	<svelte:fragment slot="right">
@@ -59,5 +64,8 @@
 			bind:value={timePrecision}
 			values={[null, 'minute', 'second', 'millisecond']}>{timePrecision}</Prop
 		>
+		{#each disabledDates as day, index}
+			<Prop label="disabledDate {index + 1}" bind:value={day} />
+		{/each}
 	</svelte:fragment>
 </Split>

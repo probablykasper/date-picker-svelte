@@ -13,11 +13,24 @@
 	let locale = localeFromDateFnsLocale(hy)
 	let browseWithoutSelecting: boolean
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = 'millisecond'
+
+	let disabledDay1 = new Date()
+	let disabledDay2 = new Date(disabledDay1)
+	disabledDay2.setDate(disabledDay1.getDate() + 1)
+	let disabledDates = [disabledDay1, disabledDay2]
 </script>
 
 <Split>
 	<div class="left" slot="left">
-		<DatePicker bind:value bind:min bind:max {locale} bind:browseWithoutSelecting {timePrecision} />
+		<DatePicker
+			bind:value
+			bind:min
+			bind:max
+			{locale}
+			bind:browseWithoutSelecting
+			{timePrecision}
+			bind:disabledDates
+		/>
 	</div>
 	<div slot="right">
 		<h3 class="no-top">Props</h3>
@@ -31,5 +44,8 @@
 			bind:value={timePrecision}
 			values={[null, 'minute', 'second', 'millisecond']}>{timePrecision}</Prop
 		>
+		{#each disabledDates as day, index}
+			<Prop label="disabledDate {index + 1}" bind:value={day} />
+		{/each}
 	</div>
 </Split>
