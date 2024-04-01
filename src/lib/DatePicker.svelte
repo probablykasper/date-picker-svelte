@@ -59,6 +59,9 @@
 	export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
 	/** Disabled dates on calendar*/
 	export let disabledDates: Date[] = []
+	/** Enabled dates. Only days listed in this array will be enabled.
+	 * disabledDates prop will be ignored if this is used */
+	export let enabledDates: Date[] = []
 
 	$: if (value && value > max) {
 		setValue(max)
@@ -173,13 +176,26 @@
 		})
 	}
 
+	function isEnabledDate(calendarDay: CalendarDay) {
+		return enabledDates.find((day) => {
+			return (
+				day.getFullYear() === calendarDay.year &&
+				day.getMonth() === calendarDay.month &&
+				day.getDate() === calendarDay.number
+			)
+		})
+	}
+
 	function dayIsInRange(calendarDay: CalendarDay, min: Date, max: Date) {
 		const date = new Date(calendarDay.year, calendarDay.month, calendarDay.number)
 		const minDate = new Date(min.getFullYear(), min.getMonth(), min.getDate())
 		const maxDate = new Date(max.getFullYear(), max.getMonth(), max.getDate())
 
-		const disabled = isDisabledDate(calendarDay)
-		return date >= minDate && date <= maxDate && !disabled
+		return (
+			date >= minDate &&
+			date <= maxDate &&
+			(enabledDates.length === 0 ? !isDisabledDate(calendarDay) : isEnabledDate(calendarDay))
+		)
 	}
 	function shiftKeydown(e: KeyboardEvent) {
 		if (e.shiftKey && e.key === 'ArrowUp') {
@@ -357,23 +373,25 @@
 		{#each Array(6) as _, weekIndex}
 			<div class="week">
 				{#each calendarDays.slice(weekIndex * 7, weekIndex * 7 + 7) as calendarDay}
-					{#key disabledDates}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<div
-							class="cell"
-							on:click={() => selectDay(calendarDay)}
-							class:disabled={!dayIsInRange(calendarDay, min, max)}
-							class:selected={value &&
-								calendarDay.year === value.getFullYear() &&
-								calendarDay.month === value.getMonth() &&
-								calendarDay.number === value.getDate()}
-							class:today={calendarDay.year === todayDate.getFullYear() &&
-								calendarDay.month === todayDate.getMonth() &&
-								calendarDay.number === todayDate.getDate()}
-							class:other-month={calendarDay.month !== browseMonth}
-						>
-							<span>{calendarDay.number}</span>
-						</div>
+					{#key enabledDates}
+						{#key disabledDates}
+							<!-- svelte-ignore a11y-click-events-have-key-events -->
+							<div
+								class="cell"
+								on:click={() => selectDay(calendarDay)}
+								class:disabled={!dayIsInRange(calendarDay, min, max)}
+								class:selected={value &&
+									calendarDay.year === value.getFullYear() &&
+									calendarDay.month === value.getMonth() &&
+									calendarDay.number === value.getDate()}
+								class:today={calendarDay.year === todayDate.getFullYear() &&
+									calendarDay.month === todayDate.getMonth() &&
+									calendarDay.number === todayDate.getDate()}
+								class:other-month={calendarDay.month !== browseMonth}
+							>
+								<span>{calendarDay.number}</span>
+							</div>
+						{/key}
 					{/key}
 				{/each}
 			</div>
