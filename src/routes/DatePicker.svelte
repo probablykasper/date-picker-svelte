@@ -17,7 +17,7 @@
 	let disabledDay1 = new Date()
 	let disabledDay2 = new Date(disabledDay1)
 	disabledDay2.setDate(disabledDay1.getDate() + 1)
-	let disabledDates = [disabledDay1, disabledDay2].filter(d=>d!== undefined)
+	let disabledDates = [disabledDay1, disabledDay2].filter((d) => d !== undefined)
 
 	let enabledDates = [new Date()]
 	const day2 = new Date()
