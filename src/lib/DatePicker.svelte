@@ -169,9 +169,9 @@
 	function isDisabledDate(calendarDay: CalendarDay) {
 		return disabledDates.find((day) => {
 			return (
-				day.getFullYear() === calendarDay.year &&
-				day.getMonth() === calendarDay.month &&
-				day.getDate() === calendarDay.number
+				day?.getFullYear() === calendarDay.year &&
+				day?.getMonth() === calendarDay.month &&
+				day?.getDate() === calendarDay.number
 			)
 		})
 	}
@@ -179,9 +179,9 @@
 	function isEnabledDate(calendarDay: CalendarDay) {
 		return enabledDates.find((day) => {
 			return (
-				day.getFullYear() === calendarDay.year &&
-				day.getMonth() === calendarDay.month &&
-				day.getDate() === calendarDay.number
+				day?.getFullYear() === calendarDay.year &&
+				day?.getMonth() === calendarDay.month &&
+				day?.getDate() === calendarDay.number
 			)
 		})
 	}
