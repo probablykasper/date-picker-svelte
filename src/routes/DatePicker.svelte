@@ -26,6 +26,12 @@
 	const day3 = new Date(day2)
 	day3.setDate(day3.getDate() + 3)
 	enabledDates.push(day3)
+	const day4 = new Date(day2)
+	day4.setMonth(day4.getMonth() - 1)
+	enabledDates.push(day4)
+	const day5 = new Date(day2)
+	day5.setFullYear(day5.getFullYear() - 1)
+	enabledDates.push(day5)
 </script>
 
 <Split>

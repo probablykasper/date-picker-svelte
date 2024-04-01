@@ -166,6 +166,22 @@
 		}
 	}
 
+	function isDisabledYear(year: number) {
+		return enabledDates?.length > 0
+			? enabledDates.filter((day) => {
+					return day?.getFullYear() === year
+			  }).length === 0
+			: false
+	}
+
+	function isDisabledMonth(date: Date) {
+		return enabledDates?.length > 0
+			? enabledDates.filter((day) => {
+					return day?.getFullYear() === date.getFullYear() && day?.getMonth() === date.getMonth()
+			  }).length === 0
+			: false
+	}
+
 	function isDisabledDate(calendarDay: CalendarDay) {
 		return disabledDates.find((day) => {
 			return (
@@ -307,7 +323,9 @@
 					{#each iLocale.months as monthName, i}
 						<option
 							disabled={new Date(browseYear, i, getMonthLength(browseYear, i), 23, 59, 59, 999) <
-								min || new Date(browseYear, i) > max}
+								min ||
+								new Date(browseYear, i) > max ||
+								isDisabledMonth(new Date(browseYear, i))}
 							value={i}>{monthName}</option
 						>
 					{/each}
@@ -335,7 +353,7 @@
 					on:keydown={yearKeydown}
 				>
 					{#each years as v}
-						<option value={v}>{v}</option>
+						<option disabled={isDisabledYear(v)} value={v}>{v}</option>
 					{/each}
 				</select>
 				<!-- style <select> button without affecting menu popup -->
