@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Disable autocomplete for date input
+
 ## 2.11.0 - 2024 Feb 26
 - Add component slot, for adding your own child elements
 - Don't clamp time of day when settig date/month/year
