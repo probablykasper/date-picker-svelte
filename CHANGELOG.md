@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.12.0 - 2024 Apr 9
 - Disable autocomplete for date input
 
 ## 2.11.0 - 2024 Feb 26
