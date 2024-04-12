@@ -1,35 +1,38 @@
-import { getMonthLength } from './date-utils.js'
-
-const shortMonthName = [
-	'Jan',
-	'Feb',
-	'Mar',
-	'Apr',
-	'May',
-	'Jun',
-	'Jul',
-	'Aug',
-	'Sep',
-	'Oct',
-	'Nov',
-	'Dec',
-]
+import { getMonthLength } from '$lib/date-utils.js'
+import { getInnerLocale } from '$lib/locale'
+import type { InnerLocale } from '$lib/locale'
 
 type RuleToken = {
 	id: string
-	toString: (d: Date) => string
+	toString: (d: Date, l : InnerLocale) => string
 }
 
 export type FormatToken = string | RuleToken
+
+class FormatTokens implements Iterator<FormatToken> {
+	constructor(public formatTokens: FormatToken[], public innerLocale: InnerLocale ) {}
+
+	private pointer = 0;
+
+	public next(): IteratorResult<FormatToken> {
+		if (this.pointer < this.formatTokens.length) {
+			return { done: false, value: this.formatTokens[this.pointer++] }
+		} else {
+			return { done: true, value: null }
+		}
+	}
+}
 
 type ParseResult = {
 	date: Date | null
 	missingPunctuation: string
 }
+
 /** Parse a string according to the supplied format tokens. Returns a date if successful, and the missing punctuation if there is any that should be after the string */
-export function parse(str: string, tokens: FormatToken[], baseDate: Date | null): ParseResult {
+export function parse(str: string, tokens: FormatTokens, baseDate: Date | null): ParseResult {
 	let missingPunctuation = ''
 	let valid = true
+	const shortMonthNames = tokens.innerLocale.shortMonths
 
 	baseDate = baseDate || new Date(2020, 0, 1, 0, 0, 0, 0)
 	let year = baseDate.getFullYear()
@@ -70,11 +73,12 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
 	}
 
 	function parseShortMonth() {
-		const monthName = str.slice(0, 3)
-		str = str.slice(3)
+		const n = shortMonthNames.findIndex( (shortMonth) => {
+			return shortMonth === str.slice(0, shortMonth.length)
+		})
 
-		const n = shortMonthName.indexOf(monthName)
 		if (n >= 0) {
+			str = str.slice(shortMonthNames[n].length)
 			return n
 		} else {
 			valid = false
@@ -112,7 +116,7 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
 		}
 	}
 
-	for (const token of tokens) {
+	for (const token of tokens.formatTokens) {
 		parseToken(token)
 		if (!valid) break
 	}
@@ -143,7 +147,7 @@ const ruleTokens: RuleToken[] = [
 	},
 	{
 		id: 'MMM',
-		toString: (d: Date) => shortMonthName[d.getMonth()],
+		toString: (d: Date, l: InnerLocale) => l.shortMonths[d.getMonth()]
 	},
 	{
 		id: 'MM',
@@ -174,7 +178,7 @@ function parseRule(s: string) {
 	}
 }
 
-export function createFormat(s: string): FormatToken[] {
+export function createFormat(s: string, locale: Locale = {}): FormatTokens {
 	const tokens = []
 	while (s.length > 0) {
 		const token = parseRule(s)
@@ -192,5 +196,7 @@ export function createFormat(s: string): FormatToken[] {
 			s = s.slice(1)
 		}
 	}
-	return tokens
+
+	const innerLocale = getInnerLocale(locale)
+	return new FormatTokens(tokens, innerLocale);
 }

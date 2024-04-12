@@ -1,11 +1,13 @@
 export type Locale = {
 	weekdays?: string[]
 	months?: string[]
+	shortMonths?: string[]
 	weekStartsOn?: number
 }
-type InnerLocale = {
+export type InnerLocale = {
 	weekdays: string[]
 	months: string[]
+	shortMonths: string[]
 	weekStartsOn: number
 }
 export function getLocaleDefaults(): InnerLocale {
@@ -25,15 +27,30 @@ export function getLocaleDefaults(): InnerLocale {
 			'November',
 			'December',
 		],
+		shortMonths: [
+			'Jan',
+			'Feb',
+		  'Mar',
+		  'Apr',
+		  'May',
+		  'Jun',
+		  'Jul',
+		  'Aug',
+		  'Sep',
+		  'Oct',
+		  'Nov',
+		  'Dec',
+    ],
 		weekStartsOn: 1,
 	}
 }
-export function getInnerLocale(locale: Locale = {}): InnerLocale {
+export function getInnerLocale(locale: Locale): InnerLocale {
 	const innerLocale = getLocaleDefaults()
 	if (typeof locale.weekStartsOn === 'number') {
 		innerLocale.weekStartsOn = locale.weekStartsOn
 	}
 	if (locale.months) innerLocale.months = locale.months
+	if (locale.shortMonths) innerLocale.shortMonths = locale.shortMonths
 	if (locale.weekdays) innerLocale.weekdays = locale.weekdays
 	return innerLocale
 }
@@ -61,6 +78,7 @@ export function localeFromDateFnsLocale(dateFnsLocale: DateFnsLocale): InnerLoca
 
 		for (let i = 0; i < 12; i++) {
 			locale.months[i] = dateFnsLocale.localize.month(i, { width: 'wide' })
+			locale.shortMonths[i] = dateFnsLocale.localize.month(i, { width: 'abbreviated' })
 		}
 	}
 	return locale

@@ -56,13 +56,13 @@
 	let classes = ''
 	export { classes as class }
 
-	/** Format string */
-	export let format = 'yyyy-MM-dd HH:mm:ss'
-	let formatTokens = createFormat(format)
-	$: formatTokens = createFormat(format)
-
 	/** Locale object for internationalization */
 	export let locale: Locale = {}
+
+	/** Format string */
+	export let format = 'yyyy-MM-dd HH:mm:ss'
+	let formatTokens = createFormat(format, locale)
+	$: formatTokens = createFormat(format, locale)
 
 	function valueUpdate(value: Date | null, formatTokens: FormatToken[]) {
 		text = toText(value, formatTokens)
