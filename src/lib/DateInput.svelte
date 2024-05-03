@@ -45,7 +45,7 @@
 	/** Set the input element's ID attribute */
 	export let id: string | null = null
 	/** Placeholder text to show when input field is empty */
-	export let placeholder = '2020-12-31 23:00:00'
+	export let placeholder = 'Select...'
 	/** Whether the text is valid */
 	export let valid = true
 	/** Disable the input **/
