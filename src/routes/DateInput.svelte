@@ -2,6 +2,8 @@
 	import DateInput from '$lib/DateInput.svelte'
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
+	import { nb, de } from 'date-fns/locale'
+	import { localeFromDateFnsLocale } from '$lib'
 
 	let id: string
 	let placeholder: string
@@ -17,6 +19,11 @@
 	let format: string
 	let dynamicPositioning: boolean = true
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+	let locale: Locale = {}
+
+	let locales = { 'default': {}, 'nb': nb, 'de': de }
+	let localeString = 'default'
+	$: locale = locales[localeString]
 </script>
 
 <Split>
@@ -36,6 +43,7 @@
 		bind:browseWithoutSelecting
 		bind:dynamicPositioning
 		bind:timePrecision
+		bind:locale
 	/>
 
 	<svelte:fragment slot="right">
@@ -53,7 +61,7 @@
 		<Prop label="closeOnSelection" bind:value={closeOnSelection} />
 		<Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
 		<Prop label="dynamicPositioning" bind:value={dynamicPositioning} />
-		<Prop label="locale">Default</Prop>
+		<Prop label="localeString" values={Object.keys(locales)} bind:value={localeString} />
 		<Prop
 			label="timePrecision"
 			bind:value={timePrecision}
