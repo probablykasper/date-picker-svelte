@@ -96,7 +96,7 @@ describe('toText', () => {
 	test('conversion to month string using non-en locale', () => {
 		const format = createFormat('dd MMM yyyy HH:mm:ss', nb)
 		const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
-		expect(text).toEqual('01 Jan 2020 00:00:00')
+		expect(text).toEqual('01 jan. 2020 00:00:00')
 	})
 })
 

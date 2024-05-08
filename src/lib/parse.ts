@@ -1,5 +1,5 @@
 import { getMonthLength } from '$lib/date-utils.js'
-import { getInnerLocale } from '$lib/locale'
+import { getInnerLocale, localeFromDateFnsLocale } from '$lib/locale'
 import type { InnerLocale } from '$lib/locale'
 
 type RuleToken = {
@@ -9,17 +9,26 @@ type RuleToken = {
 
 export type FormatToken = string | RuleToken
 
-class FormatTokens implements Iterator<FormatToken> {
+export class FormatTokens implements Iterable<FormatToken> {
 	constructor(public formatTokens: FormatToken[], public innerLocale: InnerLocale ) {}
 
-	private pointer = 0;
+	[Symbol.iterator]() {
+		// Use a new index for each iterator. This makes multiple
+		// iterations over the iterable safe for non-trivial cases,
+		// such as use of break or nested looping over the same iterable.
+		let index = 0;
 
-	public next(): IteratorResult<FormatToken> {
-		if (this.pointer < this.formatTokens.length) {
-			return { done: false, value: this.formatTokens[this.pointer++] }
-		} else {
-			return { done: true, value: null }
-		}
+		return {
+			// Note: using an arrow function allows `this` to point to the
+			// one of `[@@iterator]()` instead of `next()`
+			next: (): IteratorResult<FormatToken> => {
+				if (index < this.formatTokens.length) {
+					return {value: this.formatTokens[index++], done: false};
+				} else {
+					return {value: undefined, done: true};
+				}
+			},
+		};
 	}
 }
 
@@ -197,6 +206,6 @@ export function createFormat(s: string, locale: Locale = {}): FormatTokens {
 		}
 	}
 
-	const innerLocale = getInnerLocale(locale)
+	const innerLocale = localeFromDateFnsLocale(locale)
 	return new FormatTokens(tokens, innerLocale);
 }

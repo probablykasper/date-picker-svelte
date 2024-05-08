@@ -16,7 +16,7 @@ export function toText(date: Date | null, formatTokens: FormatTokens): string {
 			if (typeof token === 'string') {
 				text += token
 			} else {
-				text += token.toString(date, formatTokens.locale)
+				text += token.toString(date, formatTokens.innerLocale)
 			}
 		}
 	}
