@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.13.0 - 2024 May 23
 - Add MMM format to allow short month names (@peterbell215)
 - Add date-fns 3 support
 
