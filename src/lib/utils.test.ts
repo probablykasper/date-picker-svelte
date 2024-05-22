@@ -191,18 +191,18 @@ describe('locale', () => {
 			'desember',
 		],
 		shortMonths: [
-			"jan.",
-			"feb.",
-			"mars",
-			"apr.",
-			"mai",
-			"juni",
-			"juli",
-			"aug.",
-			"sep.",
-			"okt.",
-			"nov.",
-			"des.",
+			'jan.',
+			'feb.',
+			'mars',
+			'apr.',
+			'mai',
+			'juni',
+			'juli',
+			'aug.',
+			'sep.',
+			'okt.',
+			'nov.',
+			'des.',
 		],
 		weekStartsOn: 1,
 	}
@@ -211,7 +211,7 @@ describe('locale', () => {
 		const locale = getInnerLocale({
 			months: nbLocale.months,
 			shortMonths: nbLocale.shortMonths,
-			weekStartsOn: 4
+			weekStartsOn: 4,
 		})
 
 		expect(locale).toEqual({

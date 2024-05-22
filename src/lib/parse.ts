@@ -4,31 +4,34 @@ import type { InnerLocale } from '$lib/locale'
 
 type RuleToken = {
 	id: string
-	toString: (d: Date, l : InnerLocale) => string
+	toString: (d: Date, l: InnerLocale) => string
 }
 
 export type FormatToken = string | RuleToken
 
 export class FormatTokens implements Iterable<FormatToken> {
-	constructor(public formatTokens: FormatToken[], public innerLocale: InnerLocale ) {}
+	constructor(
+		public formatTokens: FormatToken[],
+		public innerLocale: InnerLocale,
+	) {}
 
 	[Symbol.iterator]() {
 		// Use a new index for each iterator. This makes multiple
 		// iterations over the iterable safe for non-trivial cases,
 		// such as use of break or nested looping over the same iterable.
-		let index = 0;
+		let index = 0
 
 		return {
 			// Note: using an arrow function allows `this` to point to the
 			// one of `[@@iterator]()` instead of `next()`
 			next: (): IteratorResult<FormatToken> => {
 				if (index < this.formatTokens.length) {
-					return {value: this.formatTokens[index++], done: false};
+					return { value: this.formatTokens[index++], done: false }
 				} else {
-					return {value: undefined, done: true};
+					return { value: undefined, done: true }
 				}
 			},
-		};
+		}
 	}
 }
 
@@ -82,7 +85,7 @@ export function parse(str: string, tokens: FormatTokens, baseDate: Date | null):
 	}
 
 	function parseShortMonth() {
-		const n = shortMonthNames.findIndex( (shortMonth) => {
+		const n = shortMonthNames.findIndex((shortMonth) => {
 			return shortMonth === str.slice(0, shortMonth.length)
 		})
 
@@ -156,7 +159,7 @@ const ruleTokens: RuleToken[] = [
 	},
 	{
 		id: 'MMM',
-		toString: (d: Date, l: InnerLocale) => l.shortMonths[d.getMonth()]
+		toString: (d: Date, l: InnerLocale) => l.shortMonths[d.getMonth()],
 	},
 	{
 		id: 'MM',
@@ -207,5 +210,5 @@ export function createFormat(s: string, locale: Locale = {}): FormatTokens {
 	}
 
 	const innerLocale = localeFromDateFnsLocale(locale)
-	return new FormatTokens(tokens, innerLocale);
+	return new FormatTokens(tokens, innerLocale)
 }
