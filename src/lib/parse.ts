@@ -59,7 +59,7 @@ export function parse(str: string, tokens: FormatToken[], baseDate: Date | null)
 
 	function parseEnum(allowedValues: string[]) {
 		const n = allowedValues.findIndex((allowedValue) => {
-			return allowedValue === str.slice(0, allowedValue.length)
+			return allowedValue.toLowerCase() === str.slice(0, allowedValue.length).toLowerCase()
 		})
 
 		if (n >= 0) {
