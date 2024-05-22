@@ -19,7 +19,7 @@
 		{ key: 'de (date-fns)', value: localeFromDateFnsLocale(de) },
 		{ key: 'hy (date-fns)', value: localeFromDateFnsLocale(hy) },
 	]
-	let locale = locales[0]
+	let locale = locales[3]
 	let browseWithoutSelecting: boolean
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = 'millisecond'
 </script>
