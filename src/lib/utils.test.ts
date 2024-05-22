@@ -94,7 +94,7 @@ describe('toText', () => {
 	})
 
 	test('conversion to month string using non-en locale', () => {
-		const format = createFormat('dd MMM yyyy HH:mm:ss', nb)
+		const format = createFormat('dd MMM yyyy HH:mm:ss', localeFromDateFnsLocale(nb))
 		const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
 		expect(text).toEqual('01 jan. 2020 00:00:00')
 	})
@@ -122,7 +122,7 @@ describe('parse()', () => {
 	})
 
 	it('works with a short month date in non-En locale', () => {
-		const format = createFormat('dd MMM yyyy HH:mm:ss', nb)
+		const format = createFormat('dd MMM yyyy HH:mm:ss', localeFromDateFnsLocale(nb))
 		const result = parse('31 des. 2022 23:59:59', format, baseDate)
 		expect(result).toEqual({
 			date: new Date(2022, 11, 31, 23, 59, 59, 999),

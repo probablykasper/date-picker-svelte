@@ -1,6 +1,6 @@
 import { getMonthLength } from '$lib/date-utils.js'
-import { getInnerLocale, localeFromDateFnsLocale } from '$lib/locale'
-import type { InnerLocale } from '$lib/locale'
+import { localeFromDateFnsLocale } from '$lib/locale'
+import type { Locale, InnerLocale } from '$lib/locale'
 
 type RuleToken = {
 	id: string
