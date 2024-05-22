@@ -1,4 +1,4 @@
-import type { FormatTokens } from './parse.js'
+import type { FormatToken } from './parse.js'
 
 export function isLeapYear(year: number): boolean {
 	return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
@@ -9,14 +9,14 @@ export function getMonthLength(year: number, month: number): number {
 	return monthLengths[month]
 }
 
-export function toText(date: Date | null, formatTokens: FormatTokens): string {
+export function toText(date: Date | null, formatTokens: FormatToken[]): string {
 	let text = ''
 	if (date) {
-		for (const token of formatTokens.formatTokens) {
+		for (const token of formatTokens) {
 			if (typeof token === 'string') {
 				text += token
 			} else {
-				text += token.toString(date, formatTokens.innerLocale)
+				text += token.toString(date)
 			}
 		}
 	}
