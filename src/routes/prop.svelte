@@ -23,7 +23,7 @@
 		<select bind:value>
 			{#each values as value}
 				{#if value && typeof value === 'object' && 'key' in value && 'value' in value}
-					<option value={value.value}>{String(value.key)}</option>
+					<option {value}>{String(value.key)}</option>
 				{:else}
 					<option {value}>{String(value)}</option>
 				{/if}
