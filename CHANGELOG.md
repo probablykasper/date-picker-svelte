@@ -3,6 +3,9 @@
 ## Next
 - Add MMM format to allow short month names (@peterbell215)
 
+## 2.12.0 - 2024 Apr 9
+- Disable autocomplete for date input (@gianarb)
+
 ## 2.11.0 - 2024 Feb 26
 - Add component slot, for adding your own child elements
 - Don't clamp time of day when settig date/month/year

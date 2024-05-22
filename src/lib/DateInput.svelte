@@ -190,6 +190,7 @@
 		bind:this={InputElement}
 		class:invalid={!valid}
 		type="text"
+		autocomplete="off"
 		value={text}
 		{id}
 		{placeholder}
