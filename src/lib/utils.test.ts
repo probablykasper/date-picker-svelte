@@ -80,13 +80,27 @@ describe('getCalendarDays', () => {
 	})
 })
 
-test('toText', () => {
-	const format = createFormat('yyyy-MM-dd HH:mm:ss')
-	const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
-	expect(text).toEqual('2020-01-01 00:00:00')
+describe('toText', () => {
+	test('basic conversion', () => {
+		const format = createFormat('yyyy-MM-dd HH:mm:ss')
+		const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
+		expect(text).toEqual('2020-01-01 00:00:00')
+	})
+
+	test('conversion to month string', () => {
+		const format = createFormat('dd MMM yyyy HH:mm:ss')
+		const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
+		expect(text).toEqual('01 Jan 2020 00:00:00')
+	})
+
+	test('conversion to month string using non-en locale', () => {
+		const format = createFormat('dd MMM yyyy HH:mm:ss', localeFromDateFnsLocale(nb))
+		const text = toText(new Date(2020, 0, 1, 0, 0, 0, 0), format)
+		expect(text).toEqual('01 jan. 2020 00:00:00')
+	})
 })
 
-describe('Formatting', () => {
+describe('parse()', () => {
 	const baseDate = new Date(1234, 0, 1, 0, 0, 0, 999)
 	const format = createFormat('yyyy--MM-dd HH:mm:ss')
 
@@ -94,6 +108,33 @@ describe('Formatting', () => {
 		const result = parse('1234--12-31 23:59:59', format, baseDate)
 		expect(result).toEqual({
 			date: new Date(1234, 11, 31, 23, 59, 59, 999),
+			missingPunctuation: '',
+		})
+	})
+
+	it('works with a short month date', () => {
+		const format = createFormat('dd MMM yyyy HH:mm:ss')
+		const result = parse('31 Dec 2022 23:59:59', format, baseDate)
+		expect(result).toEqual({
+			date: new Date(2022, 11, 31, 23, 59, 59, 999),
+			missingPunctuation: '',
+		})
+	})
+
+	it('works with a short month date in non-En locale', () => {
+		const format = createFormat('dd MMM yyyy HH:mm:ss', localeFromDateFnsLocale(nb))
+		const result = parse('31 des. 2022 23:59:59', format, baseDate)
+		expect(result).toEqual({
+			date: new Date(2022, 11, 31, 23, 59, 59, 999),
+			missingPunctuation: '',
+		})
+	})
+
+	it('handles badly formed month name', () => {
+		const format = createFormat('dd MMM yyyy HH:mm:ss')
+		const result = parse('31 Dex 2022 23:59:59', format, baseDate)
+		expect(result).toEqual({
+			date: null,
 			missingPunctuation: '',
 		})
 	})
@@ -149,18 +190,34 @@ describe('locale', () => {
 			'november',
 			'desember',
 		],
+		shortMonths: [
+			'jan.',
+			'feb.',
+			'mars',
+			'apr.',
+			'mai',
+			'juni',
+			'juli',
+			'aug.',
+			'sep.',
+			'okt.',
+			'nov.',
+			'des.',
+		],
 		weekStartsOn: 1,
 	}
 
 	test('getInnerLocale', () => {
 		const locale = getInnerLocale({
 			months: nbLocale.months,
+			shortMonths: nbLocale.shortMonths,
 			weekStartsOn: 4,
 		})
 
 		expect(locale).toEqual({
 			weekdays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
 			months: nbLocale.months,
+			shortMonths: nbLocale.shortMonths,
 			weekStartsOn: 4,
 		})
 	})

@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Add MMM format to allow short month names (@peterbell215)
+
 ## 2.12.0 - 2024 Apr 9
 - Disable autocomplete for date input (@gianarb)
 

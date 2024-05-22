@@ -2,6 +2,13 @@
 	import DateInput from '$lib/DateInput.svelte'
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
+	import { localeFromDateFnsLocale } from '$lib'
+
+	// had to import it this way to avoid errors
+	// in `npm run build:site` or `npm run check`:
+	import hy from 'date-fns/locale/hy/index'
+	import de from 'date-fns/locale/de/index'
+	import nb from 'date-fns/locale/nb/index'
 
 	let id: string
 	let placeholder: string
@@ -17,6 +24,13 @@
 	let format: string
 	let dynamicPositioning: boolean = true
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+	let locales = [
+		{ key: 'default', value: localeFromDateFnsLocale({}) },
+		{ key: 'nb (date-fns)', value: localeFromDateFnsLocale(nb) },
+		{ key: 'de (date-fns)', value: localeFromDateFnsLocale(de) },
+		{ key: 'hy (date-fns)', value: localeFromDateFnsLocale(hy) },
+	]
+	let locale = locales[0]
 </script>
 
 <Split>
@@ -36,6 +50,7 @@
 		bind:browseWithoutSelecting
 		bind:dynamicPositioning
 		bind:timePrecision
+		bind:locale={locale.value}
 	/>
 
 	<svelte:fragment slot="right">
@@ -53,7 +68,7 @@
 		<Prop label="closeOnSelection" bind:value={closeOnSelection} />
 		<Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
 		<Prop label="dynamicPositioning" bind:value={dynamicPositioning} />
-		<Prop label="locale">Default</Prop>
+		<Prop label="locale" bind:value={locale} values={locales} />
 		<Prop
 			label="timePrecision"
 			bind:value={timePrecision}
