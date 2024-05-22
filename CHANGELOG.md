@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Add MMM format to allow short month names (@peterbell215)
+
 ## 2.11.0 - 2024 Feb 26
 - Add component slot, for adding your own child elements
 - Don't clamp time of day when settig date/month/year
