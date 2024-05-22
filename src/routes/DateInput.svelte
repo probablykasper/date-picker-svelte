@@ -19,11 +19,12 @@
 	let format: string
 	let dynamicPositioning: boolean = true
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
-	let locale: Locale = {}
-
-	let locales = { 'default': {}, 'nb': nb, 'de': de }
-	let localeString = 'default'
-	$: locale = locales[localeString]
+	let locales = [
+		{ key: 'default', value: localeFromDateFnsLocale({}) },
+		{ key: 'nb', value: localeFromDateFnsLocale(nb) },
+		{ key: 'de', value: localeFromDateFnsLocale(de) },
+	]
+	let locale = locales[0]
 </script>
 
 <Split>
@@ -43,7 +44,7 @@
 		bind:browseWithoutSelecting
 		bind:dynamicPositioning
 		bind:timePrecision
-		bind:locale
+		bind:locale={locale.value}
 	/>
 
 	<svelte:fragment slot="right">
@@ -61,7 +62,7 @@
 		<Prop label="closeOnSelection" bind:value={closeOnSelection} />
 		<Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
 		<Prop label="dynamicPositioning" bind:value={dynamicPositioning} />
-		<Prop label="localeString" values={Object.keys(locales)} bind:value={localeString} />
+		<Prop label="locale" bind:value={locale} values={locales} />
 		<Prop
 			label="timePrecision"
 			bind:value={timePrecision}

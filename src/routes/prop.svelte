@@ -22,7 +22,11 @@
 	{#if values}
 		<select bind:value>
 			{#each values as value}
-				<option {value}>{String(value)}</option>
+				{#if value && typeof value === 'object' && 'key' in value && 'value' in value}
+					<option value={value.value}>{String(value.key)}</option>
+				{:else}
+					<option {value}>{String(value)}</option>
+				{/if}
 			{/each}
 		</select>
 	{:else if typeof value === 'string'}
