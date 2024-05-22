@@ -1,6 +1,5 @@
 import { getMonthLength } from '$lib/date-utils.js'
-import { localeFromDateFnsLocale } from '$lib/locale'
-import type { Locale, InnerLocale } from '$lib/locale'
+import { type Locale, type InnerLocale, getInnerLocale } from '$lib/locale'
 
 type RuleToken = {
 	id: string
@@ -209,6 +208,6 @@ export function createFormat(s: string, locale: Locale = {}): FormatTokens {
 		}
 	}
 
-	const innerLocale = localeFromDateFnsLocale(locale)
+	const innerLocale = getInnerLocale(locale)
 	return new FormatTokens(tokens, innerLocale)
 }
