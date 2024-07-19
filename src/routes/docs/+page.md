@@ -125,3 +125,12 @@ Dark theme example:
 	--date-picker-foreground: #f7f7f7;
 }
 ```
+
+<h2 id="css-variables">Custom CSS</h2>
+
+You can always use [:global()](https://svelte.dev/docs/svelte-components#style) to add your own styles. Example:
+```css
+:global(.date-time-picker) {
+	width: 16rem;
+}
+```
