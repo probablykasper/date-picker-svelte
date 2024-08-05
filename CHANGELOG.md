@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.14.0 - 2024 Aug 5
+- Add `name` prop (@saimonx)
+
 ## 2.13.0 - 2024 May 23
 - Add MMM format to allow short month names (@peterbell215)
 - Add date-fns 3 support

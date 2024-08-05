@@ -37,6 +37,7 @@ The component will not assign a date value until a specific date is selected in 
 | `placeholder`            | string                                        | Placeholder used when date value is null                      |
 | `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision               |
 | `id`                     | string \| null                                | Set the input element's ID attribute                          |
+| `name`                   | string \| null                                | Set the input element's NAME attribute                          |
 | `valid`                  | bool                                          | Whether the text is valid                                     |
 | `format`                 | string                                        | Format string                                                 |
 | `visible`                | bool                                          | Whether the date popup is visible                             |

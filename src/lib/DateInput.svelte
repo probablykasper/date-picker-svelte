@@ -44,6 +44,8 @@
 	export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
 	/** Set the input element's ID attribute */
 	export let id: string | null = null
+	/** Set the input element's NAME attribute */
+	export let name: string | null = null
 	/** Placeholder text to show when input field is empty */
 	export let placeholder = '2020-12-31 23:00:00'
 	/** Whether the text is valid */
@@ -193,6 +195,7 @@
 		autocomplete="off"
 		value={text}
 		{id}
+		{name}
 		{placeholder}
 		{disabled}
 		{required}
