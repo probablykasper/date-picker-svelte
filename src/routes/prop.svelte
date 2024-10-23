@@ -41,7 +41,7 @@
 			dynamicPositioning
 		/>
 	{:else if value instanceof Object}
-		<textarea bind:value={jsonValue} on:input={jsonInput} />
+		<textarea bind:value={jsonValue} on:input={jsonInput}></textarea>
 	{:else}
 		<div>
 			<slot />

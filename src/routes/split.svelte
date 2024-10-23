@@ -1,13 +1,13 @@
 <div class="row">
 	<section class="left">
-		<div class="spacer" />
+		<div class="spacer"></div>
 		<slot name="left" />
-		<div class="spacer" />
+		<div class="spacer"></div>
 	</section>
 	<section class="right">
-		<div class="spacer" />
+		<div class="spacer"></div>
 		<slot name="right" />
-		<div class="spacer" />
+		<div class="spacer"></div>
 	</section>
 </div>
 

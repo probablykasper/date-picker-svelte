@@ -255,6 +255,7 @@
 		<div class="top">
 			<button
 				type="button"
+				aria-label="Previous month"
 				class="page-button"
 				tabindex="-1"
 				on:click={() => setMonth(browseDate.getMonth() - 1)}
@@ -318,6 +319,7 @@
 			</div>
 			<button
 				type="button"
+				aria-label="Next month"
 				class="page-button"
 				tabindex="-1"
 				on:click={() => setMonth(browseDate.getMonth() + 1)}
