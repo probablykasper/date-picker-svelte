@@ -51,11 +51,11 @@
 
 <style lang="sass">
 	.prop
+		padding: 5px 0px
+		align-items: center
 		display: block
 		@media (min-width: 450px)
 			display: flex
-		padding: 5px 0px
-		align-items: center
 	.label
 		width: 195px
 		flex-shrink: 0

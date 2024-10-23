@@ -157,10 +157,10 @@
 	.page
 		max-width: 800px
 		margin: auto
+		padding-bottom: 100px
 		padding: 0px 15px
 		@media (min-width: 400px)
 			padding: 0px 30px
-		padding-bottom: 100px
 	.header-title
 		color: var(--primary)
 		font-weight: 500
