@@ -27,7 +27,8 @@
 					innerStore.set(null)
 					value = date
 				} else if (date.getTime() !== $innerStore?.getTime()) {
-					innerStore.set(date)
+					const copyDate = new Date(date);
+					innerStore.set(copyDate)
 					value = date
 				}
 			},
