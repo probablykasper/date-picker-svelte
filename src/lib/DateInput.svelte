@@ -16,6 +16,10 @@
 	/** Default date to display in picker before value is assigned */
 	const defaultDate = new Date()
 
+	function cloneDate(d: Date) {
+		return new Date(d.getTime())
+	}
+
 	// inner date value store for preventing value updates (and also
 	// text updates as a result) when date is unchanged
 	const innerStore = writable(null as Date | null)
@@ -27,7 +31,7 @@
 					innerStore.set(null)
 					value = date
 				} else if (date.getTime() !== $innerStore?.getTime()) {
-					innerStore.set(date)
+					innerStore.set(cloneDate(date))
 					value = date
 				}
 			},

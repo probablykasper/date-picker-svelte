@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Fix value bindings not always causing updates (@asdfghjkkl11)
+
 ## 2.14.0 - 2024 Oct 23
 - Add Svelte 5 support
 
