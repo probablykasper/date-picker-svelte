@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.14.1 - 2024 Nov 6
 - Fix value bindings not always causing updates (@asdfghjkkl11)
 
 ## 2.14.0 - 2024 Oct 23
