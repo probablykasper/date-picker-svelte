@@ -105,7 +105,7 @@ describe('parse()', () => {
 	const format = createFormat('yyyy--MM-dd HH:mm:ss')
 
 	it('works with a basic date', () => {
-		const result = parse('1234--12-31 23:59:59', format, baseDate)
+		const result = parse('1234--12-31 23:59:59', format, baseDate, null)
 		expect(result).toEqual({
 			date: new Date(1234, 11, 31, 23, 59, 59, 999),
 			missingPunctuation: '',
@@ -114,7 +114,7 @@ describe('parse()', () => {
 
 	it('works with a short month date', () => {
 		const format = createFormat('dd MMM yyyy HH:mm:ss')
-		const result = parse('31 Dec 2022 23:59:59', format, baseDate)
+		const result = parse('31 Dec 2022 23:59:59', format, baseDate, null)
 		expect(result).toEqual({
 			date: new Date(2022, 11, 31, 23, 59, 59, 999),
 			missingPunctuation: '',
@@ -123,7 +123,7 @@ describe('parse()', () => {
 
 	it('works with a short month date in non-En locale', () => {
 		const format = createFormat('dd MMM yyyy HH:mm:ss', localeFromDateFnsLocale(nb))
-		const result = parse('31 des. 2022 23:59:59', format, baseDate)
+		const result = parse('31 des. 2022 23:59:59', format, baseDate, null)
 		expect(result).toEqual({
 			date: new Date(2022, 11, 31, 23, 59, 59, 999),
 			missingPunctuation: '',
@@ -132,7 +132,7 @@ describe('parse()', () => {
 
 	it('handles badly formed month name', () => {
 		const format = createFormat('dd MMM yyyy HH:mm:ss')
-		const result = parse('31 Dex 2022 23:59:59', format, baseDate)
+		const result = parse('31 Dex 2022 23:59:59', format, baseDate, null)
 		expect(result).toEqual({
 			date: null,
 			missingPunctuation: '',
@@ -140,7 +140,7 @@ describe('parse()', () => {
 	})
 
 	it('handles missing punctuation', () => {
-		const result = parse('2345', format, baseDate)
+		const result = parse('2345', format, baseDate, null)
 		expect(result).toEqual({
 			date: null,
 			missingPunctuation: '--',
@@ -148,7 +148,7 @@ describe('parse()', () => {
 	})
 
 	it('fails with too high minute', () => {
-		const result = parse('1234--12-31 23:99:59', format, baseDate)
+		const result = parse('1234--12-31 23:99:59', format, baseDate, null)
 		expect(result).toEqual({
 			date: null,
 			missingPunctuation: '',
@@ -157,7 +157,7 @@ describe('parse()', () => {
 
 	it('fails with too high date-of-month', () => {
 		// separate test because some months have less than 31 days
-		const dayOfMonthOverflow = parse('1234--02-31 23:59:59', format, baseDate)
+		const dayOfMonthOverflow = parse('1234--02-31 23:59:59', format, baseDate, null)
 		expect(dayOfMonthOverflow).toEqual({
 			date: null,
 			missingPunctuation: '',
@@ -165,7 +165,7 @@ describe('parse()', () => {
 	})
 
 	it('fails when the second has a non-numeric character', () => {
-		const noNumber = parse('1234--02-31 23:59:5d', format, baseDate)
+		const noNumber = parse('1234--02-31 23:59:5d', format, baseDate, null)
 		expect(noNumber).toEqual({
 			date: null,
 			missingPunctuation: '',
