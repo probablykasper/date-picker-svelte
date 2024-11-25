@@ -77,7 +77,7 @@
 
 	function textUpdate(text: string, formatTokens: FormatToken[]) {
 		if (text.length) {
-			const result = parse(text, formatTokens, $store)
+			const result = parse(text, formatTokens, $store, min)
 			if (result.date !== null) {
 				valid = true
 				store.set(result.date)
@@ -210,7 +210,7 @@
 				e.currentTarget.value === text + e.data
 			) {
 				// check for missing punctuation, and add if there is any
-				let result = parse(text, formatTokens, $store)
+				let result = parse(text, formatTokens, $store, min)
 				if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
 					text = text + result.missingPunctuation + e.data
 					return
