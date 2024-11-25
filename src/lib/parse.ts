@@ -15,11 +15,16 @@ type ParseResult = {
 }
 
 /** Parse a string according to the supplied format tokens. Returns a date if successful, and the missing punctuation if there is any that should be after the string */
-export function parse(str: string, tokens: FormatToken[], baseDate: Date | null): ParseResult {
+export function parse(
+	str: string,
+	tokens: FormatToken[],
+	baseDate: Date | null,
+	min: Date | null,
+): ParseResult {
 	let missingPunctuation = ''
 	let valid = true
 
-	baseDate = baseDate || new Date(2020, 0, 1, 0, 0, 0, 0)
+	baseDate = min || baseDate || new Date(new Date().getFullYear(), 0, 1, 0, 0, 0, 0)
 	let year = baseDate.getFullYear()
 	let month = baseDate.getMonth()
 	let day = baseDate.getDate()

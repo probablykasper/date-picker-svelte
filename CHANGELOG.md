@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.14.2 - 2024 Nov 25
+- Fix parse value when format has not year (MM-dd) (@jorgejaime)
+
 ## 2.14.1 - 2024 Nov 6
 - Fix value bindings not always causing updates (@asdfghjkkl11)
 
