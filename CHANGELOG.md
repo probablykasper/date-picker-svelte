@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.15.0 - 2024 Nov 27
 - Default to the current year instead of 2020 for year-less date inputs
 
 ## 2.14.1 - 2024 Nov 6
