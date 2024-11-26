@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Default to the current year instead of 2020 for year-less date inputs
+
 ## 2.14.1 - 2024 Nov 6
 - Fix value bindings not always causing updates (@asdfghjkkl11)
 
