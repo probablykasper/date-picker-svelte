@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.15.1 - 2024 Nov 29
+- Remove leftover logging statements
+
 ## 2.15.0 - 2024 Nov 27
 - Default to the current year instead of 2020 for year-less date inputs
 
