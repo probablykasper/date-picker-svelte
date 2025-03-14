@@ -3,8 +3,17 @@
 	export let timePrecision: 'minute' | 'second' | 'millisecond' | null
 	export let setTime: (d: Date) => Date
 
-	let fields: (HTMLSpanElement | undefined | null)[] = []
+	// Set time precision by setting unused time components to 0
+	// Only needs to run once on load, as time values wont change after
+	if (timePrecision === null) {
+		browseDate.setHours(0, 0, 0, 0)
+	} else if (timePrecision === 'minute') {
+		browseDate.setSeconds(0, 0)
+	} else if (timePrecision === 'second') {
+		browseDate.setMilliseconds(0)
+	}
 
+	let fields: (HTMLSpanElement | undefined | null)[] = []
 	function select(node: Node) {
 		const selection = window.getSelection()
 		const range = document.createRange()
