@@ -103,7 +103,6 @@
 			browseDate.setMilliseconds(value)
 		}
 
-		browseDate = setTime(browseDate)
 		setText(browseDate)
 	}
 
@@ -134,6 +133,19 @@
 	function focus(e: FocusEvent & SpanEvent) {
 		select(e.currentTarget)
 	}
+
+	function focusout(e: FocusEvent) {
+		const node = e.currentTarget as HTMLElement
+		// Use setTimeout with 0ms delay to check focus after the browser has processed the current event cycle
+		// This is necessary because when switching focus between elements, the document.activeElement updates
+		// after the focusout event fires
+		setTimeout(() => {
+			if (!node.contains(document.activeElement)) {
+				browseDate = setTime(browseDate)
+				setText(browseDate)
+			}
+		}, 0)
+	}
 </script>
 
 {#if timePrecision}
@@ -146,6 +158,7 @@
 				e.preventDefault() // prevent text dragging
 			}
 		}}
+		on:focusout={focusout}
 	>
 		<span
 			bind:this={fields[0]}
