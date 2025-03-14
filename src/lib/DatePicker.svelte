@@ -57,6 +57,11 @@
 	export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
 	/** The latest year the user can select */
 	export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+	/** Disabled dates on calendar*/
+	export let disabledDates: Date[] | null = null
+	/** Enabled dates. Only days listed in this array will be enabled.
+	 * disabledDates prop will be ignored if this is used */
+	export let enabledDates: Date[] | null = null
 	$: if (value && value > max) {
 		setValue(max)
 	} else if (value && value < min) {
@@ -148,7 +153,7 @@
 	$: calendarDays = getCalendarDays(browseDate, iLocale.weekStartsOn)
 
 	function selectDay(calendarDay: CalendarDay) {
-		if (dayIsInRange(calendarDay, min, max)) {
+		if (dayIsInRange(calendarDay, min, max) && !isDateDisabled(calendarDay)) {
 			browseDate.setFullYear(0)
 			browseDate.setMonth(0)
 			browseDate.setDate(1)
@@ -164,6 +169,29 @@
 		const minDate = new Date(min.getFullYear(), min.getMonth(), min.getDate())
 		const maxDate = new Date(max.getFullYear(), max.getMonth(), max.getDate())
 		return date >= minDate && date <= maxDate
+	}
+	function isDateDisabled(date: CalendarDay) {
+		const isSameDate = (d1: CalendarDay, d2: Date) =>
+			d1.year === d2.getFullYear() && d1.month === d2.getMonth() && d1.number === d2.getDate()
+
+		if (enabledDates) {
+			for (const enabledDate of enabledDates) {
+				if (isSameDate(date, enabledDate)) {
+					return false
+				}
+			}
+			return true
+		}
+
+		if (disabledDates) {
+			for (const disabledDate of disabledDates) {
+				if (isSameDate(date, disabledDate)) {
+					return true
+				}
+			}
+		}
+
+		return false
 	}
 	function shiftKeydown(e: KeyboardEvent) {
 		if (e.shiftKey && e.key === 'ArrowUp') {
@@ -347,7 +375,7 @@
 					<div
 						class="cell"
 						on:click={() => selectDay(calendarDay)}
-						class:disabled={!dayIsInRange(calendarDay, min, max)}
+						class:disabled={!dayIsInRange(calendarDay, min, max) || isDateDisabled(calendarDay)}
 						class:selected={value &&
 							calendarDay.year === value.getFullYear() &&
 							calendarDay.month === value.getMonth() &&
