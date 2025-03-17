@@ -29,25 +29,24 @@ The component will not assign a date value until a specific date is selected in 
 
 <h3 id="props">Props</h3>
 
-| Prop                     | Type                                          | Description                                                   |
-| :----------------------- | :-------------------------------------------- | :------------------------------------------------------------ |
-| `value`                  | Date \| null                                  | Date value                                                    |
-| `min`                    | Date                                          | The earliest value the user can select                        |
-| `max`                    | Date                                          | The latest value the user can select                          |
-| `placeholder`            | string                                        | Placeholder used when date value is null                      |
-| `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision               |
-| `id`                     | string \| null                                | Set the input element's ID attribute                          |
-| `valid`                  | bool                                          | Whether the text is valid                                     |
-| `format`                 | string                                        | Format string                                                 |
-| `visible`                | bool                                          | Whether the date popup is visible                             |
-| `disabled`               | bool                                          | Disable the input                                             |
-| `required`               | bool                                          | Require a value to submit form                                |
-| `closeOnSelection`       | bool                                          | Close the date popup when a date is selected                  |
-| `browseWithoutSelecting` | bool                                          | Wait with updating the date until a value is selected         |
-| `dynamicPositioning`     | bool                                          | Dynamically postions the date popup to best fit on the screen |
-| `locale`                 | Locale                                        | Locale object for internationalization                        |
-| `disabledDates`          | Date[] \| null                                | Disable specific dates on the calendar                        |
-| `enabledDates`           | Date[] \| null                                | Enable particular dates. disabledDates is ignored.            |
+| Prop                     | Type                                             | Description                                                   |
+| :----------------------- | :----------------------------------------------- | :------------------------------------------------------------ |
+| `value`                  | Date \| null                                     | Date value                                                    |
+| `min`                    | Date                                             | The earliest value the user can select                        |
+| `max`                    | Date                                             | The latest value the user can select                          |
+| `placeholder`            | string                                           | Placeholder used when date value is null                      |
+| `timePrecision`          | "minute" \| "second" \| "millisecond" \| null    | Show a time picker with the specified precision               |
+| `id`                     | string \| null                                   | Set the input element's ID attribute                          |
+| `valid`                  | bool                                             | Whether the text is valid                                     |
+| `format`                 | string                                           | Format string                                                 |
+| `visible`                | bool                                             | Whether the date popup is visible                             |
+| `disabled`               | bool                                             | Disable the input                                             |
+| `required`               | bool                                             | Require a value to submit form                                |
+| `closeOnSelection`       | bool                                             | Close the date popup when a date is selected                  |
+| `browseWithoutSelecting` | bool                                             | Wait with updating the date until a value is selected         |
+| `dynamicPositioning`     | bool                                             | Dynamically postions the date popup to best fit on the screen |
+| `locale`                 | Locale                                           | Locale object for internationalization                        |
+| `isDisabledDate`         | ((datToCheck: CalanderDate) = > boolean) \| null | Disable specific dates on the calendar                        |
 
 <h4 id="format-string">Format string</h4>
 
@@ -70,16 +69,38 @@ The component will not assign a date value until a specific date is selected in 
 
 <h3 id="datepicker-props">Props</h3>
 
-| Prop                     | Type                                          | Description                                          |
-| :----------------------- | :-------------------------------------------- | :--------------------------------------------------- |
-| `value`                  | Date \| null                                  | Date value                                           |
-| `min`                    | Date                                          | The earliest year the user can select                |
-| `max`                    | Date                                          | The latest year the user can select                  |
-| `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision      |
-| `locale`                 | Locale                                        | Locale object for internationalization               |
-| `browseWithoutSelecting` | bool                                          | Wait with updating the date until a date is selected |
-| `disabledDates`          | Date[] \| null                                | Disable specific dates on the calendar               |
-| `enabledDates`           | Date[] \| null                                | Enable particular dates. disabledDates is ignored.   |
+| Prop                     | Type                                              | Description                                          |
+| :----------------------- | :------------------------------------------------ | :--------------------------------------------------- |
+| `value`                  | Date \| null                                      | Date value                                           |
+| `min`                    | Date                                              | The earliest year the user can select                |
+| `max`                    | Date                                              | The latest year the user can select                  |
+| `timePrecision`          | "minute" \| "second" \| "millisecond" \| null     | Show a time picker with the specified precision      |
+| `locale`                 | Locale                                            | Locale object for internationalization               |
+| `browseWithoutSelecting` | bool                                              | Wait with updating the date until a date is selected |
+| `isDisabledDate`         | ((dateToCheck: CalanderDate) = > boolean) \| null | Disable specific dates on the calendar               |
+
+<h2 id="prop-usage">Prop Usage</h2>
+
+<h3 id="isDisabledDate">isDisabledDate</h3>
+
+The `isDisabledDate` prop allows you to disable specific dates in the `DatePicker` or `DateInput` component.
+
+To use it, define a function that takes a `Date` as input and returns `true` if the date should be disabled, or false otherwise. Then, pass this function to the component as `isDisabledDate`.
+
+```js
+<script>
+	import { DatePicker, isSameDate } from 'date-picker-svelte'
+	let disabledDate = new Date()
+	function isDisabledDate(date) {
+		if (isSameDate(date, disabledDate)) {
+			return true
+		}
+		return false
+	}
+</script>
+
+<DatePicker {isDisabledDate} />
+```
 
 <h2 id="internationalization">Internationalization</h2>
 

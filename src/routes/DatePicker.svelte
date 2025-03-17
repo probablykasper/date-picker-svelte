@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isSameDate } from '$lib/date-utils'
 	import DatePicker from '$lib/DatePicker.svelte'
 	import { localeFromDateFnsLocale } from '$lib/locale.js'
 	import Prop from './prop.svelte'
@@ -21,6 +22,15 @@
 	let disabledDay2 = new Date(disabledDay1)
 	disabledDay2.setDate(disabledDay1.getDate() + 1)
 	let disabledDates = [disabledDay1, disabledDay2].filter((d) => d !== undefined)
+
+	function isDisabledDate(date: Date): boolean {
+		for (const disabledDate of disabledDates) {
+			if (isSameDate(date, disabledDate)) {
+				return true
+			}
+		}
+		return false
+	}
 </script>
 
 <Split>
@@ -32,7 +42,7 @@
 			locale={locale.value}
 			bind:browseWithoutSelecting
 			{timePrecision}
-			bind:disabledDates
+			{isDisabledDate}
 		/>
 	</div>
 	<div slot="right">
