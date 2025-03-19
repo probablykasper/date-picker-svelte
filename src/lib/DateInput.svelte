@@ -105,7 +105,7 @@
 	/** Show a time picker with the specified precision */
 	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
 
-	/** Function to disable dates on calendar*/
+	/** Disallow specific dates */
 	export let isDisabledDate: ((dateToCheck: Date) => boolean) | null = null
 
 	// handle on:focusout for parent element. If the parent element loses

@@ -57,7 +57,7 @@
 	export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
 	/** The latest year the user can select */
 	export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
-	/** Function to disable dates on calendar*/
+	/** Disallow specific dates */
 	export let isDisabledDate: ((dateToCheck: Date) => boolean) | null = null
 
 	function handleDisabledDate(dateToCheck: CalendarDay) {

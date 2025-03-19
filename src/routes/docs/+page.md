@@ -46,7 +46,7 @@ The component will not assign a date value until a specific date is selected in 
 | `browseWithoutSelecting` | bool                                          | Wait with updating the date until a value is selected         |
 | `dynamicPositioning`     | bool                                          | Dynamically postions the date popup to best fit on the screen |
 | `locale`                 | Locale                                        | Locale object for internationalization                        |
-| `isDisabledDate`         | ((datToCheck: Date) = > boolean) \| null      | Disable specific dates on the calendar                        |
+| `isDisabledDate`         | ((dateToCheck: Date) => boolean) \| null      | Disallow specific dates                                       |
 
 <h4 id="format-string">Format string</h4>
 
@@ -77,7 +77,7 @@ The component will not assign a date value until a specific date is selected in 
 | `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision      |
 | `locale`                 | Locale                                        | Locale object for internationalization               |
 | `browseWithoutSelecting` | bool                                          | Wait with updating the date until a date is selected |
-| `isDisabledDate`         | ((dateToCheck: Date) = > boolean) \| null     | Disable specific dates on the calendar               |
+| `isDisabledDate`         | ((dateToCheck: Date) => boolean) \| null      | Disallow specific dates                              |
 
 <h2 id="prop-usage">Prop Usage</h2>
 
