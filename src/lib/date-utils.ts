@@ -74,3 +74,17 @@ export function getCalendarDays(value: Date, weekStartsOn: number): CalendarDay[
 
 	return days
 }
+
+export function applyTimePrecision(
+	date: Date,
+	timePrecision: 'minute' | 'second' | 'millisecond' | null,
+) {
+	// Set unused time components to 0
+	if (timePrecision === null) {
+		date.setHours(0, 0, 0, 0)
+	} else if (timePrecision === 'minute') {
+		date.setSeconds(0, 0)
+	} else if (timePrecision === 'second') {
+		date.setMilliseconds(0)
+	}
+}

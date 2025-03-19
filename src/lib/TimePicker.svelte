@@ -4,7 +4,6 @@
 	export let setTime: (d: Date) => Date
 
 	let fields: (HTMLSpanElement | undefined | null)[] = []
-
 	function select(node: Node) {
 		const selection = window.getSelection()
 		const range = document.createRange()
