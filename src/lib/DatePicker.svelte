@@ -60,11 +60,8 @@
 	/** Disallow specific dates */
 	export let isDisabledDate: ((dateToCheck: Date) => boolean) | null = null
 
-	function handleDisabledDate(dateToCheck: CalendarDay) {
-		if (typeof isDisabledDate === 'function') {
-			return isDisabledDate(new Date(dateToCheck.year, dateToCheck.month, dateToCheck.number))
-		}
-		return false
+	function handleDisabledDate(date: CalendarDay) {
+		return isDisabledDate?.(new Date(date.year, date.month, date.number))
 	}
 
 	$: if (value && value > max) {
