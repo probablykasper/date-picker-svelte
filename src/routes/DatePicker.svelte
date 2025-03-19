@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { isSameDate } from '$lib/date-utils'
 	import DatePicker from '$lib/DatePicker.svelte'
 	import { localeFromDateFnsLocale } from '$lib/locale.js'
 	import Prop from './prop.svelte'

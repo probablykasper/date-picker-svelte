@@ -4,7 +4,6 @@
 	import Split from './split.svelte'
 	import { localeFromDateFnsLocale } from '$lib'
 	import { hy, de, nb } from 'date-fns/locale'
-	import { isSameDate } from '$lib/date-utils'
 
 	let id: string
 	let placeholder: string
