@@ -7,9 +7,9 @@
 <button
 	on:click={() => {
 		value = new Date(2025, 3, 19, 11, 11, 11, 111)
-	}}>Set to precise value</button
+	}}>chhh</button
 >
 
 <DatePicker timePrecision="minute" bind:value />
 
-{value?.toISOString() ?? 'null'}
+{value?.toISOString()}
