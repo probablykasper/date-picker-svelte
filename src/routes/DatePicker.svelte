@@ -18,19 +18,6 @@
 	let locale = locales[3]
 	let browseWithoutSelecting: boolean
 	let timePrecision: 'minute' | 'second' | 'millisecond' | null = 'millisecond'
-	let disabledDay1 = new Date()
-	let disabledDay2 = new Date(disabledDay1)
-	disabledDay2.setDate(disabledDay1.getDate() + 1)
-	let disabledDates = [disabledDay1, disabledDay2].filter((d) => d !== undefined)
-
-	function isDisabledDate(date: Date): boolean {
-		for (const disabledDate of disabledDates) {
-			if (isSameDate(date, disabledDate)) {
-				return true
-			}
-		}
-		return false
-	}
 </script>
 
 <Split>
@@ -42,7 +29,6 @@
 			locale={locale.value}
 			bind:browseWithoutSelecting
 			{timePrecision}
-			{isDisabledDate}
 		/>
 	</div>
 	<div slot="right">
@@ -57,8 +43,5 @@
 			bind:value={timePrecision}
 			values={[null, 'minute', 'second', 'millisecond']}>{timePrecision}</Prop
 		>
-		{#each disabledDates as day, index}
-			<Prop label="disabledDate {index + 1}" bind:value={day} />
-		{/each}
 	</div>
 </Split>
