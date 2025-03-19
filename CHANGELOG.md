@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.15.2 - 2025 Mar 19
+- Fix `timePrecision` not always setting unused values to 0 (@stinger567)
+
 ## 2.15.1 - 2024 Nov 29
 - Remove leftover logging statements
 

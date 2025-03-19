@@ -1,6 +1,11 @@
 <script lang="ts">
 	import TimePicker from './TimePicker.svelte'
-	import { getMonthLength, getCalendarDays, type CalendarDay } from './date-utils.js'
+	import {
+		getMonthLength,
+		getCalendarDays,
+		type CalendarDay,
+		applyTimePrecision,
+	} from './date-utils.js'
 	import { getInnerLocale, type Locale } from './locale.js'
 	import { createEventDispatcher } from 'svelte'
 
@@ -19,6 +24,7 @@
 	function setValue(d: Date) {
 		if (d.getTime() !== value?.getTime()) {
 			browseDate = clamp(d, min, max)
+			applyTimePrecision(browseDate, timePrecision)
 			value = cloneDate(browseDate)
 		}
 	}
@@ -101,6 +107,8 @@
 	function setBrowseDate(value: Date | null) {
 		if (browseDate.getTime() !== value?.getTime()) {
 			browseDate = value ? cloneDate(value) : browseDate
+			// If the value was updated externally, this fixes the time precision
+			applyTimePrecision(browseDate, timePrecision)
 		}
 	}
 
