@@ -79,27 +79,20 @@ The component will not assign a date value until a specific date is selected in 
 | `browseWithoutSelecting` | bool                                          | Wait with updating the date until a date is selected |
 | `isDisabledDate`         | ((dateToCheck: Date) => boolean) \| null      | Disallow specific dates                              |
 
-<h2 id="prop-usage">Prop Usage</h2>
+<h2 id="isDisabledDate">Date disabling example</h2>
 
-<h3 id="isDisabledDate">isDisabledDate</h3>
+Example usage of the `isDisabledDate` prop:
 
-The `isDisabledDate` prop allows you to disable specific dates in the `DatePicker` or `DateInput` component.
-
-To use it, define a function that takes a `Date` as input and returns `true` if the date should be disabled, or false otherwise. Then, pass this function to the component as `isDisabledDate`.
-
-```js
+```svelte
 <script>
-	import { DatePicker, isSameDate } from 'date-picker-svelte'
-	let disabledDate = new Date()
-	function isDisabledDate(date) {
-		if (isSameDate(date, disabledDate)) {
-			return true
-		}
-		return false
-	}
+	const disabledDate = new Date()
 </script>
 
-<DatePicker {isDisabledDate} />
+<DatePicker 
+	isDisabledDate={(dateToCheck) => {
+		return isSameDate(dateToCheck, disabledDate)
+	}}
+/>
 ```
 
 <h2 id="internationalization">Internationalization</h2>
@@ -116,7 +109,7 @@ Object to support internationalization. Properties (all are optional):
 
 If you use [date-fns](https://date-fns.org/), you can create a Locale object by passing a date-fns locale to this function:
 
-```js
+```svelte
 <script>
 	import { DatePicker, localeFromDateFnsLocale } from 'date-picker-svelte'
 	import { hy } from 'date-fns/locale'
