@@ -88,7 +88,7 @@ Example usage of the `isDisabledDate` prop:
 	const disabledDate = new Date()
 </script>
 
-<DatePicker 
+<DatePicker
 	isDisabledDate={(dateToCheck) => {
 		return isSameDate(dateToCheck, disabledDate)
 	}}
