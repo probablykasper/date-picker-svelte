@@ -23,15 +23,8 @@
 
 	function setValue(d: Date) {
 		if (d.getTime() !== value?.getTime()) {
-			browseDate = clamp(d, min, max)
+			browseDate = getValidDate(value, d)
 			applyTimePrecision(browseDate, timePrecision)
-			value = cloneDate(browseDate)
-		}
-	}
-
-	function setValueDate(d: Date) {
-		if (d.getTime() !== value?.getTime()) {
-			browseDate = clampDate(d, min, max)
 			value = cloneDate(browseDate)
 		}
 	}
@@ -70,10 +63,53 @@
 		return isDisabledDate?.(new Date(date.year, date.month, date.number))
 	}
 
+	function getValidDate(oldDate: Date | null, newDate: Date | null): Date {
+		if (!newDate) return new Date(defaultDate)
+		if (!oldDate) oldDate = new Date(defaultDate)
+
+		// This creates a new Date object to avoid mutating the original newDate
+		// this leads to unintended side effects elsewhere in the program if this is not done
+		let adjustedDate = new Date(newDate)
+
+		if (oldDate > newDate) {
+			adjustDate(adjustedDate, -1)
+			if (adjustedDate < min) {
+				adjustedDate = new Date(min)
+				// Adjusts the date one more time if the min date is disabled, to ensure a valid, enabled date is selected
+				adjustDate(adjustedDate, 1)
+			}
+			return adjustedDate
+		}
+		if (adjustedDate > oldDate) {
+			adjustDate(adjustedDate, 1)
+			if (adjustedDate > max) {
+				adjustedDate = new Date(max)
+				// Adjusts the date one more time if the max date is disabled, to ensure a valid, enabled date is selected
+				adjustDate(adjustedDate, -1)
+			}
+			return adjustedDate
+		}
+		return adjustedDate
+
+		function adjustDate(date: Date, increment: number) {
+			// Prevents accidental infinite loops
+			const MAXLOOPS = 36525 // ~100 years, should be large enough
+			let loopCount: number = 0
+
+			while (isDisabledDate?.(date) && date >= min && date <= max && loopCount <= MAXLOOPS) {
+				date.setDate(date.getDate() + increment)
+				loopCount++
+			}
+		}
+	}
+
+	// Prevents a invalid date from being typed into the Dateinput text box
 	$: if (value && value > max) {
-		setValue(max)
+		setValue(getValidDate(value, max))
 	} else if (value && value < min) {
-		setValue(min)
+		setValue(getValidDate(value, min))
+	} else if (value && isDisabledDate?.(value)) {
+		setValue(getValidDate(defaultDate, value))
 	}
 	function clamp(d: Date, min: Date, max: Date) {
 		if (d > max) {
@@ -170,7 +206,7 @@
 			browseDate.setFullYear(calendarDay.year)
 			browseDate.setMonth(calendarDay.month)
 			browseDate.setDate(calendarDay.number)
-			setValueDate(browseDate)
+			setValue(browseDate)
 			dispatch('select', cloneDate(browseDate))
 		}
 	}
@@ -243,16 +279,16 @@
 			return
 		} else if (e.key === 'ArrowUp') {
 			browseDate.setDate(browseDate.getDate() - 7)
-			setValueDate(browseDate)
+			setValue(browseDate)
 		} else if (e.key === 'ArrowDown') {
 			browseDate.setDate(browseDate.getDate() + 7)
-			setValueDate(browseDate)
+			setValue(browseDate)
 		} else if (e.key === 'ArrowLeft') {
 			browseDate.setDate(browseDate.getDate() - 1)
-			setValueDate(browseDate)
+			setValue(browseDate)
 		} else if (e.key === 'ArrowRight') {
 			browseDate.setDate(browseDate.getDate() + 1)
-			setValueDate(browseDate)
+			setValue(browseDate)
 		} else if (e.key === 'Enter') {
 			setValue(browseDate)
 			dispatch('select', cloneDate(browseDate))
