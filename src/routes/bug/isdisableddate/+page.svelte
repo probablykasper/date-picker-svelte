@@ -13,5 +13,10 @@
 		return date.getDate() === 15 || date.getDate() === 16
 	}}
 />
+<button
+	on:click={() => {
+		value = new Date(2024, 10, 15)
+	}}>Set to 2024-10-15</button
+>
 
 {value}
