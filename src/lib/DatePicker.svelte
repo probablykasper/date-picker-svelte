@@ -108,7 +108,7 @@
 	} else if (value && value < min) {
 		setValue(toValidDate(value, min))
 	} else if (value && isDisabledDate?.(value)) {
-		setValue(toValidDate(brosweDate, value))
+		setValue(toValidDate(browseDate, value))
 	}
 	function clamp(d: Date, min: Date, max: Date) {
 		if (d > max) {
