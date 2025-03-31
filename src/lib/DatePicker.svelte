@@ -23,7 +23,7 @@
 
 	function setValue(d: Date) {
 		if (d.getTime() !== value?.getTime()) {
-			browseDate = toValidDate(value, d)
+			browseDate = toValidDate(value ?? browseDate, d)
 			applyTimePrecision(browseDate, timePrecision)
 			value = cloneDate(browseDate)
 		}
@@ -63,10 +63,7 @@
 		return isDisabledDate?.(new Date(date.year, date.month, date.number))
 	}
 
-	function toValidDate(oldDate: Date | null, newDate: Date | null): Date {
-		if (!newDate) return cloneDate(defaultDate)
-		if (!oldDate) oldDate = cloneDate(defaultDate)
-
+	function toValidDate(oldDate: Date, newDate: Date): Date {
 		// Don't mutate the original newDate to avoid unintended side effects
 		let adjustedDate = cloneDate(newDate)
 
