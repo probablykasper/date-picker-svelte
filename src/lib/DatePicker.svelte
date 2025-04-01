@@ -8,22 +8,19 @@
 	} from './date-utils.js'
 	import { getInnerLocale, type Locale } from './locale.js'
 	import { createEventDispatcher } from 'svelte'
+	import { cloneDate, toValidDate } from './date-utils.js'
 
 	const dispatch = createEventDispatcher<{
 		/** Fires when the user selects a new value by clicking on a date or by pressing enter */
 		select: Date
 	}>()
 
-	function cloneDate(d: Date) {
-		return new Date(d)
-	}
-
 	/** Date value. It's `null` if no date is selected */
 	export let value: Date | null = null
 
 	function setValue(d: Date) {
 		if (d.getTime() !== value?.getTime()) {
-			browseDate = toValidDate(value ?? browseDate, d)
+			browseDate = toValidDate(value ?? browseDate, d, min, max, isDisabledDate)
 			applyTimePrecision(browseDate, timePrecision)
 			value = cloneDate(browseDate)
 		}
@@ -63,49 +60,13 @@
 		return isDisabledDate?.(new Date(date.year, date.month, date.number))
 	}
 
-	function toValidDate(oldDate: Date, newDate: Date): Date {
-		// Don't mutate the original newDate to avoid unintended side effects
-		let adjustedDate = cloneDate(newDate)
-
-		if (oldDate > newDate) {
-			adjustDate(adjustedDate, -1)
-			if (adjustedDate < min) {
-				adjustedDate = cloneDate(min)
-				// Adjusts the date one more time if the min date is disabled, to ensure a valid, enabled date is selected
-				adjustDate(adjustedDate, 1)
-			}
-			return adjustedDate
-		}
-		if (adjustedDate > oldDate) {
-			adjustDate(adjustedDate, 1)
-			if (adjustedDate > max) {
-				adjustedDate = cloneDate(max)
-				// Adjusts the date one more time if the max date is disabled, to ensure a valid, enabled date is selected
-				adjustDate(adjustedDate, -1)
-			}
-			return adjustedDate
-		}
-		return adjustedDate
-	}
-
-	function adjustDate(date: Date, increment: number) {
-		// Prevents accidental infinite loops
-		const MAXLOOPS = 36525 // ~100 years, should be large enough
-		let loopCount = 0
-
-		while (isDisabledDate?.(date) && date >= min && date <= max && loopCount <= MAXLOOPS) {
-			date.setDate(date.getDate() + increment)
-			loopCount++
-		}
-	}
-
 	// Prevents a invalid date from being typed into the Dateinput text box
 	$: if (value && value > max) {
-		setValue(toValidDate(value, max))
+		setValue(toValidDate(value, max, min, max, isDisabledDate))
 	} else if (value && value < min) {
-		setValue(toValidDate(value, min))
+		setValue(toValidDate(value, min, min, max, isDisabledDate))
 	} else if (value && isDisabledDate?.(value)) {
-		setValue(toValidDate(browseDate, value))
+		setValue(toValidDate(browseDate, value, min, max, isDisabledDate))
 	}
 	function clamp(d: Date, min: Date, max: Date) {
 		if (d > max) {

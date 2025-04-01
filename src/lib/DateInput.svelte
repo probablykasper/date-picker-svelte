@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 	import { cubicInOut } from 'svelte/easing'
-	import { toText } from './date-utils.js'
+	import { toText, cloneDate, toValidDate } from './date-utils.js'
 	import type { Locale } from './locale.js'
 	import { parse, createFormat, type FormatToken } from './parse.js'
 	import DateTimePicker from './DatePicker.svelte'
@@ -15,10 +15,6 @@
 
 	/** Default date to display in picker before value is assigned */
 	const defaultDate = new Date()
-
-	function cloneDate(d: Date) {
-		return new Date(d.getTime())
-	}
 
 	// inner date value store for preventing value updates (and also
 	// text updates as a result) when date is unchanged
@@ -40,7 +36,7 @@
 
 	/** Date value */
 	export let value: Date | null = null
-	$: store.set(value)
+	$: store.set(value ? toValidDate(defaultDate, value, min, max, isDisabledDate) : value)
 
 	/** The earliest value the user can select */
 	export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)

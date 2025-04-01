@@ -96,3 +96,55 @@ export function applyTimePrecision(
 		date.setMilliseconds(0)
 	}
 }
+
+export function cloneDate(d: Date) {
+	return new Date(d)
+}
+
+export function toValidDate(
+	oldDate: Date,
+	newDate: Date,
+	minDate: Date,
+	maxDate: Date,
+	isDisabledDate: ((date: Date) => boolean) | null,
+): Date {
+	// Don't mutate the original newDate to avoid unintended side effects
+	let adjustedDate = cloneDate(newDate)
+
+	if (oldDate > newDate) {
+		adjustDate(adjustedDate, -1, minDate, maxDate, isDisabledDate)
+		if (adjustedDate < minDate) {
+			adjustedDate = cloneDate(minDate)
+			// Adjusts the date one more time if the min date is disabled, to ensure a valid, enabled date is selected
+			adjustDate(adjustedDate, 1, minDate, maxDate, isDisabledDate)
+		}
+		return adjustedDate
+	}
+	if (adjustedDate >= oldDate) {
+		adjustDate(adjustedDate, 1, minDate, maxDate, isDisabledDate)
+		if (adjustedDate > maxDate) {
+			adjustedDate = cloneDate(maxDate)
+			// Adjusts the date one more time if the max date is disabled, to ensure a valid, enabled date is selected
+			adjustDate(adjustedDate, -1, minDate, maxDate, isDisabledDate)
+		}
+		return adjustedDate
+	}
+	return adjustedDate
+}
+
+function adjustDate(
+	date: Date,
+	increment: number,
+	minDate: Date,
+	maxDate: Date,
+	isDisabledDate: ((date: Date) => boolean) | null,
+) {
+	// Prevents accidental infinite loops
+	const MAXLOOPS = 36525 // ~100 years, should be large enough
+	let loopCount = 0
+
+	while (isDisabledDate?.(date) && date >= minDate && date <= maxDate && loopCount <= MAXLOOPS) {
+		date.setDate(date.getDate() + increment)
+		loopCount++
+	}
+}
