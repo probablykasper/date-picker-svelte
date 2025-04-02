@@ -7,16 +7,16 @@
 	<title>Demo • Date Picker Svelte</title>
 </svelte:head>
 
-<!-- svelte-ignore a11y_consider_explicit_label -->
+<!-- svelte-ignore a11y-missing-content -->
 <a id="Demo"></a>
 <h1>Demo</h1>
 
-<!-- svelte-ignore a11y_consider_explicit_label -->
+<!-- svelte-ignore a11y-missing-content -->
 <a id="DateInput"></a>
 <h2>DateInput</h2>
 <DateInput />
 
-<!-- svelte-ignore a11y_consider_explicit_label -->
+<!-- svelte-ignore a11y-missing-content -->
 <a id="DatePicker"></a>
 <h2>DatePicker</h2>
 <DatePicker />
