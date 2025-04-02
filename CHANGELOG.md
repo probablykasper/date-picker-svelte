@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.16.0 - 2025 Apr 2
 - Add `isDisabledDate` prop (@stinger567)
 
 ## 2.15.2 - 2025 Mar 19
