@@ -5,6 +5,8 @@
 		getCalendarDays,
 		type CalendarDay,
 		applyTimePrecision,
+		clampDate,
+		clamp,
 	} from './date-utils.js'
 	import { getInnerLocale, type Locale } from './locale.js'
 	import { createEventDispatcher } from 'svelte'
@@ -67,31 +69,6 @@
 		setValue(toValidDate(value, min, min, max, isDisabledDate))
 	} else if (value && isDisabledDate?.(value)) {
 		setValue(toValidDate(browseDate, value, min, max, isDisabledDate))
-	}
-	function clamp(d: Date, min: Date, max: Date) {
-		if (d > max) {
-			return cloneDate(max)
-		} else if (d < min) {
-			return cloneDate(min)
-		} else {
-			return cloneDate(d)
-		}
-	}
-	function clampDate(d: Date, min: Date, max: Date) {
-		const limit = clamp(d, min, max)
-		if (limit.getTime() !== d.getTime()) {
-			d = new Date(
-				limit.getFullYear(),
-				limit.getMonth(),
-				limit.getDate(),
-				d.getHours(),
-				d.getMinutes(),
-				d.getSeconds(),
-				d.getMilliseconds(),
-			)
-			d = clamp(d, min, max)
-		}
-		return d
 	}
 
 	/** The date shown in the popup when none is selected */

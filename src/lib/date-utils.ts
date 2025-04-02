@@ -114,20 +114,21 @@ export function toValidDate(
 	if (oldDate > newDate) {
 		adjustDate(adjustedDate, -1, minDate, maxDate, isDisabledDate)
 		if (adjustedDate < minDate) {
-			adjustedDate = cloneDate(minDate)
+			adjustedDate = clampDate(adjustedDate, minDate, maxDate)
 			// Adjusts the date one more time if the min date is disabled, to ensure a valid, enabled date is selected
 			adjustDate(adjustedDate, 1, minDate, maxDate, isDisabledDate)
 		}
-		return adjustedDate
-	}
-	if (adjustedDate >= oldDate) {
+	} else if (adjustedDate >= oldDate) {
 		adjustDate(adjustedDate, 1, minDate, maxDate, isDisabledDate)
 		if (adjustedDate > maxDate) {
-			adjustedDate = cloneDate(maxDate)
+			adjustedDate = clampDate(adjustedDate, minDate, maxDate)
 			// Adjusts the date one more time if the max date is disabled, to ensure a valid, enabled date is selected
 			adjustDate(adjustedDate, -1, minDate, maxDate, isDisabledDate)
 		}
-		return adjustedDate
+	}
+	// Finally, clamp the time
+	if (adjustedDate < minDate || adjustedDate > maxDate) {
+		adjustedDate = clamp(adjustedDate, minDate, maxDate)
 	}
 	return adjustedDate
 }
@@ -147,4 +148,33 @@ function adjustDate(
 		date.setDate(date.getDate() + increment)
 		loopCount++
 	}
+}
+
+export function clamp(value: Date, min: Date, max: Date) {
+	if (value > max) {
+		return cloneDate(max)
+	} else if (value < min) {
+		return cloneDate(min)
+	} else {
+		return cloneDate(value)
+	}
+}
+export function clampDate(value: Date, min: Date, max: Date) {
+	const limit = clamp(value, min, max)
+	value = new Date(
+		limit.getFullYear(),
+		limit.getMonth(),
+		limit.getDate(),
+		value.getHours(),
+		value.getMinutes(),
+		value.getSeconds(),
+		value.getMilliseconds(),
+	)
+	if (value > max) {
+		value.setDate(max.getDate())
+	}
+	if (value < min) {
+		value.setDate(min.getDate())
+	}
+	return value
 }
