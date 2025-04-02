@@ -76,7 +76,7 @@
 			const result = parse(text, formatTokens, $store)
 			if (result.date !== null) {
 				valid = true
-				store.set(result.date)
+				store.set(toValidDate(defaultDate, result.date, min, max, isDisabledDate))
 			} else {
 				valid = false
 			}
