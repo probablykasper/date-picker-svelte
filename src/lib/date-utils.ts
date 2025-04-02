@@ -23,6 +23,14 @@ export function toText(date: Date | null, formatTokens: FormatToken[]): string {
 	return text
 }
 
+export function isSameDate(date1: Date, date2: Date) {
+	return (
+		date1.getFullYear() === date2.getFullYear() &&
+		date1.getMonth() === date2.getMonth() &&
+		date1.getDate() === date2.getDate()
+	)
+}
+
 export type CalendarDay = {
 	year: number
 	month: number
@@ -87,4 +95,86 @@ export function applyTimePrecision(
 	} else if (timePrecision === 'second') {
 		date.setMilliseconds(0)
 	}
+}
+
+export function cloneDate(d: Date) {
+	return new Date(d)
+}
+
+export function toValidDate(
+	oldDate: Date,
+	newDate: Date,
+	minDate: Date,
+	maxDate: Date,
+	isDisabledDate: ((date: Date) => boolean) | null,
+): Date {
+	// Don't mutate the original newDate to avoid unintended side effects
+	let adjustedDate = cloneDate(newDate)
+
+	if (oldDate > newDate) {
+		adjustDate(adjustedDate, -1, minDate, maxDate, isDisabledDate)
+		if (adjustedDate < minDate) {
+			adjustedDate = clampDate(adjustedDate, minDate, maxDate)
+			// Adjusts the date one more time if the min date is disabled, to ensure a valid, enabled date is selected
+			adjustDate(adjustedDate, 1, minDate, maxDate, isDisabledDate)
+		}
+	} else if (adjustedDate >= oldDate) {
+		adjustDate(adjustedDate, 1, minDate, maxDate, isDisabledDate)
+		if (adjustedDate > maxDate) {
+			adjustedDate = clampDate(adjustedDate, minDate, maxDate)
+			// Adjusts the date one more time if the max date is disabled, to ensure a valid, enabled date is selected
+			adjustDate(adjustedDate, -1, minDate, maxDate, isDisabledDate)
+		}
+	}
+	// Finally, clamp the time
+	if (adjustedDate < minDate || adjustedDate > maxDate) {
+		adjustedDate = clamp(adjustedDate, minDate, maxDate)
+	}
+	return adjustedDate
+}
+
+function adjustDate(
+	date: Date,
+	increment: number,
+	minDate: Date,
+	maxDate: Date,
+	isDisabledDate: ((date: Date) => boolean) | null,
+) {
+	// Prevents accidental infinite loops
+	const MAXLOOPS = 36525 // ~100 years, should be large enough
+	let loopCount = 0
+
+	while (isDisabledDate?.(date) && date >= minDate && date <= maxDate && loopCount <= MAXLOOPS) {
+		date.setDate(date.getDate() + increment)
+		loopCount++
+	}
+}
+
+export function clamp(value: Date, min: Date, max: Date) {
+	if (value > max) {
+		return cloneDate(max)
+	} else if (value < min) {
+		return cloneDate(min)
+	} else {
+		return cloneDate(value)
+	}
+}
+export function clampDate(value: Date, min: Date, max: Date) {
+	const limit = clamp(value, min, max)
+	value = new Date(
+		limit.getFullYear(),
+		limit.getMonth(),
+		limit.getDate(),
+		value.getHours(),
+		value.getMinutes(),
+		value.getSeconds(),
+		value.getMilliseconds(),
+	)
+	if (value > max) {
+		value.setDate(max.getDate())
+	}
+	if (value < min) {
+		value.setDate(min.getDate())
+	}
+	return value
 }

@@ -46,6 +46,7 @@ The component will not assign a date value until a specific date is selected in 
 | `browseWithoutSelecting` | bool                                          | Wait with updating the date until a value is selected         |
 | `dynamicPositioning`     | bool                                          | Dynamically postions the date popup to best fit on the screen |
 | `locale`                 | Locale                                        | Locale object for internationalization                        |
+| `isDisabledDate`         | ((dateToCheck: Date) => boolean) \| null      | Disallow specific dates                                       |
 
 <h4 id="format-string">Format string</h4>
 
@@ -76,6 +77,23 @@ The component will not assign a date value until a specific date is selected in 
 | `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision      |
 | `locale`                 | Locale                                        | Locale object for internationalization               |
 | `browseWithoutSelecting` | bool                                          | Wait with updating the date until a date is selected |
+| `isDisabledDate`         | ((dateToCheck: Date) => boolean) \| null      | Disallow specific dates                              |
+
+<h2 id="isDisabledDate">Date disabling example</h2>
+
+Example usage of the `isDisabledDate` prop:
+
+```svelte
+<script>
+	const disabledDate = new Date()
+</script>
+
+<DatePicker
+	isDisabledDate={(dateToCheck) => {
+		return isSameDate(dateToCheck, disabledDate)
+	}}
+/>
+```
 
 <h2 id="internationalization">Internationalization</h2>
 
@@ -91,7 +109,7 @@ Object to support internationalization. Properties (all are optional):
 
 If you use [date-fns](https://date-fns.org/), you can create a Locale object by passing a date-fns locale to this function:
 
-```js
+```svelte
 <script>
 	import { DatePicker, localeFromDateFnsLocale } from 'date-picker-svelte'
 	import { hy } from 'date-fns/locale'

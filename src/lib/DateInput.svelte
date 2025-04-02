@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 	import { cubicInOut } from 'svelte/easing'
-	import { toText } from './date-utils.js'
+	import { toText, cloneDate, toValidDate } from './date-utils.js'
 	import type { Locale } from './locale.js'
 	import { parse, createFormat, type FormatToken } from './parse.js'
 	import DateTimePicker from './DatePicker.svelte'
@@ -16,10 +16,6 @@
 	/** Default date to display in picker before value is assigned */
 	const defaultDate = new Date()
 
-	function cloneDate(d: Date) {
-		return new Date(d.getTime())
-	}
-
 	// inner date value store for preventing value updates (and also
 	// text updates as a result) when date is unchanged
 	const innerStore = writable(null as Date | null)
@@ -30,7 +26,10 @@
 				if (date === null || date === undefined) {
 					innerStore.set(null)
 					value = date
-				} else if (date.getTime() !== $innerStore?.getTime()) {
+				} else if (
+					date.getTime() !== $innerStore?.getTime() ||
+					date.getTime() !== value?.getTime()
+				) {
 					innerStore.set(cloneDate(date))
 					value = date
 				}
@@ -40,7 +39,7 @@
 
 	/** Date value */
 	export let value: Date | null = null
-	$: store.set(value)
+	$: store.set(value ? toValidDate(defaultDate, value, min, max, isDisabledDate) : value)
 
 	/** The earliest value the user can select */
 	export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
@@ -80,7 +79,7 @@
 			const result = parse(text, formatTokens, $store)
 			if (result.date !== null) {
 				valid = true
-				store.set(result.date)
+				store.set(toValidDate(defaultDate, result.date, min, max, isDisabledDate))
 			} else {
 				valid = false
 			}
@@ -104,6 +103,9 @@
 
 	/** Show a time picker with the specified precision */
 	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+
+	/** Disallow specific dates */
+	export let isDisabledDate: ((dateToCheck: Date) => boolean) | null = null
 
 	// handle on:focusout for parent element. If the parent element loses
 	// focus (e.g input element), visible is set to false
@@ -237,6 +239,7 @@
 				{locale}
 				{browseWithoutSelecting}
 				{timePrecision}
+				{isDisabledDate}
 			>
 				<slot />
 			</DateTimePicker>

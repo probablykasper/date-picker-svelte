@@ -5,33 +5,25 @@
 		getCalendarDays,
 		type CalendarDay,
 		applyTimePrecision,
+		clampDate,
+		clamp,
 	} from './date-utils.js'
 	import { getInnerLocale, type Locale } from './locale.js'
 	import { createEventDispatcher } from 'svelte'
+	import { cloneDate, toValidDate } from './date-utils.js'
 
 	const dispatch = createEventDispatcher<{
 		/** Fires when the user selects a new value by clicking on a date or by pressing enter */
 		select: Date
 	}>()
 
-	function cloneDate(d: Date) {
-		return new Date(d.getTime())
-	}
-
 	/** Date value. It's `null` if no date is selected */
 	export let value: Date | null = null
 
 	function setValue(d: Date) {
 		if (d.getTime() !== value?.getTime()) {
-			browseDate = clamp(d, min, max)
+			browseDate = toValidDate(value ?? browseDate, d, min, max, isDisabledDate)
 			applyTimePrecision(browseDate, timePrecision)
-			value = cloneDate(browseDate)
-		}
-	}
-
-	function setValueDate(d: Date) {
-		if (d.getTime() !== value?.getTime()) {
-			browseDate = clampDate(d, min, max)
 			value = cloneDate(browseDate)
 		}
 	}
@@ -63,35 +55,20 @@
 	export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
 	/** The latest year the user can select */
 	export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+	/** Disallow specific dates */
+	export let isDisabledDate: ((dateToCheck: Date) => boolean) | null = null
+
+	function handleDisabledDate(date: CalendarDay) {
+		return isDisabledDate?.(new Date(date.year, date.month, date.number))
+	}
+
+	// Prevents a invalid date from being typed into the Dateinput text box
 	$: if (value && value > max) {
-		setValue(max)
+		setValue(toValidDate(value, max, min, max, isDisabledDate))
 	} else if (value && value < min) {
-		setValue(min)
-	}
-	function clamp(d: Date, min: Date, max: Date) {
-		if (d > max) {
-			return cloneDate(max)
-		} else if (d < min) {
-			return cloneDate(min)
-		} else {
-			return cloneDate(d)
-		}
-	}
-	function clampDate(d: Date, min: Date, max: Date) {
-		const limit = clamp(d, min, max)
-		if (limit.getTime() !== d.getTime()) {
-			d = new Date(
-				limit.getFullYear(),
-				limit.getMonth(),
-				limit.getDate(),
-				d.getHours(),
-				d.getMinutes(),
-				d.getSeconds(),
-				d.getMilliseconds(),
-			)
-			d = clamp(d, min, max)
-		}
-		return d
+		setValue(toValidDate(value, min, min, max, isDisabledDate))
+	} else if (value && isDisabledDate?.(value)) {
+		setValue(toValidDate(browseDate, value, min, max, isDisabledDate))
 	}
 
 	/** The date shown in the popup when none is selected */
@@ -156,14 +133,14 @@
 	$: calendarDays = getCalendarDays(browseDate, iLocale.weekStartsOn)
 
 	function selectDay(calendarDay: CalendarDay) {
-		if (dayIsInRange(calendarDay, min, max)) {
+		if (dayIsInRange(calendarDay, min, max) && !handleDisabledDate(calendarDay)) {
 			browseDate.setFullYear(0)
 			browseDate.setMonth(0)
 			browseDate.setDate(1)
 			browseDate.setFullYear(calendarDay.year)
 			browseDate.setMonth(calendarDay.month)
 			browseDate.setDate(calendarDay.number)
-			setValueDate(browseDate)
+			setValue(browseDate)
 			dispatch('select', cloneDate(browseDate))
 		}
 	}
@@ -236,16 +213,16 @@
 			return
 		} else if (e.key === 'ArrowUp') {
 			browseDate.setDate(browseDate.getDate() - 7)
-			setValueDate(browseDate)
+			setValue(browseDate)
 		} else if (e.key === 'ArrowDown') {
 			browseDate.setDate(browseDate.getDate() + 7)
-			setValueDate(browseDate)
+			setValue(browseDate)
 		} else if (e.key === 'ArrowLeft') {
 			browseDate.setDate(browseDate.getDate() - 1)
-			setValueDate(browseDate)
+			setValue(browseDate)
 		} else if (e.key === 'ArrowRight') {
 			browseDate.setDate(browseDate.getDate() + 1)
-			setValueDate(browseDate)
+			setValue(browseDate)
 		} else if (e.key === 'Enter') {
 			setValue(browseDate)
 			dispatch('select', cloneDate(browseDate))
@@ -355,7 +332,7 @@
 					<div
 						class="cell"
 						on:click={() => selectDay(calendarDay)}
-						class:disabled={!dayIsInRange(calendarDay, min, max)}
+						class:disabled={!dayIsInRange(calendarDay, min, max) || handleDisabledDate(calendarDay)}
 						class:selected={value &&
 							calendarDay.year === value.getFullYear() &&
 							calendarDay.month === value.getMonth() &&
