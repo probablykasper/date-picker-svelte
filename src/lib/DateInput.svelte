@@ -26,7 +26,10 @@
 				if (date === null || date === undefined) {
 					innerStore.set(null)
 					value = date
-				} else if (date.getTime() !== $innerStore?.getTime()) {
+				} else if (
+					date.getTime() !== $innerStore?.getTime() ||
+					date.getTime() !== value?.getTime()
+				) {
 					innerStore.set(cloneDate(date))
 					value = date
 				}
