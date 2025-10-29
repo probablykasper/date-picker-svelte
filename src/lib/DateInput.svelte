@@ -14,7 +14,7 @@
 	}>()
 
 	/** Default date to display in picker before value is assigned */
-	const defaultDate = new Date()
+	export let defaultDate = new Date()
 
 	// inner date value store for preventing value updates (and also
 	// text updates as a result) when date is unchanged
@@ -234,6 +234,7 @@
 				on:focusout={onFocusOut}
 				on:select={onSelect}
 				bind:value={$store}
+				{defaultDate}
 				{min}
 				{max}
 				{locale}

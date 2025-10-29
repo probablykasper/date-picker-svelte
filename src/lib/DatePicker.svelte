@@ -47,7 +47,7 @@
 	const todayDate = new Date()
 
 	/** Default Date to use */
-	const defaultDate = new Date()
+	export let defaultDate = new Date()
 
 	/** Show a time picker with the specified precision */
 	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
