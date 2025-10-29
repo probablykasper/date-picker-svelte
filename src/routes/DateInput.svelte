@@ -8,6 +8,7 @@
 	let id: string
 	let placeholder: string
 	let value: Date
+	let defaultDate: Date
 	let min: Date
 	let max: Date
 	let valid: boolean
@@ -33,6 +34,7 @@
 		slot="left"
 		bind:id
 		bind:value
+		bind:defaultDate
 		bind:min
 		bind:max
 		bind:placeholder
@@ -51,6 +53,7 @@
 	<svelte:fragment slot="right">
 		<h3 class="no-top">Props</h3>
 		<Prop label="value">{value}</Prop>
+		<Prop label="defaultDate" bind:value={defaultDate} />
 		<Prop label="min" bind:value={min} />
 		<Prop label="max" bind:value={max} />
 		<Prop label="id" bind:value={id} />

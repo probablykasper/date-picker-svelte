@@ -32,6 +32,7 @@ The component will not assign a date value until a specific date is selected in 
 | Prop                     | Type                                          | Description                                                   |
 | :----------------------- | :-------------------------------------------- | :------------------------------------------------------------ |
 | `value`                  | Date \| null                                  | Date value                                                    |
+| `defaultDate`            | Date                                          | Default date to display in picker before value is assigned    |
 | `min`                    | Date                                          | The earliest value the user can select                        |
 | `max`                    | Date                                          | The latest value the user can select                          |
 | `placeholder`            | string                                        | Placeholder used when date value is null                      |
@@ -72,6 +73,7 @@ The component will not assign a date value until a specific date is selected in 
 | Prop                     | Type                                          | Description                                          |
 | :----------------------- | :-------------------------------------------- | :--------------------------------------------------- |
 | `value`                  | Date \| null                                  | Date value                                           |
+| `defaultDate`            | Date                                          | Default Date to use                                  |
 | `min`                    | Date                                          | The earliest year the user can select                |
 | `max`                    | Date                                          | The latest year the user can select                  |
 | `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision      |
