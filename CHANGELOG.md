@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Add `initialBrowseDate` prop (@endaaman)
+
 ## 2.16.0 - 2025 Apr 2
 - Add `isDisabledDate` prop (@stinger567)
 
