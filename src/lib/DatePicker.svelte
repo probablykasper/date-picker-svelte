@@ -46,15 +46,15 @@
 
 	const todayDate = new Date()
 
-	/** Default Date to use */
-	const defaultDate = new Date()
+	/** Initial date to show in the calendar when no value is selected */
+	export let initialBrowseDate = new Date()
 
 	/** Show a time picker with the specified precision */
 	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
 	/** The earliest year the user can select */
-	export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
+	export let min = new Date(initialBrowseDate.getFullYear() - 20, 0, 1)
 	/** The latest year the user can select */
-	export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+	export let max = new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999)
 	/** Disallow specific dates */
 	export let isDisabledDate: ((dateToCheck: Date) => boolean) | null = null
 
@@ -72,7 +72,7 @@
 	}
 
 	/** The date shown in the popup when none is selected */
-	let browseDate = value ? cloneDate(value) : cloneDate(clampDate(defaultDate, min, max))
+	let browseDate = value ? cloneDate(value) : cloneDate(clampDate(initialBrowseDate, min, max))
 	$: setBrowseDate(value)
 	function setBrowseDate(value: Date | null) {
 		if (browseDate.getTime() !== value?.getTime()) {

@@ -13,8 +13,8 @@
 		select: Date
 	}>()
 
-	/** Default date to display in picker before value is assigned */
-	const defaultDate = new Date()
+	/** Initial date to show in the calendar when no value is selected */
+	export let initialBrowseDate = new Date()
 
 	// inner date value store for preventing value updates (and also
 	// text updates as a result) when date is unchanged
@@ -39,12 +39,12 @@
 
 	/** Date value */
 	export let value: Date | null = null
-	$: store.set(value ? toValidDate(defaultDate, value, min, max, isDisabledDate) : value)
+	$: store.set(value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value)
 
 	/** The earliest value the user can select */
-	export let min = new Date(defaultDate.getFullYear() - 20, 0, 1)
+	export let min = new Date(initialBrowseDate.getFullYear() - 20, 0, 1)
 	/** The latest value the user can select */
-	export let max = new Date(defaultDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+	export let max = new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999)
 	/** Set the input element's ID attribute */
 	export let id: string | null = null
 	/** Placeholder text to show when input field is empty */
@@ -79,7 +79,7 @@
 			const result = parse(text, formatTokens, $store)
 			if (result.date !== null) {
 				valid = true
-				store.set(toValidDate(defaultDate, result.date, min, max, isDisabledDate))
+				store.set(toValidDate(initialBrowseDate, result.date, min, max, isDisabledDate))
 			} else {
 				valid = false
 			}
@@ -234,6 +234,7 @@
 				on:focusout={onFocusOut}
 				on:select={onSelect}
 				bind:value={$store}
+				{initialBrowseDate}
 				{min}
 				{max}
 				{locale}

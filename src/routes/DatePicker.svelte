@@ -6,6 +6,7 @@
 	import { hy, de, nb } from 'date-fns/locale'
 
 	let value: Date
+	let initialBrowseDate: Date
 	let min: Date
 	let max: Date
 	let locales = [
@@ -23,6 +24,7 @@
 	<div class="left" slot="left">
 		<DatePicker
 			bind:value
+			bind:initialBrowseDate
 			bind:min
 			bind:max
 			locale={locale.value}
@@ -33,6 +35,7 @@
 	<div slot="right">
 		<h3 class="no-top">Props</h3>
 		<Prop label="value">{value}</Prop>
+		<Prop label="initialBrowseDate" bind:value={initialBrowseDate} />
 		<Prop label="min" bind:value={min} />
 		<Prop label="max" bind:value={max} />
 		<Prop label="locale" bind:value={locale} values={locales} />
