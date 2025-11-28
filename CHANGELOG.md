@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 2.17.0 - 2025 Nov 28
 - Add `initialBrowseDate` prop (@endaaman)
 
 ## 2.16.0 - 2025 Apr 2
