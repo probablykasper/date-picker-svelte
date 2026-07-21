@@ -5,7 +5,6 @@
 	import type { Locale } from './locale.js'
 	import { parse, createFormat, type FormatToken } from './parse.js'
 	import DateTimePicker from './DatePicker.svelte'
-	import { writable } from 'svelte/store'
 	import type { ClassValue } from 'svelte/elements'
 
 	interface Props {
@@ -79,30 +78,20 @@
 		children,
 	}: Props = $props()
 
-	// todo: unnecessary in svelte 5?
-	// inner date value store for preventing value updates (and also
-	// text updates as a result) when date is unchanged
-	const innerStore = writable(null as Date | null)
-	const store = (() => {
-		return {
-			subscribe: innerStore.subscribe,
-			set: (date: Date | null) => {
-				if (date === null || date === undefined) {
-					innerStore.set(null)
-					value = date
-				} else if (
-					date.getTime() !== $innerStore?.getTime() ||
-					date.getTime() !== value?.getTime()
-				) {
-					innerStore.set(cloneDate(date))
-					value = date
-				}
-			},
+	// prevent value updates (and resulting text updates) when date is unchanged
+	let innerValue: Date | null = $state(null)
+	function setInnerValue(date: Date | null) {
+		if (date === null || date === undefined) {
+			innerValue = null
+			value = date
+		} else if (date.getTime() !== innerValue?.getTime() || date.getTime() !== value?.getTime()) {
+			innerValue = cloneDate(date)
+			value = date
 		}
-	})()
+	}
 
 	$effect(() => {
-		store.set(value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value)
+		setInnerValue(value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : null)
 	})
 
 	let formatTokens = $derived(createFormat(format, locale))
@@ -111,15 +100,15 @@
 		text = toText(value, formatTokens)
 	}
 	$effect(() => {
-		valueUpdate($store, formatTokens)
+		valueUpdate(innerValue, formatTokens)
 	})
 
 	function textUpdate(text: string, formatTokens: FormatToken[]) {
 		if (text.length) {
-			const result = parse(text, formatTokens, $store)
+			const result = parse(text, formatTokens, innerValue)
 			if (result.date !== null) {
 				valid = true
-				store.set(toValidDate(initialBrowseDate, result.date, min, max, isDisabledDate))
+				setInnerValue(toValidDate(initialBrowseDate, result.date, min, max, isDisabledDate))
 			} else {
 				valid = false
 			}
@@ -128,7 +117,7 @@
 			// value resets to null if you clear the field
 			if (value) {
 				value = null
-				store.set(null)
+				setInnerValue(null)
 			}
 		}
 	}
@@ -238,7 +227,7 @@
 				e.currentTarget.value === text + e.data
 			) {
 				// check for missing punctuation, and add if there is any
-				let result = parse(text, formatTokens, $store)
+				let result = parse(text, formatTokens, innerValue)
 				if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
 					text = text + result.missingPunctuation + e.data
 					return
@@ -259,7 +248,7 @@
 			<DateTimePicker
 				onfocusout={onFocusOut}
 				onselect={onSelect}
-				bind:value={$store}
+				bind:value={() => innerValue, setInnerValue}
 				{initialBrowseDate}
 				{min}
 				{max}
