@@ -15,7 +15,7 @@
 		valid = true,
 		disabled = false,
 		required = false,
-		// class: classes = '',
+		class: classes = '',
 		// locale = {},
 		format = 'yyyy-MM-dd HH:mm:ss',
 		// isDisabledDate = null,
@@ -58,6 +58,7 @@
 		bind:dynamicPositioning
 		bind:timePrecision
 		bind:locale={locale.value}
+		class={classes}
 	/>
 
 	<svelte:fragment slot="right">
@@ -82,5 +83,6 @@
 			bind:value={timePrecision}
 			values={[null, 'minute', 'second', 'millisecond']}>{timePrecision}</Prop
 		>
+		<Prop label="class" bind:value={classes} />
 	</svelte:fragment>
 </Split>

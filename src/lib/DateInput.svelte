@@ -6,6 +6,7 @@
 	import { parse, createFormat, type FormatToken } from './parse.js'
 	import DateTimePicker from './DatePicker.svelte'
 	import { writable } from 'svelte/store'
+	import type { ClassValue } from 'svelte/elements'
 
 	interface Props {
 		/** Date value. It's `null` if no date is selected */
@@ -26,8 +27,7 @@
 		disabled?: boolean
 		/** Require a value to submit form */
 		required?: boolean
-		// todo: SvelteClass type or something like that?
-		class?: string
+		class?: ClassValue
 		/** Locale object for internationalization */
 		locale?: Locale
 		/** Format string */
@@ -60,7 +60,7 @@
 		valid = $bindable(true),
 		disabled = $bindable(false),
 		required = $bindable(false),
-		class: classes = $bindable(''),
+		class: container_class = undefined,
 		locale = $bindable({}),
 		format = $bindable('yyyy-MM-dd HH:mm:ss'),
 		isDisabledDate = $bindable(null),
@@ -217,7 +217,7 @@
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="date-time-field {classes}" onfocusout={onFocusOut} onkeydown={keydown}>
+<div class={['date-time-field', container_class]} onfocusout={onFocusOut} onkeydown={keydown}>
 	<input
 		bind:this={InputElement}
 		class:invalid={!valid}
