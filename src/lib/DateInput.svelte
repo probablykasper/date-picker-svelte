@@ -44,7 +44,6 @@
 		/** Disallow specific dates */
 		isDisabledDate?: ((dateToCheck: Date) => boolean) | null
 		/** Automatically adjust date popup position to not appear outside the screen */
-		// todo: enable by default
 		dynamicPositioning?: boolean
 		/** Fires when the user selects a new value by clicking on a date or by pressing enter */
 		onselect?: (date: Date) => void
@@ -75,7 +74,7 @@
 		closeOnSelection = $bindable(false),
 		browseWithoutSelecting = $bindable(false),
 		timePrecision = $bindable(null),
-		dynamicPositioning = $bindable(false),
+		dynamicPositioning = $bindable(true),
 		onselect,
 		children,
 	}: Props = $props()

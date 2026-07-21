@@ -27,7 +27,7 @@
 		closeOnSelection = false,
 		browseWithoutSelecting = false,
 		timePrecision = null,
-		dynamicPositioning = false,
+		dynamicPositioning = true,
 	} = {}
 
 	let locales = [
