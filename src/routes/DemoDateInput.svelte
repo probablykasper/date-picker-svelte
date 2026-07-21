@@ -5,30 +5,29 @@
 	import { localeFromDateFnsLocale } from '$lib'
 	import { hy, de, nb } from 'date-fns/locale'
 
-	let {
-		value = null,
-		initialBrowseDate = new Date(),
-		min = new Date(initialBrowseDate.getFullYear() - 20, 0, 1),
-		max = new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999),
-		id = null,
-		placeholder = '2020-12-31 23:00:00',
-		valid = true,
-		disabled = false,
-		required = false,
-		class: classes = '',
-		// locale = {},
-		format = 'yyyy-MM-dd HH:mm:ss',
-		// isDisabledDate = null,
-		// text = toText(
-		// 	value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value,
-		// 	createFormat(format, locale),
-		// ),
-		visible = false,
-		closeOnSelection = false,
-		browseWithoutSelecting = false,
-		timePrecision = null,
-		dynamicPositioning = true,
-	} = {}
+	let value: Date | null = $state(null)
+	const now = new Date()
+	let initialBrowseDate = $state(now)
+	let min = $state(new Date(now.getFullYear() - 20, 0, 1))
+	let max = $state(new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999))
+	let id: string | null = $state(null)
+	let placeholder = $state('2020-12-31 23:00:00')
+	let valid = $state(true)
+	let disabled = $state(false)
+	let required = $state(false)
+	let classes = $state('')
+	// let locale = $state({})
+	let format = $state('yyyy-MM-dd HH:mm:ss')
+	// let isDisabledDate = $state(null)
+	// let text = $state(toText(
+	// 	value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value,
+	// 	createFormat(format, locale),
+	// ))
+	let visible = $state(false)
+	let closeOnSelection = $state(false)
+	let browseWithoutSelecting = $state(false)
+	let timePrecision: 'second' | 'minute' | 'millisecond' | null = $state(null)
+	let dynamicPositioning = $state(true)
 
 	let locales = [
 		{ key: 'default', value: localeFromDateFnsLocale({}) },
@@ -36,7 +35,7 @@
 		{ key: 'de (date-fns)', value: localeFromDateFnsLocale(de) },
 		{ key: 'hy (date-fns)', value: localeFromDateFnsLocale(hy) },
 	]
-	let locale = locales[0]
+	let locale = $state(locales[0])
 </script>
 
 <Split>
