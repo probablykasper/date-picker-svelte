@@ -1,6 +1,6 @@
 <script lang="ts">
-	import DatePicker from '../DatePicker.svelte'
-	import DateInput from '../DateInput.svelte'
+	import DemoDatePicker from '../DemoDatePicker.svelte'
+	import DemoDateInput from '../DemoDateInput.svelte'
 </script>
 
 <svelte:head>
@@ -14,9 +14,9 @@
 <!-- svelte-ignore a11y_consider_explicit_label -->
 <a id="DateInput"></a>
 <h2>DateInput</h2>
-<DateInput />
+<DemoDateInput />
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
 <a id="DatePicker"></a>
 <h2>DatePicker</h2>
-<DatePicker />
+<DemoDatePicker />

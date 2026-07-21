@@ -1,5 +1,4 @@
 <script lang="ts">
-	// todo: rename these two files to avoid confusion
 	import DateInput from '$lib/DateInput.svelte'
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
