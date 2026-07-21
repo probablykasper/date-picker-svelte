@@ -1,9 +1,12 @@
 <script lang="ts">
-	export let browseDate: Date
-	export let timePrecision: 'minute' | 'second' | 'millisecond' | null
-	export let setTime: (d: Date) => Date
+	interface Props {
+		browseDate: Date
+		timePrecision: 'minute' | 'second' | 'millisecond' | null
+		setTime: (d: Date) => Date
+	}
+	let { browseDate = $bindable(), timePrecision, setTime }: Props = $props()
 
-	let fields: (HTMLSpanElement | undefined | null)[] = []
+	let fields: (HTMLSpanElement | undefined | null)[] = $state([])
 	function select(node: Node) {
 		const selection = window.getSelection()
 		const range = document.createRange()
@@ -69,7 +72,9 @@
 		}
 	}
 
-	$: setText(browseDate)
+	$effect(() => {
+		setText(browseDate)
+	})
 	function setText(d: Date) {
 		const hours = ('00' + d.getHours()).slice(-2)
 		const minutes = ('00' + d.getMinutes()).slice(-2)
@@ -139,7 +144,7 @@
 	<div
 		class="time-picker"
 		role="none"
-		on:mousedown={(e) => {
+		onmousedown={(e) => {
 			if (e.target instanceof HTMLElement && e.target.tagName === 'SPAN') {
 				e.target.focus()
 				e.preventDefault() // prevent text dragging
@@ -153,9 +158,9 @@
 			tabindex="0"
 			contenteditable
 			inputmode="numeric"
-			on:keydown={keydown}
-			on:input={input}
-			on:focus={focus}>{('00' + browseDate.getHours()).slice(-2)}</span
+			onkeydown={keydown}
+			oninput={input}
+			onfocus={focus}>{('00' + browseDate.getHours()).slice(-2)}</span
 		>:
 		<span
 			bind:this={fields[1]}
@@ -164,9 +169,9 @@
 			tabindex="0"
 			contenteditable
 			inputmode="numeric"
-			on:keydown={keydown}
-			on:input={input}
-			on:focus={focus}>{('00' + browseDate.getMinutes()).slice(-2)}</span
+			onkeydown={keydown}
+			oninput={input}
+			onfocus={focus}>{('00' + browseDate.getMinutes()).slice(-2)}</span
 		>
 		{#if timePrecision !== 'minute'}
 			:<span
@@ -176,9 +181,9 @@
 				tabindex="0"
 				contenteditable
 				inputmode="numeric"
-				on:keydown={keydown}
-				on:input={input}
-				on:focus={focus}>{('00' + browseDate.getSeconds()).slice(-2)}</span
+				onkeydown={keydown}
+				oninput={input}
+				onfocus={focus}>{('00' + browseDate.getSeconds()).slice(-2)}</span
 			>
 			{#if timePrecision !== 'second'}
 				.<span
@@ -188,9 +193,9 @@
 					tabindex="0"
 					contenteditable
 					inputmode="numeric"
-					on:keydown={keydown}
-					on:input={input}
-					on:focus={focus}>{('000' + browseDate.getMilliseconds()).slice(-3)}</span
+					onkeydown={keydown}
+					oninput={input}
+					onfocus={focus}>{('000' + browseDate.getMilliseconds()).slice(-3)}</span
 				>
 			{/if}
 		{/if}

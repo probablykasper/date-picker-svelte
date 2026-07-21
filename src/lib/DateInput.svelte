@@ -6,16 +6,81 @@
 	import { parse, createFormat, type FormatToken } from './parse.js'
 	import DateTimePicker from './DatePicker.svelte'
 	import { writable } from 'svelte/store'
-	import { createEventDispatcher } from 'svelte'
 
-	const dispatch = createEventDispatcher<{
-		/** Fires when the user selects a new value in the DatePicker by clicking on a date or by pressing enter */
-		select: Date
-	}>()
+	interface Props {
+		/** Date value. It's `null` if no date is selected */
+		value?: Date | null
+		/** Initial date to show in the calendar when no value is selected */
+		initialBrowseDate?: Date
+		/** The earliest value the user can select */
+		min?: Date
+		/** The latest value the user can select */
+		max?: Date
+		/** Set the input element's ID attribute */
+		id?: string | null
+		/** Placeholder text to show when input field is empty */
+		placeholder?: string
+		/** Whether the text is valid */
+		valid?: boolean
+		/** Disable the input */
+		disabled?: boolean
+		/** Require a value to submit form */
+		required?: boolean
+		// todo: SvelteClass type or something like that?
+		class?: string
+		/** Locale object for internationalization */
+		locale?: Locale
+		/** Format string */
+		format?: string
+		text?: string
+		/** Whether the date popup is visible */
+		visible?: boolean
+		/** Close the date popup when a date is selected */
+		closeOnSelection?: boolean
+		/** Wait with updating the date until a date is selected */
+		browseWithoutSelecting?: boolean
+		/** Show a time picker with the specified precision */
+		timePrecision?: 'minute' | 'second' | 'millisecond' | null
+		/** Disallow specific dates */
+		isDisabledDate?: ((dateToCheck: Date) => boolean) | null
+		/** Automatically adjust date popup position to not appear outside the screen */
+		// todo: enable by default
+		dynamicPositioning?: boolean
+		/** Fires when the user selects a new value by clicking on a date or by pressing enter */
+		onselect?: (date: Date) => void
+		children?: import('svelte').Snippet
+	}
 
-	/** Initial date to show in the calendar when no value is selected */
-	export let initialBrowseDate = new Date()
+	let {
+		value = $bindable(null),
+		initialBrowseDate = $bindable(new Date()),
+		min = $bindable(new Date(initialBrowseDate.getFullYear() - 20, 0, 1)),
+		max = $bindable(new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999)),
+		id = $bindable(null),
+		placeholder = $bindable('2020-12-31 23:00:00'),
+		valid = $bindable(true),
+		disabled = $bindable(false),
+		required = $bindable(false),
+		class: classes = $bindable(''),
+		locale = $bindable({}),
+		format = $bindable('yyyy-MM-dd HH:mm:ss'),
+		isDisabledDate = $bindable(null),
+		text = $bindable(
+			toText(
+				value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value,
+				createFormat(format, locale),
+			),
+		),
+		visible = $bindable(false),
+		closeOnSelection = $bindable(false),
+		browseWithoutSelecting = $bindable(false),
+		timePrecision = $bindable(null),
+		dynamicPositioning = $bindable(false),
+		onselect,
+		children,
+	}: Props = $props()
 
+	// todo: unnecessary in svelte 5?
 	// inner date value store for preventing value updates (and also
 	// text updates as a result) when date is unchanged
 	const innerStore = writable(null as Date | null)
@@ -37,42 +102,18 @@
 		}
 	})()
 
-	/** Date value */
-	export let value: Date | null = null
-	$: store.set(value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value)
+	$effect(() => {
+		store.set(value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value)
+	})
 
-	/** The earliest value the user can select */
-	export let min = new Date(initialBrowseDate.getFullYear() - 20, 0, 1)
-	/** The latest value the user can select */
-	export let max = new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999)
-	/** Set the input element's ID attribute */
-	export let id: string | null = null
-	/** Placeholder text to show when input field is empty */
-	export let placeholder = '2020-12-31 23:00:00'
-	/** Whether the text is valid */
-	export let valid = true
-	/** Disable the input **/
-	export let disabled = false
-	/** Require a value to submit form **/
-	export let required = false
-	/** Pass custom classes */
-	let classes = ''
-	export { classes as class }
-
-	/** Locale object for internationalization */
-	export let locale: Locale = {}
-
-	/** Format string */
-	export let format = 'yyyy-MM-dd HH:mm:ss'
-	let formatTokens = createFormat(format, locale)
-	$: formatTokens = createFormat(format, locale)
+	let formatTokens = $derived(createFormat(format, locale))
 
 	function valueUpdate(value: Date | null, formatTokens: FormatToken[]) {
 		text = toText(value, formatTokens)
 	}
-	$: valueUpdate($store, formatTokens)
-
-	export let text = toText($store, formatTokens)
+	$effect(() => {
+		valueUpdate($store, formatTokens)
+	})
 
 	function textUpdate(text: string, formatTokens: FormatToken[]) {
 		if (text.length) {
@@ -92,22 +133,11 @@
 			}
 		}
 	}
-	$: textUpdate(text, formatTokens)
+	$effect(() => {
+		textUpdate(text, formatTokens)
+	})
 
-	/** Whether the date popup is visible */
-	export let visible = false
-	/** Close the date popup when a date is selected */
-	export let closeOnSelection = false
-	/** Wait with updating the date until a date is selected */
-	export let browseWithoutSelecting = false
-
-	/** Show a time picker with the specified precision */
-	export let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
-
-	/** Disallow specific dates */
-	export let isDisabledDate: ((dateToCheck: Date) => boolean) | null = null
-
-	// handle on:focusout for parent element. If the parent element loses
+	// handle onfocusout for parent element. If the parent element loses
 	// focus (e.g input element), visible is set to false
 	function onFocusOut(e: FocusEvent) {
 		if (
@@ -134,20 +164,17 @@
 		}
 	}
 
-	function onSelect(e: CustomEvent<Date>) {
-		dispatch('select', e.detail)
+	function onSelect(date: Date) {
+		onselect?.(date)
 		if (closeOnSelection) {
 			visible = false
 		}
 	}
 
-	/** Automatically adjust date popup position to not appear outside the screen */
-	export let dynamicPositioning = false
-
 	let InputElement: HTMLInputElement
-	let pickerElement: HTMLElement | null
-	let showAbove = false
-	let pickerLeftPosition: number | null = null
+	let pickerElement: HTMLElement | undefined = $state()
+	let showAbove = $state(false)
+	let pickerLeftPosition: number | null = $state(null)
 
 	function setDatePickerPosition() {
 		// Defaults
@@ -190,8 +217,8 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="date-time-field {classes}" on:focusout={onFocusOut} on:keydown={keydown}>
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="date-time-field {classes}" onfocusout={onFocusOut} onkeydown={keydown}>
 	<input
 		bind:this={InputElement}
 		class:invalid={!valid}
@@ -202,9 +229,9 @@
 		{placeholder}
 		{disabled}
 		{required}
-		on:focus={() => (visible = true)}
-		on:mousedown={() => (visible = true)}
-		on:input={(e) => {
+		onfocus={() => (visible = true)}
+		onmousedown={() => (visible = true)}
+		oninput={(e) => {
 			if (
 				e instanceof InputEvent &&
 				e.inputType === 'insertText' &&
@@ -231,8 +258,8 @@
 			style:--picker-left-position="{pickerLeftPosition}px"
 		>
 			<DateTimePicker
-				on:focusout={onFocusOut}
-				on:select={onSelect}
+				onfocusout={onFocusOut}
+				onselect={onSelect}
 				bind:value={$store}
 				{initialBrowseDate}
 				{min}
@@ -242,7 +269,7 @@
 				{timePrecision}
 				{isDisabledDate}
 			>
-				<slot />
+				{@render children?.()}
 			</DateTimePicker>
 		</div>
 	{/if}

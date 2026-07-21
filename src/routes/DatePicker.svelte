@@ -5,19 +5,20 @@
 	import Split from './split.svelte'
 	import { hy, de, nb } from 'date-fns/locale'
 
-	let value: Date
-	let initialBrowseDate: Date
-	let min: Date
-	let max: Date
+	let value: Date | null = $state(null)
+	const now = new Date()
+	let initialBrowseDate = $state(now)
+	let min = $state(new Date(now.getFullYear() - 20, 0, 1))
+	let max = $state(new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999))
 	let locales = [
 		{ key: 'default', value: localeFromDateFnsLocale({}) },
 		{ key: 'nb (date-fns)', value: localeFromDateFnsLocale(nb) },
 		{ key: 'de (date-fns)', value: localeFromDateFnsLocale(de) },
 		{ key: 'hy (date-fns)', value: localeFromDateFnsLocale(hy) },
 	]
-	let locale = locales[3]
-	let browseWithoutSelecting: boolean
-	let timePrecision: 'minute' | 'second' | 'millisecond' | null = 'millisecond'
+	let locale = $state(locales[3])
+	let browseWithoutSelecting = $state(false)
+	let timePrecision: 'minute' | 'second' | 'millisecond' | null = $state('millisecond')
 </script>
 
 <Split>

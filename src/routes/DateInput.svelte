@@ -1,25 +1,36 @@
 <script lang="ts">
+	// todo: rename these two files to avoid confusion
 	import DateInput from '$lib/DateInput.svelte'
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
 	import { localeFromDateFnsLocale } from '$lib'
 	import { hy, de, nb } from 'date-fns/locale'
 
-	let id: string
-	let placeholder: string
-	let value: Date
-	let initialBrowseDate: Date
-	let min: Date
-	let max: Date
-	let valid: boolean
-	let visible: boolean
-	let disabled: boolean
-	let required: boolean
-	let closeOnSelection: boolean
-	let browseWithoutSelecting: boolean
-	let format: string
-	let dynamicPositioning: boolean = true
-	let timePrecision: 'minute' | 'second' | 'millisecond' | null = null
+	let {
+		value = null,
+		initialBrowseDate = new Date(),
+		min = new Date(initialBrowseDate.getFullYear() - 20, 0, 1),
+		max = new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999),
+		id = null,
+		placeholder = '2020-12-31 23:00:00',
+		valid = true,
+		disabled = false,
+		required = false,
+		// class: classes = '',
+		// locale = {},
+		format = 'yyyy-MM-dd HH:mm:ss',
+		// isDisabledDate = null,
+		// text = toText(
+		// 	value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value,
+		// 	createFormat(format, locale),
+		// ),
+		visible = false,
+		closeOnSelection = false,
+		browseWithoutSelecting = false,
+		timePrecision = null,
+		dynamicPositioning = false,
+	} = {}
+
 	let locales = [
 		{ key: 'default', value: localeFromDateFnsLocale({}) },
 		{ key: 'nb (date-fns)', value: localeFromDateFnsLocale(nb) },

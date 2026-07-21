@@ -1,5 +1,8 @@
 # Changelog
 
+## Next
+- Require Svelte 5
+
 ## 2.17.0 - 2025 Nov 28
 - Add `initialBrowseDate` prop (@endaaman)
 

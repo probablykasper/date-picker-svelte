@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 
+	let { children } = $props()
+
 	let systemTheme: string | null = null
 	onMount(() => {
 		const prefersDarkMQ = matchMedia('(prefers-color-scheme: dark)')
@@ -72,7 +74,7 @@
 				aria-label="Toggle theme"
 				type="button"
 				class="icon theme-toggle"
-				on:click={toggleTheme}
+				onclick={toggleTheme}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +90,7 @@
 		</div>
 	</header>
 	<div class="page">
-		<slot />
+		{@render children?.()}
 	</div>
 </div>
 

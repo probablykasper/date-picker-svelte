@@ -74,8 +74,8 @@ The component will not assign a date value until a specific date is selected in 
 | :----------------------- | :-------------------------------------------- | :------------------------------------------------------------- |
 | `value`                  | Date \| null                                  | Date value                                                     |
 | `initialBrowseDate`      | Date                                          | Initial date to show in the calendar when no value is selected |
-| `min`                    | Date                                          | The earliest year the user can select                          |
-| `max`                    | Date                                          | The latest year the user can select                            |
+| `min`                    | Date                                          | The earliest value the user can select                         |
+| `max`                    | Date                                          | The latest value the user can select                           |
 | `timePrecision`          | "minute" \| "second" \| "millisecond" \| null | Show a time picker with the specified precision                |
 | `locale`                 | Locale                                        | Locale object for internationalization                         |
 | `browseWithoutSelecting` | bool                                          | Wait with updating the date until a date is selected           |

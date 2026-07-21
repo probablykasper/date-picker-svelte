@@ -1,13 +1,20 @@
 <script lang="ts">
 	import DateInput from '$lib/DateInput.svelte'
 
-	export let value: unknown = undefined
-	export let values: unknown[] | undefined = undefined
-	export let label: string
-	let jsonValue = ''
-	$: if (value instanceof Object) {
-		jsonValue = JSON.stringify(value)
+	interface Props {
+		value?: unknown
+		values?: unknown[] | undefined
+		label: string
+		children?: import('svelte').Snippet
 	}
+	let { value = $bindable(), values, label, children }: Props = $props()
+
+	let jsonValue = $state('')
+	$effect(() => {
+		if (value instanceof Object) {
+			jsonValue = JSON.stringify(value)
+		}
+	})
 	function jsonInput() {
 		try {
 			value = JSON.parse(jsonValue)
@@ -41,10 +48,10 @@
 			dynamicPositioning
 		/>
 	{:else if value instanceof Object}
-		<textarea bind:value={jsonValue} on:input={jsonInput}></textarea>
+		<textarea bind:value={jsonValue} oninput={jsonInput}></textarea>
 	{:else}
 		<div>
-			<slot />
+			{@render children?.()}
 		</div>
 	{/if}
 </div>
