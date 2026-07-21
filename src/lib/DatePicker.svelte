@@ -11,6 +11,7 @@
 	import { getInnerLocale, type Locale } from './locale.js'
 	import { cloneDate, toValidDate } from './date-utils.js'
 	import type { SvelteHTMLElements } from 'svelte/elements'
+	import { untrack } from 'svelte'
 
 	interface Props {
 		/** Date value. It's `null` if no date is selected */
@@ -101,7 +102,10 @@
 		value ? cloneDate(value) : cloneDate(clampDate(initialBrowseDate, min, max)),
 	)
 	$effect(() => {
-		setBrowseDate(value)
+		const v = value
+		untrack(() => {
+			setBrowseDate(v)
+		})
 	})
 	function setBrowseDate(value: Date | null) {
 		if (browseDate.getTime() !== value?.getTime()) {
