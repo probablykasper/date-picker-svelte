@@ -94,11 +94,8 @@
 
 	let formatTokens = $derived(createFormat(format, locale))
 
-	function valueUpdate(value: Date | null, formatTokens: FormatToken[]) {
-		text = toText(value, formatTokens)
-	}
 	$effect(() => {
-		valueUpdate(value, formatTokens)
+		text = toText(value, formatTokens)
 	})
 
 	function textUpdate(text: string, formatTokens: FormatToken[]) {
