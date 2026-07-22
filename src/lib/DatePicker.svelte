@@ -288,18 +288,6 @@
 						>
 					{/each}
 				</select>
-				<!--
-					Here we have use `select.dummy-select` for showing just the <select> button. This
-					is to style the <select> button without affecting the menu popup
-					- `option { color: initial }` causes invisible menu in dark mode on Firefox
-					- `option { color: initial; background-color: initial }` causes invisible menu in Chrome
-					- `select { background-color: $bg; color: $text }` causes white scrollbar in dark mode on Firefox
-				-->
-				<select class="dummy-select" tabindex="-1">
-					{#each iLocale.months as monthName, i}
-						<option value={i} selected={i === browseMonth}>{monthName}</option>
-					{/each}
-				</select>
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
 					><path d="M6 0l12 12-12 12z" transform="rotate(90, 12, 12)" /></svg
 				>
@@ -312,12 +300,6 @@
 				>
 					{#each years as v}
 						<option value={v}>{v}</option>
-					{/each}
-				</select>
-				<!-- style <select> button without affecting menu popup -->
-				<select class="dummy-select" tabindex="-1">
-					{#each years as v}
-						<option value={v} selected={v === browseDate.getFullYear()}>{v}</option>
 					{/each}
 				</select>
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -441,19 +423,6 @@
 		svg
 			width: 0.68rem
 			height: 0.68rem
-	select.dummy-select
-		position: absolute
-		width: 100%
-		pointer-events: none
-		outline: none
-		color: var(--date-picker-foreground, #000000)
-		background-color: var(--date-picker-background, #ffffff)
-		border-radius: 3px
-	select:focus + select.dummy-select
-		border-color: var(--date-picker-highlight-border, #0269f7)
-		box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
-	select:not(.dummy-select)
-		opacity: 0
 	select
 		font-size: inherit
 		font-family: inherit
@@ -469,6 +438,12 @@
 		outline: none
 		transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
 		background-image: none
+		color: var(--date-picker-foreground, #000000)
+		background-color: var(--date-picker-background, #ffffff)
+		border-radius: 3px
+	select:focus
+		border-color: var(--date-picker-highlight-border, #0269f7)
+		box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
 
 	.header
 		display: flex
