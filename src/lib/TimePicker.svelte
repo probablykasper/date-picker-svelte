@@ -18,15 +18,15 @@
 	type SpanEvent = { currentTarget: EventTarget & HTMLSpanElement }
 	function keydown(e: KeyboardEvent & SpanEvent) {
 		if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-			const value = get_value(e.currentTarget)
+			const value = getValue(e.currentTarget)
 			const delta = e.key === 'ArrowUp' ? 1 : -1
-			set_value(e.currentTarget, value + delta, true)
+			setValue(e.currentTarget, value + delta, true)
 			e.preventDefault()
 			select(e.currentTarget)
 		} else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || ':;-,.'.includes(e.key)) {
-			const field_index = fields.indexOf(e.currentTarget)
+			const fieldIndex = fields.indexOf(e.currentTarget)
 			const delta = e.key === 'ArrowLeft' ? -1 : 1
-			const el = fields[field_index + delta]
+			const el = fields[fieldIndex + delta]
 			e.preventDefault()
 			if (el) {
 				el.focus()
@@ -35,8 +35,8 @@
 		}
 	}
 
-	function get_value(node: HTMLElement) {
-		const label = get_field(node).label
+	function getValue(node: HTMLElement) {
+		const label = getField(node).label
 		if (label === 'Hours') {
 			return browseDate.getHours()
 		} else if (label === 'Minutes') {
@@ -47,17 +47,17 @@
 			return browseDate.getMilliseconds()
 		}
 	}
-	function clamp(value: number, max: number, loop_around: boolean) {
-		if (loop_around && value < 0) {
+	function clamp(value: number, max: number, loopAround: boolean) {
+		if (loopAround && value < 0) {
 			return max
-		} else if (loop_around && value > max) {
+		} else if (loopAround && value > max) {
 			return 0
 		} else {
 			return Math.max(0, Math.min(max, value))
 		}
 	}
 
-	function get_field(element: HTMLElement) {
+	function getField(element: HTMLElement) {
 		const label = element.getAttribute('aria-label')
 		if (label === 'Hours') {
 			return { label, len: 2, max: 23 } as const
@@ -94,9 +94,9 @@
 		}
 	}
 
-	function set_value(node: HTMLElement, value: number, loop_around = false) {
-		const field = get_field(node)
-		value = clamp(value, field.max, loop_around)
+	function setValue(node: HTMLElement, value: number, loopAround = false) {
+		const field = getField(node)
+		value = clamp(value, field.max, loopAround)
 		if (field.label === 'Hours') {
 			browseDate.setHours(value)
 		} else if (field.label === 'Minutes') {
@@ -115,23 +115,23 @@
 		return parseInt(text.replace(/[^\d]/g, '').slice(-length))
 	}
 
-	function input(e_unknown: unknown) {
-		const e = e_unknown as InputEvent & SpanEvent // type error workaround
+	function input(eUnknown: unknown) {
+		const e = eUnknown as InputEvent & SpanEvent // type error workaround
 
-		const field = get_field(e.currentTarget)
-		let new_value: number
+		const field = getField(e.currentTarget)
+		let newValue: number
 
 		if (e.inputType === 'insertText') {
-			const original_text = '000' + get_value(e.currentTarget)
-			new_value = parse(original_text + e.currentTarget.innerText, field.len)
-			if (new_value > field.max && e.data) {
-				new_value = parse(e.data, field.len)
+			const originalText = '000' + getValue(e.currentTarget)
+			newValue = parse(originalText + e.currentTarget.innerText, field.len)
+			if (newValue > field.max && e.data) {
+				newValue = parse(e.data, field.len)
 			}
 		} else {
-			new_value = parse('000' + e.currentTarget.innerText, field.len)
+			newValue = parse('000' + e.currentTarget.innerText, field.len)
 		}
 
-		set_value(e.currentTarget, new_value)
+		setValue(e.currentTarget, newValue)
 		select(e.currentTarget)
 	}
 

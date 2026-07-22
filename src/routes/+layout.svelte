@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths'
 	import { onMount } from 'svelte'
 
 	let { children } = $props()
@@ -43,10 +44,10 @@
 <div class="layout">
 	<header>
 		<div class="left">
-			<a class="header-title" href="/">Date Picker Svelte</a>
+			<a class="header-title" href={resolve('/')}>Date Picker Svelte</a>
 			<div class="links">
-				<a class="nav-link" href="/demo">Demo</a>
-				<a class="nav-link" href="/docs">Docs</a>
+				<a class="nav-link" href={resolve('/demo')}>Demo</a>
+				<a class="nav-link" href={resolve('/docs')}>Docs</a>
 				<a
 					class="nav-link"
 					href="https://svelte.dev/repl/044911429c4b4e659362518d9a5deaae?version=4">REPL</a

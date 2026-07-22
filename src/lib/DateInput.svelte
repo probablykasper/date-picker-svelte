@@ -59,7 +59,7 @@
 		valid = $bindable(true),
 		disabled = false,
 		required = false,
-		class: container_class = undefined,
+		class: containerClass = undefined,
 		locale = {},
 		format = 'yyyy-MM-dd HH:mm:ss',
 		isDisabledDate = null,
@@ -200,7 +200,7 @@
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class={['date-time-field', container_class]} onfocusout={onFocusOut} onkeydown={keydown}>
+<div class={['date-time-field', containerClass]} onfocusout={onFocusOut} onkeydown={keydown}>
 	<input
 		bind:this={InputElement}
 		class:invalid={!valid}
