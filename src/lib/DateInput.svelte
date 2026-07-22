@@ -78,20 +78,17 @@
 		children,
 	}: Props = $props()
 
-	// prevent value updates (and resulting text updates) when date is unchanged
-	let innerValue: Date | null = $state(null)
-	function setInnerValue(date: Date | null) {
+	// prevent updates when date is unchanged
+	function setValue(date: Date | null) {
 		if (date === null || date === undefined) {
-			innerValue = null
 			value = date
-		} else if (date.getTime() !== innerValue?.getTime() || date.getTime() !== value?.getTime()) {
-			innerValue = cloneDate(date)
-			value = date
+		} else if (date?.getTime() !== value?.getTime()) {
+			value = cloneDate(date)
 		}
 	}
 
 	$effect(() => {
-		setInnerValue(value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : null)
+		setValue(value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : null)
 	})
 
 	let formatTokens = $derived(createFormat(format, locale))
@@ -100,15 +97,15 @@
 		text = toText(value, formatTokens)
 	}
 	$effect(() => {
-		valueUpdate(innerValue, formatTokens)
+		valueUpdate(value, formatTokens)
 	})
 
 	function textUpdate(text: string, formatTokens: FormatToken[]) {
 		if (text.length) {
-			const result = parse(text, formatTokens, innerValue)
+			const result = parse(text, formatTokens, value)
 			if (result.date !== null) {
 				valid = true
-				setInnerValue(toValidDate(initialBrowseDate, result.date, min, max, isDisabledDate))
+				setValue(toValidDate(initialBrowseDate, result.date, min, max, isDisabledDate))
 			} else {
 				valid = false
 			}
@@ -117,7 +114,7 @@
 			// value resets to null if you clear the field
 			if (value) {
 				value = null
-				setInnerValue(null)
+				setValue(null)
 			}
 		}
 	}
@@ -227,7 +224,7 @@
 				e.currentTarget.value === text + e.data
 			) {
 				// check for missing punctuation, and add if there is any
-				let result = parse(text, formatTokens, innerValue)
+				let result = parse(text, formatTokens, value)
 				if (result.missingPunctuation !== '' && !result.missingPunctuation.startsWith(e.data)) {
 					text = text + result.missingPunctuation + e.data
 					return
@@ -248,7 +245,7 @@
 			<DateTimePicker
 				onfocusout={onFocusOut}
 				onselect={onSelect}
-				bind:value={() => innerValue, setInnerValue}
+				bind:value
 				{initialBrowseDate}
 				{min}
 				{max}
