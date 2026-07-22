@@ -91,6 +91,7 @@
 	})
 
 	/** The date shown in the popup when none is selected */
+	// svelte-ignore state_referenced_locally
 	let browseDate = $state(
 		value ? cloneDate(value) : cloneDate(clampDate(initialBrowseDate, min, max)),
 	)

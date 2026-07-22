@@ -77,7 +77,6 @@
 		onselect,
 		children,
 	}: Props = $props()
-	$inspect(text)
 
 	// prevent updates when date is unchanged
 	function setValue(date: Date | null) {
