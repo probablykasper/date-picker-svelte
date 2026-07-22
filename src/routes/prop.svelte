@@ -27,7 +27,9 @@
 </script>
 
 <div class="prop">
-	<div class="label" class:label-wide={labelWide}>{label}</div>
+	{#if !(value instanceof Color)}
+		<div class="label" class:label-wide={labelWide}>{label}</div>
+	{/if}
 	{#if values}
 		<select bind:value>
 			{#each values as value}
@@ -50,12 +52,14 @@
 			dynamicPositioning
 		/>
 	{:else if value instanceof Color}
-		<div style:color="var(--date-picker-foreground, #000000)">
+		<div class="color-input" style:color="var(--date-picker-foreground, #000000)">
 			<ColorInput
 				bind:color={value}
 				showAlphaSlider
+				title={label}
 				--picker-background="var(--date-picker-background, #ffffff)"
-				--input-width="260px"
+				--input-width="360px"
+				--picker-width="200px"
 			/>
 		</div>
 	{:else if value instanceof Object}
@@ -95,4 +99,6 @@
 			box-shadow: 0px 0px 0px 2px var(--input-highlight-shadow)
 	input[type='text']
 		width: var(--input-width)
+	.color-input :global(.color-picker)
+		width: 290px
 </style>

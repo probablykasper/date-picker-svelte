@@ -115,3 +115,14 @@
 		bind:value={cssVars['--date-picker-selected-background']}
 	/>
 </div>
+
+<style>
+	.theming {
+		display: grid;
+		gap: 10px;
+		column-gap: 20px;
+		@media (min-width: 800px) {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+</style>
