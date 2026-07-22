@@ -104,6 +104,15 @@
 		--date-input-width: var(--input-width)
 		color: var(--foreground)
 		transition: background 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
+
+		// for demo editing
+		--date-picker-background: #ffffff
+		--date-picker-foreground: var(--foreground)
+		--date-picker-highlight-border: var(--input-highlight-border)
+		--date-picker-highlight-shadow: var(--input-highlight-shadow)
+		--date-picker-today-border: #8080804D
+		--date-picker-selected-color: var(--foreground)
+		--date-picker-selected-background: rgba(2, 105, 247, 0.2)
 	:global([data-theme='dark'])
 		--foreground: #f7f7f7
 		--background: #0d0e12
@@ -135,6 +144,7 @@
 	.layout
 		transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
 		min-height: 100vh
+		padding-bottom: 14rem
 	header
 		display: flex
 		align-items: center

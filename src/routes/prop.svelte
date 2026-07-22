@@ -1,13 +1,15 @@
 <script lang="ts">
 	import DateInput from '$lib/DateInput.svelte'
+	import { Color, ColorInput } from 'color-picker-svelte'
 
 	interface Props {
 		value?: unknown
 		values?: unknown[] | undefined
 		label: string
 		children?: import('svelte').Snippet
+		labelWide?: boolean
 	}
-	let { value = $bindable(), values, label, children }: Props = $props()
+	let { value = $bindable(), values, label, labelWide = false, children }: Props = $props()
 
 	let jsonValue = $state('')
 	$effect(() => {
@@ -25,7 +27,7 @@
 </script>
 
 <div class="prop">
-	<div class="label">{label}</div>
+	<div class="label" class:label-wide={labelWide}>{label}</div>
 	{#if values}
 		<select bind:value>
 			{#each values as value}
@@ -47,6 +49,15 @@
 			max={new Date(new Date().getFullYear() + 5, 0)}
 			dynamicPositioning
 		/>
+	{:else if value instanceof Color}
+		<div style:color="var(--date-picker-foreground, #000000)">
+			<ColorInput
+				bind:color={value}
+				showAlphaSlider
+				--picker-background="var(--date-picker-background, #ffffff)"
+				--input-width="260px"
+			/>
+		</div>
 	{:else if value instanceof Object}
 		<textarea bind:value={jsonValue} oninput={jsonInput}></textarea>
 	{:else}
@@ -61,11 +72,14 @@
 		padding: 5px 0px
 		align-items: center
 		display: block
-		@media (min-width: 450px)
+		@media (min-width: 600px)
 			display: flex
 	.label
 		width: 195px
 		flex-shrink: 0
+		&.label-wide
+			width: 290px
+			font-size: 15px
 	input[type='text'], textarea, select
 		color: var(--foreground)
 		background: var(--input-background)

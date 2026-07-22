@@ -2,7 +2,7 @@
 	import DateInput from '$lib/DateInput.svelte'
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
-	import { localeFromDateFnsLocale, type Locale } from '$lib'
+	import { localeFromDateFnsLocale } from '$lib'
 	import { hy, de, nb } from 'date-fns/locale'
 	import { toText, toValidDate } from '$lib/date-utils'
 	import { createFormat } from '$lib/parse'
@@ -27,8 +27,8 @@
 	let required = $state(false)
 	let format = $state('yyyy-MM-dd HH:mm:ss')
 	let isDisabledDate = null
+	// svelte-ignore state_referenced_locally
 	let text = $state(
-		// svelte-ignore state_referenced_locally
 		toText(
 			value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value,
 			createFormat(format, localeEntry.value),
