@@ -118,7 +118,7 @@ export function toValidDate(
 			// Adjusts the date one more time if the min date is disabled, to ensure a valid, enabled date is selected
 			adjustDate(adjustedDate, 1, minDate, maxDate, isDisabledDate)
 		}
-	} else if (adjustedDate >= oldDate) {
+	} else {
 		adjustDate(adjustedDate, 1, minDate, maxDate, isDisabledDate)
 		if (adjustedDate > maxDate) {
 			adjustedDate = clampDate(adjustedDate, minDate, maxDate)
@@ -159,6 +159,8 @@ export function clamp(value: Date, min: Date, max: Date) {
 		return cloneDate(value)
 	}
 }
+
+/** Clamps the date, but keeps the time unchanged */
 export function clampDate(value: Date, min: Date, max: Date) {
 	const limit = clamp(value, min, max)
 	value = new Date(
