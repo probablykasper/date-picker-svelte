@@ -51,18 +51,18 @@
 
 	let {
 		value = $bindable(null),
-		initialBrowseDate = $bindable(new Date()),
-		min = $bindable(new Date(initialBrowseDate.getFullYear() - 20, 0, 1)),
-		max = $bindable(new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999)),
-		id = $bindable(null),
-		placeholder = $bindable('2020-12-31 23:00:00'),
+		initialBrowseDate = new Date(),
+		min = new Date(initialBrowseDate.getFullYear() - 20, 0, 1),
+		max = new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999),
+		id = null,
+		placeholder = '2020-12-31 23:00:00',
 		valid = $bindable(true),
-		disabled = $bindable(false),
-		required = $bindable(false),
+		disabled = false,
+		required = false,
 		class: container_class = undefined,
-		locale = $bindable({}),
-		format = $bindable('yyyy-MM-dd HH:mm:ss'),
-		isDisabledDate = $bindable(null),
+		locale = {},
+		format = 'yyyy-MM-dd HH:mm:ss',
+		isDisabledDate = null,
 		text = $bindable(
 			toText(
 				value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value,
@@ -70,13 +70,14 @@
 			),
 		),
 		visible = $bindable(false),
-		closeOnSelection = $bindable(false),
-		browseWithoutSelecting = $bindable(false),
-		timePrecision = $bindable(null),
-		dynamicPositioning = $bindable(true),
+		closeOnSelection = false,
+		browseWithoutSelecting = false,
+		timePrecision = null,
+		dynamicPositioning = true,
 		onselect,
 		children,
 	}: Props = $props()
+	$inspect(text)
 
 	// prevent updates when date is unchanged
 	function setValue(date: Date | null) {

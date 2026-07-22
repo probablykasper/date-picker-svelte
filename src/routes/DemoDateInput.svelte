@@ -41,22 +41,22 @@
 <Split>
 	<DateInput
 		slot="left"
-		bind:id
+		{id}
 		bind:value
-		bind:initialBrowseDate
-		bind:min
-		bind:max
-		bind:placeholder
+		{initialBrowseDate}
+		{min}
+		{max}
+		{placeholder}
 		bind:valid
-		bind:format
+		{format}
 		bind:visible
-		bind:disabled
-		bind:required
-		bind:closeOnSelection
-		bind:browseWithoutSelecting
-		bind:dynamicPositioning
-		bind:timePrecision
-		bind:locale={locale.value}
+		{disabled}
+		{required}
+		{closeOnSelection}
+		{browseWithoutSelecting}
+		{dynamicPositioning}
+		{timePrecision}
+		locale={locale.value}
 		class={classes}
 	/>
 

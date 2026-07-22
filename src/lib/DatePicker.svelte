@@ -37,20 +37,13 @@
 	}
 	let {
 		value = $bindable(null),
-		// todo: is $bindable() needed?
-		initialBrowseDate = $bindable(new Date()),
-		// todo: is $bindable() needed?
-		timePrecision = $bindable(null),
-		// todo: is $bindable() needed?
-		min = $bindable(new Date(initialBrowseDate.getFullYear() - 20, 0, 1)),
-		// todo: is $bindable() needed?
-		max = $bindable(new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999)),
-		// todo: is $bindable() needed?
-		isDisabledDate = $bindable(null),
-		// todo: is $bindable() needed?
-		locale = $bindable({}),
-		// todo: is $bindable() needed?
-		browseWithoutSelecting = $bindable(false),
+		initialBrowseDate = new Date(),
+		timePrecision = null,
+		min = new Date(initialBrowseDate.getFullYear() - 20, 0, 1),
+		max = new Date(initialBrowseDate.getFullYear(), 11, 31, 23, 59, 59, 999),
+		isDisabledDate = null,
+		locale = {},
+		browseWithoutSelecting = false,
 		onselect,
 		onfocusout,
 		children,

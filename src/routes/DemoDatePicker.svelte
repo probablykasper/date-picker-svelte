@@ -25,11 +25,11 @@
 	<div class="left" slot="left">
 		<DatePicker
 			bind:value
-			bind:initialBrowseDate
-			bind:min
-			bind:max
+			{initialBrowseDate}
+			{min}
+			{max}
 			locale={locale.value}
-			bind:browseWithoutSelecting
+			{browseWithoutSelecting}
 			{timePrecision}
 		/>
 	</div>
