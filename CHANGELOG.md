@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 3.0.0 - 2026 Jul 22
 - **Breaking**: Require Svelte 5.19 or later
 - **Breaking**: Enable DateInput `dynamicPositioning` by default. If there's not enough space on the screen, this means the popup can appear above/below and right/left-aligned to the input. If your `DateInput` is near the edge of a non-overflow/scollable container, check how it behaves.
 - Use `ClassValue` type for `class` prop
