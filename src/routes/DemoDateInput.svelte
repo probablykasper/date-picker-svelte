@@ -2,8 +2,18 @@
 	import DateInput from '$lib/DateInput.svelte'
 	import Prop from './prop.svelte'
 	import Split from './split.svelte'
-	import { localeFromDateFnsLocale } from '$lib'
+	import { localeFromDateFnsLocale, type Locale } from '$lib'
 	import { hy, de, nb } from 'date-fns/locale'
+	import { toText, toValidDate } from '$lib/date-utils'
+	import { createFormat } from '$lib/parse'
+
+	let locales = [
+		{ key: 'default', value: localeFromDateFnsLocale({}) },
+		{ key: 'nb (date-fns)', value: localeFromDateFnsLocale(nb) },
+		{ key: 'de (date-fns)', value: localeFromDateFnsLocale(de) },
+		{ key: 'hy (date-fns)', value: localeFromDateFnsLocale(hy) },
+	]
+	let localeEntry = $state(locales[0])
 
 	let value: Date | null = $state(null)
 	const now = new Date()
@@ -15,27 +25,20 @@
 	let valid = $state(true)
 	let disabled = $state(false)
 	let required = $state(false)
-	let classes = $state('')
-	// let locale = $state({})
 	let format = $state('yyyy-MM-dd HH:mm:ss')
-	// let isDisabledDate = $state(null)
-	// let text = $state(toText(
-	// 	value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value,
-	// 	createFormat(format, locale),
-	// ))
+	let isDisabledDate = null
+	let text = $state(
+		// svelte-ignore state_referenced_locally
+		toText(
+			value ? toValidDate(initialBrowseDate, value, min, max, isDisabledDate) : value,
+			createFormat(format, localeEntry.value),
+		),
+	)
 	let visible = $state(false)
 	let closeOnSelection = $state(false)
 	let browseWithoutSelecting = $state(false)
 	let timePrecision: 'second' | 'minute' | 'millisecond' | null = $state(null)
 	let dynamicPositioning = $state(true)
-
-	let locales = [
-		{ key: 'default', value: localeFromDateFnsLocale({}) },
-		{ key: 'nb (date-fns)', value: localeFromDateFnsLocale(nb) },
-		{ key: 'de (date-fns)', value: localeFromDateFnsLocale(de) },
-		{ key: 'hy (date-fns)', value: localeFromDateFnsLocale(hy) },
-	]
-	let locale = $state(locales[0])
 </script>
 
 <Split>
@@ -56,8 +59,8 @@
 		{browseWithoutSelecting}
 		{dynamicPositioning}
 		{timePrecision}
-		locale={locale.value}
-		class={classes}
+		locale={localeEntry.value}
+		bind:text
 	/>
 
 	<svelte:fragment slot="right">
@@ -76,12 +79,21 @@
 		<Prop label="closeOnSelection" bind:value={closeOnSelection} />
 		<Prop label="browseWithoutSelecting" bind:value={browseWithoutSelecting} />
 		<Prop label="dynamicPositioning" bind:value={dynamicPositioning} />
-		<Prop label="locale" bind:value={locale} values={locales} />
+		<Prop label="locale" bind:value={localeEntry} values={locales} />
+		<Prop label="text" bind:value={text} />
 		<Prop
 			label="timePrecision"
 			bind:value={timePrecision}
 			values={[null, 'minute', 'second', 'millisecond']}>{timePrecision}</Prop
 		>
-		<Prop label="class" bind:value={classes} />
+		<Prop label="class">
+			<span style="font-family:monospace">ClassValue</span>
+		</Prop>
+		<Prop label="isDisabledDate">
+			<span style="font-family:monospace">(date: Date) =&gt; boolean</span>
+		</Prop>
+		<Prop label="onselect">
+			<span style="font-family:monospace">(date: Date) =&gt; void</span>
+		</Prop>
 	</svelte:fragment>
 </Split>

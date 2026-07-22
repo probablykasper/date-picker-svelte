@@ -46,5 +46,11 @@
 			bind:value={timePrecision}
 			values={[null, 'minute', 'second', 'millisecond']}>{timePrecision}</Prop
 		>
+		<Prop label="isDisabledDate">
+			<span style="font-family:monospace">(date: Date) =&gt; boolean</span>
+		</Prop>
+		<Prop label="onselect">
+			<span style="font-family:monospace">(date: Date) =&gt; void</span>
+		</Prop>
 	</div>
 </Split>
