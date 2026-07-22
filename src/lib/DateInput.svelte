@@ -272,7 +272,7 @@
 		width: var(--date-input-width, 150px)
 		outline: none
 		transition: all 80ms cubic-bezier(0.4, 0.0, 0.2, 1)
-		&:focus
+		&:focus-visible
 			border-color: var(--date-picker-highlight-border, #0269f7)
 			box-shadow: 0px 0px 0px 2px var(--date-picker-highlight-shadow, rgba(#0269f7, 0.4))
 		&:disabled
@@ -280,7 +280,7 @@
 	.invalid
 		border: 1px solid rgba(#f92f72, 0.5)
 		background-color: rgba(#f92f72, 0.1)
-		&:focus
+		&:focus-visible
 			border-color: #f92f72
 			box-shadow: 0px 0px 0px 2px rgba(#f92f72, 0.5)
 	.picker
